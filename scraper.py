@@ -30,6 +30,7 @@ def soccerway_scraper(url):
                                'home_offsides',
                                'away_offsides'
                                ])
+
     # scrape date and team names
     for info in soup.find_all('title'):
         data = info.contents[0]
