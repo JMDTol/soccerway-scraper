@@ -76,16 +76,16 @@ def soccerway_scraper(url):
 
     # scrape booking related markets
     for home_bookings in soup.find_all('div', {'class': 'container left'}):
-        bookings = home_bookings.find_all("span")
+        bookings = home_bookings.find_all('span')
         for info in bookings:
-            if len(info.select("img[src*=YC]")) != 0:
+            if len(info.select('img[src*=YC]')) != 0:
                 yellow = (str(info.contents[1]).strip())
                 yellow = (yellow[:-1])
                 yellow = int((yellow.split('+')[0]))
                 home_yellow_times.append(yellow)
                 home_yellow_times.sort()
 
-            elif len(info.select("img[src*=RC]")) or len(info.select("img[src*=Y2C]")) != 0:
+            elif len(info.select('img[src*=RC]')) or len(info.select('img[src*=Y2C]')) != 0:
                 second_yellow = (str(info.contents[1]).strip())
                 second_yellow = (second_yellow[:-1])
                 second_yellow = int((second_yellow.split('+')[0]))
@@ -95,24 +95,24 @@ def soccerway_scraper(url):
     for away_bookings in soup.find_all('div', {'class': 'container right'}):
         bookings = away_bookings.find_all("span")
         for info in bookings:
-            if len(info.select("img[src*=YC]")) != 0:
+            if len(info.select('img[src*=YC]')) != 0:
                 yellow = (str(info.contents[1]).strip())
                 yellow = (yellow[:-1])
                 yellow = int((yellow.split('+')[0]))
                 away_yellow_times.append(yellow)
                 away_yellow_times.sort()
 
-            elif len(info.select("img[src*=RC]")) or len(info.select("img[src*=Y2C]")) != 0:
+            elif len(info.select('img[src*=RC]')) or len(info.select('img[src*=Y2C]')) != 0:
                 second_yellow = (str(info.contents[1]).strip())
                 second_yellow = (second_yellow[:-1])
                 second_yellow = int((second_yellow.split('+')[0]))
                 away_red_times.append(second_yellow)
                 away_red_times.sort()
 
-    game_data["home_yellow_times"] = home_yellow_times
-    game_data["home_red_times"] = home_red_times
-    game_data["away_yellow_times"] = away_yellow_times
-    game_data["away_red_times"] = away_red_times
+    game_data['home_yellow_times'] = home_yellow_times
+    game_data['home_red_times'] = home_red_times
+    game_data['away_yellow_times'] = away_yellow_times
+    game_data['away_red_times'] = away_red_times
 
     # below scrapes iframe that contains match stats (corners, shots etc)
     iframe_complete_url = None

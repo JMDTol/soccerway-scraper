@@ -7,8 +7,8 @@ root = tk.Tk()
 root.withdraw()
 file_path = filedialog.askopenfilename()
 
-url = input("Enter URL (split multiple URLs with ',': ")
-url_list = url.split(",")
+url = input("Enter URL (split multiple URLs with ','): ")
+url_list = url.split(',')
 
 for url in url_list:
     output = soccerway_scraper(url)
