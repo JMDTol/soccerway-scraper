@@ -11,22 +11,26 @@ def spread(file_path, output):
     for i in ws.rows:
         column_length += 1
 
-    ws.cell(row=column_length, column=1).value = output['date']
-    ws.cell(row=column_length, column=2).value = output['home_team_name']
-    ws.cell(row=column_length, column=3).value = output['away_team_name']
-    ws.cell(row=column_length, column=4).value = output['home_goal_total']
-    ws.cell(row=column_length, column=5).value = output['away_goal_total']
-    ws.cell(row=column_length, column=44).value = output['referee']
-    ws.cell(row=column_length, column=45).value = output['home_corners']
-    ws.cell(row=column_length, column=46).value = output['away_corners']
-    ws.cell(row=column_length, column=47).value = output['home_offsides']
-    ws.cell(row=column_length, column=48).value = output['away_offsides']
-    ws.cell(row=column_length, column=49).value = output['home_fouls']
-    ws.cell(row=column_length, column=50).value = output['away_fouls']
-    ws.cell(row=column_length, column=51).value = output['home_shots_on']
-    ws.cell(row=column_length, column=52).value = output['home_shots_wide']
-    ws.cell(row=column_length, column=53).value = output['away_shots_on']
-    ws.cell(row=column_length, column=54).value = output['away_shots_wide']
+    column_dict = {'date': 1,
+                   'home_team_name': 2,
+                   'away_team_name': 3,
+                   'home_goal_total': 4,
+                   'away_goal_total': 5,
+                   'referee': 44,
+                   'home_corners': 45,
+                   'away_corners': 46,
+                   'home_shots_on': 51,
+                   'away_shots_on': 53,
+                   'home_shots_wide': 52,
+                   'away_shots_wide': 54,
+                   'home_fouls': 49,
+                   'away_fouls': 50,
+                   'home_offsides': 47,
+                   'away_offsides': 48,
+                   }
+
+    for key in column_dict.keys():
+        ws.cell(row=column_length, column=column_dict[key]).value = output[key]
 
     h1 = 6
     j = 0
