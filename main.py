@@ -13,4 +13,4 @@ url_list = url.split(",")
 for url in url_list:
     output = soccerway_scraper(url)
     spread(file_path, output)
-print("complete")
+print("=" * 50 + "\nComplete")

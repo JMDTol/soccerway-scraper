@@ -1,5 +1,6 @@
 from openpyxl import load_workbook
 
+
 def spread(file_path, output):
     wb = load_workbook(file_path)
     ws = wb.worksheets[0]
@@ -26,53 +27,52 @@ def spread(file_path, output):
     ws.cell(row=column_length, column=53).value = output['away_shots_on']
     ws.cell(row=column_length, column=54).value = output['away_shots_wide']
 
-
-    H1 = 6
+    h1 = 6
     j = 0
 
     for i in output['home_goal_times']:
-        ws.cell(row=(column_length), column=H1).value = output['home_goal_times'][j]
-        H1 += 1
+        ws.cell(row=column_length, column=h1).value = output['home_goal_times'][j]
+        h1 += 1
         j += 1
 
-    A1 = 14
+    a1 = 14
     j = 0
 
     for i in output['away_goal_times']:
-        ws.cell(row=(column_length), column=A1).value = output['away_goal_times'][j]
-        A1 += 1
+        ws.cell(row=column_length, column=a1).value = output['away_goal_times'][j]
+        a1 += 1
         j += 1
 
-    HY1 = 20
+    hy1 = 20
     j = 0
 
     for i in output['home_yellow_times']:
-        ws.cell(row=(column_length), column=HY1).value = output['home_yellow_times'][j]
-        HY1 += 1
+        ws.cell(row=column_length, column=hy1).value = output['home_yellow_times'][j]
+        hy1 += 1
         j += 1
 
-    AY1 = 29
+    ay1 = 29
     j = 0
 
     for i in output['away_yellow_times']:
-        ws.cell(row=(column_length), column=AY1).value = output['away_yellow_times'][j]
-        AY1 += 1
+        ws.cell(row=column_length, column=ay1).value = output['away_yellow_times'][j]
+        ay1 += 1
         j += 1
 
-    HR1 = 38
+    hr1 = 38
     j = 0
 
     for i in output['home_red_times']:
-        ws.cell(row=(column_length), column=HR1).value = output['home_red_times'][j]
-        HR1 += 1
+        ws.cell(row=column_length, column=hr1).value = output['home_red_times'][j]
+        hr1 += 1
         j += 1
 
-    AR1 = 41
+    ar1 = 41
     j = 0
 
     for i in output['away_red_times']:
-        ws.cell(row=(column_length), column=AR1).value = output['away_red_times'][j]
-        AR1 += 1
+        ws.cell(row=column_length, column=ar1).value = output['away_red_times'][j]
+        ar1 += 1
         j += 1
 
     wb.save(file_path)
