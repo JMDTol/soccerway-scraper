@@ -82,15 +82,17 @@ def soccerway_scraper(url):
                 yellow = (str(info.contents[1]).strip())
                 yellow = (yellow[:-1])
                 yellow = int((yellow.split('+')[0]))
-                home_yellow_times.append(yellow)
-                home_yellow_times.sort()
+                if yellow <= 90:
+                    home_yellow_times.append(yellow)
+                    home_yellow_times.sort()
 
             elif len(info.select('img[src*=RC]')) or len(info.select('img[src*=Y2C]')) != 0:
                 second_yellow = (str(info.contents[1]).strip())
                 second_yellow = (second_yellow[:-1])
                 second_yellow = int((second_yellow.split('+')[0]))
-                home_red_times.append(second_yellow)
-                home_red_times.sort()
+                if second_yellow <= 90:
+                    home_red_times.append(second_yellow)
+                    home_red_times.sort()
 
     for away_bookings in soup.find_all('div', {'class': 'container right'}):
         bookings = away_bookings.find_all("span")
@@ -99,15 +101,17 @@ def soccerway_scraper(url):
                 yellow = (str(info.contents[1]).strip())
                 yellow = (yellow[:-1])
                 yellow = int((yellow.split('+')[0]))
-                away_yellow_times.append(yellow)
-                away_yellow_times.sort()
+                if yellow <= 90:
+                    away_yellow_times.append(yellow)
+                    away_yellow_times.sort()
 
             elif len(info.select('img[src*=RC]')) or len(info.select('img[src*=Y2C]')) != 0:
                 second_yellow = (str(info.contents[1]).strip())
                 second_yellow = (second_yellow[:-1])
                 second_yellow = int((second_yellow.split('+')[0]))
-                away_red_times.append(second_yellow)
-                away_red_times.sort()
+                if second_yellow <= 90:
+                    away_red_times.append(second_yellow)
+                    away_red_times.sort()
 
     game_data['home_yellow_times'] = home_yellow_times
     game_data['home_red_times'] = home_red_times
