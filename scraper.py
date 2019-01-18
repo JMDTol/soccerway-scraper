@@ -110,6 +110,8 @@ def soccerway_scraper(url):
     game_data["away_yellow_times"] = away_yellow_times
     game_data["away_red_times"] = away_red_times
 
+    iframe_complete_url = None
+
     for info in soup.find_all('iframe'):
         if info['src'].startswith('/charts'):
             iframe_complete_url = 'https://www.soccerway.com' + (info['src'])
