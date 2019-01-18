@@ -2,12 +2,13 @@ from openpyxl import load_workbook
 
 
 def spread(file_path, output):
+    global i
     wb = load_workbook(file_path)
     ws = wb.worksheets[0]
 
     column_length = 1
 
-    for row in ws.rows:
+    for i in ws.rows:
         column_length += 1
 
     ws.cell(row=column_length, column=1).value = output['date']

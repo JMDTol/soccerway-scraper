@@ -1,8 +1,8 @@
 from bs4 import BeautifulSoup
 import requests
 
-def soccerway_scraper(url):
 
+def soccerway_scraper(url):
     r = requests.get(url)
     data = r.text
     soup = BeautifulSoup(data, 'html.parser')
@@ -42,10 +42,7 @@ def soccerway_scraper(url):
         game_data['away_team_name'] = away.strip()
 
     for info in soup.findAll('a',
-                             {'class': lambda x: x
-                                                 and 'referee' in x.split()
-                              }
-                             ):
+                             {'class': lambda x: x and 'referee' in x.split()}):
         game_data['referee'] = (info.contents[0])
         break
 
@@ -74,8 +71,8 @@ def soccerway_scraper(url):
     home_red_times = []
     away_red_times = []
 
-    for info in soup.find_all('div', {'class': 'container left'}):
-        bookings = info.find_all("span")
+    for home_bookings in soup.find_all('div', {'class': 'container left'}):
+        bookings = home_bookings.find_all("span")
         for info in bookings:
             if len(info.select("img[src*=YC]")) != 0:
                 yellow = (str(info.contents[1]).strip())
@@ -91,8 +88,8 @@ def soccerway_scraper(url):
                 home_red_times.append(second_yellow)
                 home_red_times.sort()
 
-    for info in soup.find_all('div', {'class': 'container right'}):
-        bookings = info.find_all("span")
+    for away_bookings in soup.find_all('div', {'class': 'container right'}):
+        bookings = away_bookings.find_all("span")
         for info in bookings:
             if len(info.select("img[src*=YC]")) != 0:
                 yellow = (str(info.contents[1]).strip())
@@ -122,14 +119,11 @@ def soccerway_scraper(url):
     iframe_soup = BeautifulSoup(data, 'html.parser')
 
     match_stats = []
-    keys = ['home_corners', 'away_corners', 'home_shots_on', 'away_shots_on' ,'home_shots_wide' ,'away_shots_wide' ,
-           'home_fouls', 'away_fouls', 'home_offsides', 'away_offsides']
+    keys = ['home_corners', 'away_corners', 'home_shots_on', 'away_shots_on', 'home_shots_wide', 'away_shots_wide',
+            'home_fouls', 'away_fouls', 'home_offsides', 'away_offsides']
 
     for info in iframe_soup.findAll('td',
-                             {'class': lambda x: x
-                                                 and 'legend' in x.split()
-                              }
-                             ):
+                                    {'class': lambda x: x and 'legend' in x.split()}):
         try:
             match_stats.append((int(info.contents[0])))
         except ValueError:
@@ -138,4 +132,4 @@ def soccerway_scraper(url):
     for i in range(10):
         game_data[(keys[i])] = match_stats[i]
 
-    return(game_data)
+    return game_data
