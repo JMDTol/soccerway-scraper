@@ -11,6 +11,7 @@ def spread(file_path, output):
     for i in ws.rows:
         column_length += 1
 
+# dict values correspond to columns in spreadsheet
     column_dict = {'date': 1,
                    'home_team_name': 2,
                    'away_team_name': 3,
@@ -29,6 +30,7 @@ def spread(file_path, output):
                    'away_offsides': 48,
                    }
 
+# h1, a1, hy1, ay1, hr1, ar1 correspond to goal/card min columns
     for key in column_dict.keys():
         ws.cell(row=column_length, column=column_dict[key]).value = output[key]
 

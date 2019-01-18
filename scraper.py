@@ -30,7 +30,7 @@ def soccerway_scraper(url):
                                'home_offsides',
                                'away_offsides'
                                ])
-
+    # scrape date and team names
     for info in soup.find_all('title'):
         data = info.contents[0]
         teams = data.split('-')[0]
@@ -41,6 +41,7 @@ def soccerway_scraper(url):
         game_data['home_team_name'] = home.strip()
         game_data['away_team_name'] = away.strip()
 
+    # scrape ref
     for info in soup.findAll('a',
                              {'class': lambda x: x and 'referee' in x.split()}):
         game_data['referee'] = (info.contents[0])
@@ -49,6 +50,7 @@ def soccerway_scraper(url):
     home_goals = []
     away_goals = []
 
+    # scrape goal times
     for info in soup.findAll('td', {'class': 'player player-a'}):
         home_goal_mins = info.contents[1].find(('span', {'class': 'minute'}))
         if home_goal_mins is not None:
@@ -71,6 +73,7 @@ def soccerway_scraper(url):
     home_red_times = []
     away_red_times = []
 
+    # scrape booking related markets
     for home_bookings in soup.find_all('div', {'class': 'container left'}):
         bookings = home_bookings.find_all("span")
         for info in bookings:
@@ -110,6 +113,7 @@ def soccerway_scraper(url):
     game_data["away_yellow_times"] = away_yellow_times
     game_data["away_red_times"] = away_red_times
 
+    # below scrapes iframe that contains match stats (corners, shots etc)
     iframe_complete_url = None
 
     for info in soup.find_all('iframe'):
