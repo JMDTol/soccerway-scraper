@@ -121,27 +121,29 @@ def soccerway_scraper(url):
     game_data['away_red_times'] = away_red_times
 
     # below scrapes iframe that contains match stats (corners, shots etc)
-    iframe_complete_url = None
 
     for info in soup.find_all('iframe'):
         if info['src'].startswith('/charts'):
             iframe_complete_url = 'https://www.soccerway.com' + (info['src'])
+            r = requests.get(iframe_complete_url)
+            data = r.text
+            iframe_soup = BeautifulSoup(data, 'html.parser')
 
-    r = requests.get(iframe_complete_url)
-    data = r.text
-    iframe_soup = BeautifulSoup(data, 'html.parser')
+            match_stats = []
+            keys = ['home_corners', 'away_corners', 'home_shots_on', 'away_shots_on', 'home_shots_wide',
+                    'away_shots_wide',
+                    'home_fouls', 'away_fouls', 'home_offsides', 'away_offsides']
 
-    match_stats = []
-    keys = ['home_corners', 'away_corners', 'home_shots_on', 'away_shots_on', 'home_shots_wide', 'away_shots_wide',
-            'home_fouls', 'away_fouls', 'home_offsides', 'away_offsides']
+            for stat in iframe_soup.findAll('td', {'class': 'legend'}):
+                try:
+                    match_stats.append((int(stat.contents[0])))
+                except ValueError:
+                    continue
 
-    for info in iframe_soup.findAll('td', {'class': 'legend'}):
-        try:
-            match_stats.append((int(info.contents[0])))
-        except ValueError:
-            continue
-
-    for i in range(10):
-        game_data[(keys[i])] = match_stats[i]
+                for i in range(10):
+                    game_data[(keys[i])] = match_stats[i]
+            else:
+                for i in range(10):
+                    game_data[(keys[i])] = None
 
     return game_data
