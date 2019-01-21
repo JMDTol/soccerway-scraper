@@ -80,7 +80,7 @@ def soccerway_scraper(url):
     for home_bookings in soup.find_all('div', {'class': 'container left'}):
         bookings = home_bookings.find_all('span')
         for info in bookings:
-            if len(info.select('img[src*=YC]')) != 0:
+            if info.select('img[src*=YC]'):
                 yellow = (str(info.contents[1]).strip())
                 yellow = (yellow[:-1])
                 yellow = int((yellow.split('+')[0]))
@@ -88,7 +88,7 @@ def soccerway_scraper(url):
                     home_yellow_times.append(yellow)
                     home_yellow_times.sort()
 
-            elif len(info.select('img[src*=RC]')) or len(info.select('img[src*=Y2C]')) != 0:
+            elif info.select('img[src*=RC]') or info.select('img[src*=Y2C]'):
                 second_yellow = (str(info.contents[1]).strip())
                 second_yellow = (second_yellow[:-1])
                 second_yellow = int((second_yellow.split('+')[0]))
@@ -99,7 +99,7 @@ def soccerway_scraper(url):
     for away_bookings in soup.find_all('div', {'class': 'container right'}):
         bookings = away_bookings.find_all("span")
         for info in bookings:
-            if len(info.select('img[src*=YC]')) != 0:
+            if info.select('img[src*=YC]'):
                 yellow = (str(info.contents[1]).strip())
                 yellow = (yellow[:-1])
                 yellow = int((yellow.split('+')[0]))
@@ -107,7 +107,7 @@ def soccerway_scraper(url):
                     away_yellow_times.append(yellow)
                     away_yellow_times.sort()
 
-            elif len(info.select('img[src*=RC]')) or len(info.select('img[src*=Y2C]')) != 0:
+            elif info.select('img[src*=RC]') or info.select('img[src*=Y2C]'):
                 second_yellow = (str(info.contents[1]).strip())
                 second_yellow = (second_yellow[:-1])
                 second_yellow = int((second_yellow.split('+')[0]))
