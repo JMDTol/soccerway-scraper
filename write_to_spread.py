@@ -11,7 +11,7 @@ def spread(file_path, output):
     for i in ws.rows:
         column_length += 1
 
-# dict values correspond to columns in spreadsheet
+    # dict values correspond to columns in spreadsheet
     column_dict = {'date': 1,
                    'home_team_name': 2,
                    'away_team_name': 3,
@@ -30,56 +30,56 @@ def spread(file_path, output):
                    'away_offsides': 48,
                    }
 
-# h1, a1, hy1, ay1, hr1, ar1 correspond to goal/card min columns
+    # write minute related markets
     for key in column_dict.keys():
         ws.cell(row=column_length, column=column_dict[key]).value = output[key]
 
-    h1 = 6
+    home_goal_col = 6
     j = 0
 
     for i in output['home_goal_times']:
-        ws.cell(row=column_length, column=h1).value = output['home_goal_times'][j]
-        h1 += 1
+        ws.cell(row=column_length, column=home_goal_col).value = output['home_goal_times'][j]
+        home_goal_col += 1
         j += 1
 
-    a1 = 14
+    away_goal_col = 14
     j = 0
 
     for i in output['away_goal_times']:
-        ws.cell(row=column_length, column=a1).value = output['away_goal_times'][j]
-        a1 += 1
+        ws.cell(row=column_length, column=away_goal_col).value = output['away_goal_times'][j]
+        away_goal_col += 1
         j += 1
 
-    hy1 = 20
+    home_yel_col = 20
     j = 0
 
     for i in output['home_yellow_times']:
-        ws.cell(row=column_length, column=hy1).value = output['home_yellow_times'][j]
-        hy1 += 1
+        ws.cell(row=column_length, column=home_yel_col).value = output['home_yellow_times'][j]
+        home_yel_col += 1
         j += 1
 
-    ay1 = 29
+    away_yel_col = 29
     j = 0
 
     for i in output['away_yellow_times']:
-        ws.cell(row=column_length, column=ay1).value = output['away_yellow_times'][j]
-        ay1 += 1
+        ws.cell(row=column_length, column=away_yel_col).value = output['away_yellow_times'][j]
+        away_yel_col += 1
         j += 1
 
-    hr1 = 38
+    home_red_col = 38
     j = 0
 
     for i in output['home_red_times']:
-        ws.cell(row=column_length, column=hr1).value = output['home_red_times'][j]
-        hr1 += 1
+        ws.cell(row=column_length, column=home_red_col).value = output['home_red_times'][j]
+        home_red_col += 1
         j += 1
 
-    ar1 = 41
+    away_red_col = 41
     j = 0
 
     for i in output['away_red_times']:
-        ws.cell(row=column_length, column=ar1).value = output['away_red_times'][j]
-        ar1 += 1
+        ws.cell(row=column_length, column=away_red_col).value = output['away_red_times'][j]
+        away_red_col += 1
         j += 1
 
     wb.save(file_path)
