@@ -32,15 +32,14 @@ def soccerway_scraper(url):
                                ])
 
     # scrape date and team names
-    for info in soup.find_all('title'):
-        data = info.contents[0]
-        teams = data.split('-')[0]
-        date = data.split('-')[1]
-        home = teams.split('vs.')[0]
-        away = teams.split('vs.')[1]
-        game_data['date'] = date.strip()
-        game_data['home_team_name'] = home.strip()
-        game_data['away_team_name'] = away.strip()
+    page_title = soup.title.text
+    date = page_title.split('-')[1]
+    teams = page_title.split('-')[0]
+    home = teams.split('vs.')[0]
+    away = teams.split('vs.')[1]
+    game_data['date'] = date.strip()
+    game_data['home_team_name'] = home.strip()
+    game_data['away_team_name'] = away.strip()
 
     # scrape ref
     for info in soup.findAll('a',
