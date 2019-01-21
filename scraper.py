@@ -135,12 +135,11 @@ def soccerway_scraper(url):
     keys = ['home_corners', 'away_corners', 'home_shots_on', 'away_shots_on', 'home_shots_wide', 'away_shots_wide',
             'home_fouls', 'away_fouls', 'home_offsides', 'away_offsides']
 
-    for info in iframe_soup.findAll('td',
-                                    {'class': lambda x: x and 'legend' in x.split()}):
+    for info in iframe_soup.findAll('td', {'class': 'legend'}):
         try:
             match_stats.append((int(info.contents[0])))
         except ValueError:
-            print("")
+            continue
 
     for i in range(10):
         game_data[(keys[i])] = match_stats[i]
