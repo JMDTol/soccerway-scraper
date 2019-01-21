@@ -64,7 +64,7 @@ def soccerway_scraper(url):
         if away_goal_mins is not None:
             away_goal_mins = away_goal_mins.text.split("'")[0]
             if int(away_goal_mins) <= 90:
-               away_goals.append(int(away_goal_mins))
+                away_goals.append(int(away_goal_mins))
 
     game_data['home_goal_times'] = home_goals
     game_data['away_goal_times'] = away_goals
