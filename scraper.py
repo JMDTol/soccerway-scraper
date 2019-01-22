@@ -121,7 +121,6 @@ def soccerway_scraper(url):
     game_data['away_red_times'] = away_red_times
 
     # below scrapes iframe that contains match stats (corners, shots etc)
-
     match_stats = []
     keys = ['home_corners', 'away_corners', 'home_shots_on', 'away_shots_on', 'home_shots_wide', 'away_shots_wide',
             'home_fouls', 'away_fouls', 'home_offsides', 'away_offsides']
