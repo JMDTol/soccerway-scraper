@@ -135,7 +135,7 @@ def soccerway_scraper(url):
             for stat in iframe_soup.findAll('td', {'class': 'legend'}):
                 try:
                     match_stats.append((int(stat.contents[0])))
-                except (ValueError, IndexError):
+                except (ValueError, IndexError) as e:
                     continue
             if len(match_stats) == 10:
                 for i in range(10):
