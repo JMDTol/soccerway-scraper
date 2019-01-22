@@ -41,7 +41,7 @@ def soccerway_scraper(url):
     game_data['home_team_name'] = home.strip()
     game_data['away_team_name'] = away.strip()
 
-    # scrape ref
+    # scrape ref name
     for info in soup.find_all("dl", class_="details"):
         if info.contents[1].text == 'Referee:':
             game_data['referee'] = info.contents[3].text
