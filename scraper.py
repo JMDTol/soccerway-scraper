@@ -46,7 +46,7 @@ def soccerway_scraper(url):
         if info.contents[1].text == 'Referee:':
             game_data['referee'] = info.contents[3].text
         else:
-            game_data['referee'] = 'NONE'
+            game_data['referee'] = None
 
     home_goals = []
     away_goals = []
