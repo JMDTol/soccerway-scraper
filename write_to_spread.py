@@ -66,7 +66,7 @@ def spread(file_path, output):
         away_yel_col += 1
         j += 1
 
-    home_red_col = 41
+    home_red_col = 40
     j = 0
 
     for i in output['home_red_times']:
