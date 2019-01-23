@@ -46,7 +46,7 @@ def soccerway_scraper(url):
     game_data['away_team_name'] = away.strip()
 
     # scrape ref name
-    for info in soup.find_all("dl", class_="details"):
+    for info in soup.find_all('dl', class_='details'):
         if info.contents[1].text == 'Referee:':
             game_data['referee'] = info.contents[3].text
         else:
@@ -56,15 +56,15 @@ def soccerway_scraper(url):
     away_goals = []
 
     # scrape goal times
-    for info in soup.findAll('td', class_="player player-a"):
-        home_goal_mins = info.contents[1].find('span', class_="minute")
+    for info in soup.findAll('td', class_='player player-a'):
+        home_goal_mins = info.contents[1].find('span', class_='minute')
         if home_goal_mins is not None:
             home_goal_mins = home_goal_mins.text.split("'")[0]
             if int(home_goal_mins) <= 90:
                 home_goals.append(int(home_goal_mins))
 
-    for info in soup.findAll('td', class_="player player-b"):
-        away_goal_mins = info.contents[1].find('span', class_="minute")
+    for info in soup.findAll('td', class_='player player-b'):
+        away_goal_mins = info.contents[1].find('span', class_='minute')
         if away_goal_mins is not None:
             away_goal_mins = away_goal_mins.text.split("'")[0]
             if int(away_goal_mins) <= 90:
@@ -101,7 +101,7 @@ def soccerway_scraper(url):
                     home_red_times.sort()
 
     for away_bookings in soup.find_all('div', {'class': 'container right'}):
-        bookings = away_bookings.find_all("span")
+        bookings = away_bookings.find_all('span')
         for info in bookings:
             if info.select('img[src*=YC]'):
                 yellow = (str(info.contents[1]).strip())
