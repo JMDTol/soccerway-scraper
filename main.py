@@ -5,7 +5,6 @@ from openpyxl import load_workbook
 import tkinter as tk
 import timeit
 
-
 root = tk.Tk()
 root.withdraw()
 file_path = filedialog.askopenfilename()
