@@ -1,5 +1,11 @@
-def spread(output, ws):
+from openpyxl import load_workbook
+
+
+def spread(output, file_path):
     global i
+
+    wb = load_workbook(file_path)
+    ws = wb.worksheets[0]
 
     column_length = 1
 
@@ -76,5 +82,7 @@ def spread(output, ws):
         ws.cell(row=column_length, column=away_red_col).value = output['away_red_times'][j]
         away_red_col += 1
         j += 1
+
+    wb.save(file_path)
 
     print("{} - {} vs {} added.".format(output['date'], output['home_team_name'], output['away_team_name']))
