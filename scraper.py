@@ -124,32 +124,26 @@ def soccerway_scraper(url):
     game_data['away_yellow_times'] = away_yellow_times
     game_data['away_red_times'] = away_red_times
 
-    # check for pens
+    # scrape penalty mins
 
     home_pen_times = []
     away_pen_times = []
 
-    for home_pens in soup.find_all('div', {'class': 'container left'}):
-        pens = home_pens.find_all('span')
-        for info in pens:
-            if info.select('img[src*=PG]'):
-                pens = (str(info.contents[1]).strip())
-                pens = (pens[:-1])
-                pens = int((pens.split('+')[0]))
-                if pens <= 90:
-                    home_pen_times.append(pens)
-                    home_pen_times.sort()
+    for info in soup.find_all("td", class_="player player-a"):
+        if '(PG)' in info.text:
+            pen = ((info.text).split('+')[0])
+            pen = int(''.join(ch for ch in pen if ch.isdigit()))
+            if pen <= 90:
+                home_pen_times.append(pen)
+                home_pen_times.sort()
 
-    for away_pens in soup.find_all('div', {'class': 'container right'}):
-        pens = away_pens.find_all('span')
-        for info in pens:
-            if info.select('img[src*=PG]'):
-                pens = (str(info.contents[1]).strip())
-                pens = (pens[:-1])
-                pens = int((pens.split('+')[0]))
-                if pens <= 90:
-                    away_pen_times.append(pens)
-                    away_pen_times.sort()
+    for info in soup.find_all("td", class_="player player-b"):
+        if '(PG)' in info.text:
+            pen = ((info.text).split('+')[0])
+            pen = int(''.join(ch for ch in pen if ch.isdigit()))
+            if pen <= 90:
+                away_pen_times.append(pen)
+                away_pen_times.sort()
 
     game_data['home_pens'] = len(home_pen_times)
     game_data['away_pens'] = len(away_pen_times)
