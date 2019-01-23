@@ -28,7 +28,11 @@ def soccerway_scraper(url):
                                'home_fouls',
                                'away_fouls',
                                'home_offsides',
-                               'away_offsides'
+                               'away_offsides',
+                               'home_pens',
+                               'away_pens',
+                               'home_pen_mins',
+                               'away_pen_mins'
                                ])
 
     # scrape date and team names
@@ -119,6 +123,38 @@ def soccerway_scraper(url):
     game_data['home_red_times'] = home_red_times
     game_data['away_yellow_times'] = away_yellow_times
     game_data['away_red_times'] = away_red_times
+
+    # check for pens
+
+    home_pen_times = []
+    away_pen_times = []
+
+    for home_pens in soup.find_all('div', {'class': 'container left'}):
+        pens = home_pens.find_all('span')
+        for info in pens:
+            if info.select('img[src*=PG]'):
+                pens = (str(info.contents[1]).strip())
+                pens = (pens[:-1])
+                pens = int((pens.split('+')[0]))
+                if pens <= 90:
+                    home_pen_times.append(pens)
+                    home_pen_times.sort()
+
+    for away_pens in soup.find_all('div', {'class': 'container right'}):
+        pens = away_pens.find_all('span')
+        for info in pens:
+            if info.select('img[src*=PG]'):
+                pens = (str(info.contents[1]).strip())
+                pens = (pens[:-1])
+                pens = int((pens.split('+')[0]))
+                if pens <= 90:
+                    away_pen_times.append(pens)
+                    away_pen_times.sort()
+
+    game_data['home_pens'] = len(home_pen_times)
+    game_data['away_pens'] = len(away_pen_times)
+    game_data['home_pen_mins'] = sum(home_pen_times)
+    game_data['away_pen_mins'] = sum(away_pen_times)
 
     # below scrapes iframe that contains match stats (corners, shots etc)
     match_stats = []

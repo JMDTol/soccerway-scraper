@@ -29,6 +29,10 @@ def spread(output, file_path):
                    'away_fouls': 52,
                    'home_offsides': 49,
                    'away_offsides': 50,
+                   'home_pens': 57,
+                   'away_pens': 58,
+                   'home_pen_mins': 59,
+                   'away_pen_mins': 60
                    }
 
     # write minute related markets
