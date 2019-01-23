@@ -33,8 +33,8 @@ def soccerway_scraper(url):
 
     # scrape date and team names
     page_title = soup.title.text
-    date = page_title.split('-')[1]
-    teams = page_title.split('-')[0]
+    date = page_title.split(' - ')[1]
+    teams = page_title.split(' - ')[0]
     home = teams.split('vs.')[0]
     away = teams.split('vs.')[1]
     game_data['date'] = date.strip()
