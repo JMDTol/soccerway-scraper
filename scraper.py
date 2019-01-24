@@ -131,7 +131,7 @@ def soccerway_scraper(url):
 
     for info in soup.find_all("td", class_="player player-a"):
         if '(PG)' in info.text:
-            pen = ((info.text).split('+')[0])
+            pen = (info.text.split('+')[0])
             pen = int(''.join(ch for ch in pen if ch.isdigit()))
             if pen <= 90:
                 home_pen_times.append(pen)
@@ -139,7 +139,7 @@ def soccerway_scraper(url):
 
     for info in soup.find_all("td", class_="player player-b"):
         if '(PG)' in info.text:
-            pen = ((info.text).split('+')[0])
+            pen = (info.text.split('+')[0])
             pen = int(''.join(ch for ch in pen if ch.isdigit()))
             if pen <= 90:
                 away_pen_times.append(pen)
