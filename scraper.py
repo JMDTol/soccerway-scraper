@@ -59,16 +59,16 @@ def soccerway_scraper(url):
     for info in soup.findAll('td', class_='player player-a'):
         home_goal_mins = info.contents[1].find('span', class_='minute')
         if home_goal_mins is not None:
-            home_goal_mins = home_goal_mins.text.split("'")[0]
-            if int(home_goal_mins) <= 90:
-                home_goals.append(int(home_goal_mins))
+            home_goal_mins = int(home_goal_mins.text.split("'")[0])
+            if home_goal_mins <= 90:
+                home_goals.append(home_goal_mins)
 
     for info in soup.findAll('td', class_='player player-b'):
         away_goal_mins = info.contents[1].find('span', class_='minute')
         if away_goal_mins is not None:
-            away_goal_mins = away_goal_mins.text.split("'")[0]
-            if int(away_goal_mins) <= 90:
-                away_goals.append(int(away_goal_mins))
+            away_goal_mins = int(away_goal_mins.text.split("'")[0])
+            if away_goal_mins <= 90:
+                away_goals.append(away_goal_mins)
 
     game_data['home_goal_times'] = home_goals
     game_data['away_goal_times'] = away_goals
