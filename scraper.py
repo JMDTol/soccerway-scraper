@@ -2,6 +2,13 @@ from bs4 import BeautifulSoup
 import requests
 
 
+def clean_string(info):
+    card = (str(info.contents[1]).strip())
+    card = (card[:-1])
+    card = int((card.split('+')[0]))
+    return card
+
+
 def soccerway_scraper(url):
     r = requests.get(url)
     data = r.text
@@ -85,17 +92,13 @@ def soccerway_scraper(url):
         bookings = home_bookings.find_all('span')
         for info in bookings:
             if info.select('img[src*=YC]'):
-                yellow = (str(info.contents[1]).strip())
-                yellow = (yellow[:-1])
-                yellow = int((yellow.split('+')[0]))
+                yellow = clean_string(info)
                 if yellow <= 90:
                     home_yellow_times.append(yellow)
                     home_yellow_times.sort()
 
             elif info.select('img[src*=RC]') or info.select('img[src*=Y2C]'):
-                second_yellow = (str(info.contents[1]).strip())
-                second_yellow = (second_yellow[:-1])
-                second_yellow = int((second_yellow.split('+')[0]))
+                second_yellow = clean_string(info)
                 if second_yellow <= 90:
                     home_red_times.append(second_yellow)
                     home_red_times.sort()
@@ -104,17 +107,13 @@ def soccerway_scraper(url):
         bookings = away_bookings.find_all('span')
         for info in bookings:
             if info.select('img[src*=YC]'):
-                yellow = (str(info.contents[1]).strip())
-                yellow = (yellow[:-1])
-                yellow = int((yellow.split('+')[0]))
+                yellow = clean_string(info)
                 if yellow <= 90:
                     away_yellow_times.append(yellow)
                     away_yellow_times.sort()
 
             elif info.select('img[src*=RC]') or info.select('img[src*=Y2C]'):
-                second_yellow = (str(info.contents[1]).strip())
-                second_yellow = (second_yellow[:-1])
-                second_yellow = int((second_yellow.split('+')[0]))
+                second_yellow = clean_string(info)
                 if second_yellow <= 90:
                     away_red_times.append(second_yellow)
                     away_red_times.sort()
