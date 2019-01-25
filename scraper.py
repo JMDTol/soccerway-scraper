@@ -42,25 +42,33 @@ def soccerway_scraper(url):
                                'away_pen_mins'
                                ])
 
+    # empty lists to populated by minute stats
+    home_goals = []
+    away_goals = []
+    home_yellow_times = []
+    away_yellow_times = []
+    home_red_times = []
+    away_red_times = []
+    home_pen_times = []
+    away_pen_times = []
+
     # scrape date and team names
     page_title = soup.title.text
     date = page_title.split(' - ')[1]
     teams = page_title.split(' - ')[0]
     home = teams.split('vs.')[0]
     away = teams.split('vs.')[1]
+
     game_data['date'] = date.strip()
     game_data['home_team_name'] = home.strip()
     game_data['away_team_name'] = away.strip()
 
-    # scrape ref name
+    # scrape referee name
     for info in soup.find_all('dl', class_='details'):
         if info.contents[1].text == 'Referee:':
             game_data['referee'] = info.contents[3].text
         else:
             game_data['referee'] = None
-
-    home_goals = []
-    away_goals = []
 
     # scrape goal times
     for info in soup.findAll('td', class_='player player-a'):
@@ -81,11 +89,6 @@ def soccerway_scraper(url):
     game_data['away_goal_times'] = away_goals
     game_data['home_goal_total'] = len(home_goals)
     game_data['away_goal_total'] = len(away_goals)
-
-    home_yellow_times = []
-    away_yellow_times = []
-    home_red_times = []
-    away_red_times = []
 
     # scrape booking related markets
     for home_bookings in soup.find_all('div', {'class': 'container left'}):
@@ -124,10 +127,6 @@ def soccerway_scraper(url):
     game_data['away_red_times'] = away_red_times
 
     # scrape penalty mins
-
-    home_pen_times = []
-    away_pen_times = []
-
     for info in soup.find_all("td", class_="player player-a"):
         if '(PG)' in info.text:
             pen = (info.text.split('+')[0])
