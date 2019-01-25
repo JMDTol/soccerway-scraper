@@ -35,57 +35,23 @@ def spread(output, file_path):
                    'away_pen_mins': 60
                    }
 
-    # write minute related markets
+    min_col = [('home_goal_times', 6),
+               ('away_goal_times', 14),
+               ('home_yellow_times', 22),
+               ('away_yellow_times', 31),
+               ('home_red_times', 40),
+               ('away_red_times', 43)]
+
     for key in column_dict.keys():
         ws.cell(row=column_length, column=column_dict[key]).value = output[key]
 
-    home_goal_col = 6
-    j = 0
-
-    for i in output['home_goal_times']:
-        ws.cell(row=column_length, column=home_goal_col).value = output['home_goal_times'][j]
-        home_goal_col += 1
-        j += 1
-
-    away_goal_col = 14
-    j = 0
-
-    for i in output['away_goal_times']:
-        ws.cell(row=column_length, column=away_goal_col).value = output['away_goal_times'][j]
-        away_goal_col += 1
-        j += 1
-
-    home_yel_col = 22
-    j = 0
-
-    for i in output['home_yellow_times']:
-        ws.cell(row=column_length, column=home_yel_col).value = output['home_yellow_times'][j]
-        home_yel_col += 1
-        j += 1
-
-    away_yel_col = 31
-    j = 0
-
-    for i in output['away_yellow_times']:
-        ws.cell(row=column_length, column=away_yel_col).value = output['away_yellow_times'][j]
-        away_yel_col += 1
-        j += 1
-
-    home_red_col = 40
-    j = 0
-
-    for i in output['home_red_times']:
-        ws.cell(row=column_length, column=home_red_col).value = output['home_red_times'][j]
-        home_red_col += 1
-        j += 1
-
-    away_red_col = 43
-    j = 0
-
-    for i in output['away_red_times']:
-        ws.cell(row=column_length, column=away_red_col).value = output['away_red_times'][j]
-        away_red_col += 1
-        j += 1
+    for i in range(0, len(min_col)):
+        string = min_col[i][0]
+        length = len(output[string])
+        start = min_col[i][1]
+        for j in range(0, length):
+            ws.cell(row=column_length, column=start).value = output[string][j]
+            start += 1
 
     wb.save(file_path)
 
