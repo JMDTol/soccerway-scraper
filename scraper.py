@@ -42,7 +42,7 @@ def soccerway_scraper(url):
                                'away_pen_mins'
                                ])
 
-    # empty lists to populated by minute stats
+    # empty lists to be populated by minute stats
     home_goals = []
     away_goals = []
     home_yellow_times = []
@@ -59,11 +59,12 @@ def soccerway_scraper(url):
     home = teams.split('vs.')[0]
     away = teams.split('vs.')[1]
 
+    # add date and team names to game_data dictionary
     game_data['date'] = date.strip()
     game_data['home_team_name'] = home.strip()
     game_data['away_team_name'] = away.strip()
 
-    # scrape referee name
+    # scrape referee name and add to game_data if it exists
     for info in soup.find_all('dl', class_='details'):
         if info.contents[1].text == 'Referee:':
             game_data['referee'] = info.contents[3].text
@@ -85,6 +86,7 @@ def soccerway_scraper(url):
             if away_goal_mins <= 90:
                 away_goals.append(away_goal_mins)
 
+    # add goal related markets to game_data dictionary
     game_data['home_goal_times'] = home_goals
     game_data['away_goal_times'] = away_goals
     game_data['home_goal_total'] = len(home_goals)
@@ -121,6 +123,7 @@ def soccerway_scraper(url):
                     away_red_times.append(second_yellow)
                     away_red_times.sort()
 
+    # add card related markets to game_data dictionary
     game_data['home_yellow_times'] = home_yellow_times
     game_data['home_red_times'] = home_red_times
     game_data['away_yellow_times'] = away_yellow_times
@@ -143,6 +146,7 @@ def soccerway_scraper(url):
                 away_pen_times.append(pen)
                 away_pen_times.sort()
 
+    # add penalty related markets to game_data dictionary
     game_data['home_pens'] = len(home_pen_times)
     game_data['away_pens'] = len(away_pen_times)
     game_data['home_pen_mins'] = sum(home_pen_times)
