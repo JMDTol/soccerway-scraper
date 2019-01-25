@@ -43,11 +43,11 @@ def spread(output, file_path):
                     ('away_red_times', 43)
                     ]
 
-    # write column_dict markets to spreadsheet
+    # write main_data markets to spreadsheet
     for key in main_data.keys():
         ws.cell(row=column_length, column=main_data[key]).value = output[key]
 
-    # write min_col markets to spreadsheet
+    # write minutes_data markets to spreadsheet
     for i in range(0, len(minutes_data)):
         string = minutes_data[i][0]
         length = len(output[string])
