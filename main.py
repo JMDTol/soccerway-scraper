@@ -9,10 +9,12 @@ root.withdraw()
 file_path = filedialog.askopenfilename()
 
 url = input("Enter URL (split multiple URLs with ','): ")
-url_list = url.split(',')
 
-for url in url_list:
-    output = soccerway_scraper(url)
-    spread(output, file_path)
+if url != '':
+    url_list = url.split(',')
 
-print("=" * 70 + "\nComplete - {} matches added".format(len(url_list)))
+    for url in url_list:
+        output = soccerway_scraper(url)
+        spread(output, file_path)
+
+    print("=" * 70 + "\nComplete - {} matches added".format(len(url_list)))
