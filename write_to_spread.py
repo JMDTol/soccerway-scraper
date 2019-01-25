@@ -12,7 +12,7 @@ def spread(output, file_path):
     for i in ws.rows:
         column_length += 1
 
-    # dictionary values correspond to columns in spreadsheet where data should be written to
+    # integers in main_data and minutes_data correspond to column numbers
     main_data = {'date': 1,
                  'home_team_name': 2,
                  'away_team_name': 3,
@@ -43,11 +43,11 @@ def spread(output, file_path):
                     ('away_red_times', 43)
                     ]
 
-    # write main_data markets to spreadsheet
+    # write main_data markets
     for key in main_data.keys():
         ws.cell(row=column_length, column=main_data[key]).value = output[key]
 
-    # write minutes_data markets to spreadsheet
+    # write minutes_data markets
     for i in range(0, len(minutes_data)):
         string = minutes_data[i][0]
         length = len(output[string])
