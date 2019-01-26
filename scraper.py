@@ -14,7 +14,8 @@ def soccerway_scraper(url):
     data = r.text
     soup = BeautifulSoup(data, 'html.parser')
 
-    game_data = dict.fromkeys(['date',
+    game_data = dict.fromkeys(['week',
+                               'date',
                                'home_team_name',
                                'away_team_name',
                                'home_goal_total',
@@ -51,6 +52,11 @@ def soccerway_scraper(url):
     away_red_times = []
     home_pen_times = []
     away_pen_times = []
+
+    # find match week
+    for x in soup.find_all("dt", string="Game week"):
+        week_number = (x.find_next('dd')).text
+        game_data['week'] = int(week_number)
 
     # scrape date and team names
     page_title = soup.title.text

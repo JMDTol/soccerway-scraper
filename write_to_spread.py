@@ -5,7 +5,7 @@ def spread(output, file_path):
     global i
 
     wb = load_workbook(file_path)
-    ws = wb.worksheets[0]
+    ws = wb.worksheets[1]
 
     column_length = 1
 
@@ -13,34 +13,35 @@ def spread(output, file_path):
         column_length += 1
 
     # integers in main_data and minutes_data correspond to column numbers
-    main_data = {'date': 1,
-                 'home_team_name': 2,
-                 'away_team_name': 3,
-                 'home_goal_total': 4,
-                 'away_goal_total': 5,
-                 'referee': 46,
-                 'home_corners': 47,
-                 'away_corners': 48,
-                 'home_shots_on': 53,
-                 'away_shots_on': 55,
-                 'home_shots_wide': 54,
-                 'away_shots_wide': 56,
-                 'home_fouls': 51,
-                 'away_fouls': 52,
-                 'home_offsides': 49,
-                 'away_offsides': 50,
-                 'home_pens': 57,
-                 'away_pens': 58,
-                 'home_pen_mins': 59,
-                 'away_pen_mins': 60
+    main_data = {'week': 1,
+                 'date': 2,
+                 'home_team_name': 3,
+                 'away_team_name': 4,
+                 'home_goal_total': 5,
+                 'away_goal_total': 6,
+                 'referee': 47,
+                 'home_corners': 48,
+                 'away_corners': 49,
+                 'home_shots_on': 54,
+                 'away_shots_on': 56,
+                 'home_shots_wide': 55,
+                 'away_shots_wide': 57,
+                 'home_fouls': 52,
+                 'away_fouls': 53,
+                 'home_offsides': 50,
+                 'away_offsides': 51,
+                 'home_pens': 58,
+                 'away_pens': 59,
+                 'home_pen_mins': 60,
+                 'away_pen_mins': 61
                  }
 
-    minutes_data = [('home_goal_times', 6),
-                    ('away_goal_times', 14),
-                    ('home_yellow_times', 22),
-                    ('away_yellow_times', 31),
-                    ('home_red_times', 40),
-                    ('away_red_times', 43)
+    minutes_data = [('home_goal_times', 7),
+                    ('away_goal_times', 15),
+                    ('home_yellow_times', 23),
+                    ('away_yellow_times', 32),
+                    ('home_red_times', 41),
+                    ('away_red_times', 44)
                     ]
 
     # write main_data markets
