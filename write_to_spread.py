@@ -2,14 +2,13 @@ from openpyxl import load_workbook
 
 
 def spread(output, file_path):
-    global i
 
     wb = load_workbook(file_path)
     ws = wb.worksheets[1]
 
     column_length = 1
 
-    for i in ws.rows:
+    for _ in ws.rows:
         column_length += 1
 
     # integers in main_data and minutes_data correspond to column numbers
