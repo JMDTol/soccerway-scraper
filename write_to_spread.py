@@ -5,7 +5,7 @@ def spread(output, file_path):
     global i
 
     wb = load_workbook(file_path)
-    ws = wb.worksheets[0]
+    ws = wb.worksheets[1]
 
     column_length = 1
 
@@ -59,4 +59,4 @@ def spread(output, file_path):
 
     wb.save(file_path)
 
-    print('{} - {} vs {} added.'.format(output['date'], output['home_team_name'], output['away_team_name']))
+    print("{} - {} vs {} added.".format(output['date'], output['home_team_name'], output['away_team_name']))
