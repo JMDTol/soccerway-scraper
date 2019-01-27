@@ -16,18 +16,18 @@ driver = webdriver.Chrome()
 driver.fullscreen_window()
 driver.get(url)
 
-time.sleep(1)
+time.sleep(0.5)
 
 if driver.find_element_by_class_name('qc-cmp-button'):
     privacy = driver.find_element_by_class_name('qc-cmp-button')
     privacy.click()
 
-time.sleep(1)
+time.sleep(0.5)
 
 week = driver.find_element_by_id('page_competition_1_block_competition_matches_summary_5_1_2')
 week.click()
 
-time.sleep(1)
+time.sleep(0.5)
 
 html = driver.find_element_by_tag_name('html').get_attribute('innerHTML')
 game_week_soup = BeautifulSoup(html, 'html.parser')
@@ -57,7 +57,7 @@ for i in range(previous_clicks):
 
 driver.quit()
 
-print('=' * 70 + '\n{} matches added to {}'.format(len(url_list), file_path))
+print('=' * 100 + '\n{} matches added to {}'.format(len(url_list), file_path))
 
 wb = load_workbook(file_path)
 ws = wb.active
