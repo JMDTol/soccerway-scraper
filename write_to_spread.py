@@ -4,7 +4,7 @@ from openpyxl import load_workbook
 def spread(output, file_path):
 
     wb = load_workbook(file_path)
-    ws = wb.worksheets[1]
+    ws = wb.worksheets[0]
 
     column_length = 1
 
@@ -32,7 +32,9 @@ def spread(output, file_path):
                  'home_pens': 58,
                  'away_pens': 59,
                  'home_pen_mins': 60,
-                 'away_pen_mins': 61
+                 'away_pen_mins': 61,
+                 'home_pens_missed': 62,
+                 'away_pens_missed': 63
                  }
 
     minutes_data = [('home_goal_times', 7),

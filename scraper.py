@@ -40,7 +40,9 @@ def soccerway_scraper(url):
                                'home_pens',
                                'away_pens',
                                'home_pen_mins',
-                               'away_pen_mins'
+                               'away_pen_mins',
+                               'home_pens_missed',
+                               'away_pens_missed'
                                ])
 
     # empty lists to be populated by minute stats
@@ -135,6 +137,9 @@ def soccerway_scraper(url):
     game_data['away_yellow_times'] = away_yellow_times
     game_data['away_red_times'] = away_red_times
 
+    home_pens_missed = 0
+    away_pens_missed = 0
+
     # scrape penalty mins
     for info in soup.find_all("td", class_="player player-a"):
         if '(PG)' in info.text:
@@ -152,11 +157,25 @@ def soccerway_scraper(url):
                 away_pen_times.append(pen)
                 away_pen_times.sort()
 
+    for home in soup.find_all('div', {'class': 'container left'}):
+        pens = home.find_all('span')
+        for info in pens:
+            if info.select('img[src*=PM]'):
+                home_pens_missed += 1
+
+    for away in soup.find_all('div', {'class': 'container right'}):
+        pens = away.find_all('span')
+        for info in pens:
+            if info.select('img[src*=PM]'):
+                away_pens_missed += 1
+
     # add penalty related markets to game_data dictionary
-    game_data['home_pens'] = len(home_pen_times)
-    game_data['away_pens'] = len(away_pen_times)
+    game_data['home_pens'] = len(home_pen_times) + home_pens_missed
+    game_data['away_pens'] = len(away_pen_times) + away_pens_missed
     game_data['home_pen_mins'] = sum(home_pen_times)
     game_data['away_pen_mins'] = sum(away_pen_times)
+    game_data['home_pens_missed'] = home_pens_missed
+    game_data['away_pens_missed'] = away_pens_missed
 
     # below scrapes iframe that contains match stats (corners, shots etc)
     match_stats = []
