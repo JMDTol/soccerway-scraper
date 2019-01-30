@@ -11,9 +11,9 @@ def get_urls(url):
     time.sleep(0.5)
 
     # click privacy policy.
-    if driver.find_element_by_class_name('qc-cmp-button'):
-        privacy = driver.find_element_by_class_name('qc-cmp-button')
-        privacy.click()
+    driver.find_element_by_class_name('qc-cmp-button')
+    privacy = driver.find_element_by_class_name('qc-cmp-button')
+    privacy.click()
 
     time.sleep(1)
 
