@@ -6,7 +6,7 @@ def spread(output, file_path):
     wb = load_workbook(file_path)
     ws = wb.worksheets[0]
 
-    # searches first column for an empty cell so data is appended.
+    # search first column for an empty cell so data is appended.
     column_length = 1
     for _ in ws.rows:
         column_length += 1
