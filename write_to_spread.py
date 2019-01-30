@@ -11,7 +11,7 @@ def spread(output, file_path):
     for _ in ws.rows:
         column_length += 1
 
-    # integers in main_data and minutes_data correspond to column numbers
+    # integers in main_data and minutes_data correspond to spreadsheet column numbers.
     main_data = {'week': 1,
                  'date': 2,
                  'home_team_name': 3,
@@ -33,8 +33,6 @@ def spread(output, file_path):
                  'away_pens': 59,
                  'home_pen_mins': 60,
                  'away_pen_mins': 61,
-                 'home_pens_missed': 62,
-                 'away_pens_missed': 63
                  }
 
     minutes_data = [('home_goal_times', 7),
@@ -45,11 +43,11 @@ def spread(output, file_path):
                     ('away_red_times', 44)
                     ]
 
-    # write main_data markets
+    # write main_data markets.
     for key in main_data.keys():
         ws.cell(row=column_length, column=main_data[key]).value = output[key]
 
-    # write minutes_data markets
+    # write minutes_data markets.
     for i in range(0, len(minutes_data)):
         string = minutes_data[i][0]
         length = len(output[string])
