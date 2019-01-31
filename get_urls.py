@@ -29,7 +29,7 @@ def get_urls(url):
     previous_clicks = 0
     url_list = []
 
-    # Check how many game weeks there are.  Previous button is clicked (number of game weeks - 1) times.
+    # Check number of game weeks.  Previous button is clicked (number of game weeks - 1) times.
     for week in game_week_soup.findAll(id='page_competition_1_block_competition_matches_summary_5_page_dropdown'):
         number_weeks = (week.contents[-1])
         previous_clicks = int(number_weeks.contents[0]) - 1
