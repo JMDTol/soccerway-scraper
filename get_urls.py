@@ -11,16 +11,11 @@ def get_urls(url):
     time.sleep(0.5)
 
     # click privacy policy.
-    driver.find_element_by_class_name('qc-cmp-button')
-    privacy = driver.find_element_by_class_name('qc-cmp-button')
-    privacy.click()
-
+    driver.find_element_by_class_name('qc-cmp-button').click()
     time.sleep(1)
 
     # organise matches by game week.
-    week = driver.find_element_by_id('page_competition_1_block_competition_matches_summary_5_1_2')
-    week.click()
-
+    driver.find_element_by_id('page_competition_1_block_competition_matches_summary_5_1_2').click()
     time.sleep(0.5)
 
     html = driver.find_element_by_tag_name('html').get_attribute('innerHTML')
@@ -40,8 +35,7 @@ def get_urls(url):
             url_list.append(match_url)
 
     for i in range(previous_clicks):
-        previous_button = driver.find_element_by_class_name('previous')
-        previous_button.click()
+        driver.find_element_by_class_name('previous').click()
         time.sleep(1)
         html = driver.find_element_by_tag_name('html').get_attribute('innerHTML')
         game_week_soup = BeautifulSoup(html, 'html.parser')
