@@ -2,6 +2,7 @@ from scraper import soccerway_scraper
 from tkinter import filedialog
 from write_to_spread import spread
 from get_urls import get_urls
+from openpyxl import load_workbook
 import tkinter as tk
 import time
 
@@ -9,6 +10,9 @@ import time
 root = tk.Tk()
 root.withdraw()
 file_path = filedialog.askopenfilename()
+
+wb = load_workbook(file_path)
+ws = wb.worksheets[0]
 
 check1 = input('Scrape entire season?: ')
 
@@ -30,11 +34,15 @@ pause = 0
 for url in url_list:
     if pause == 10:
         time.sleep(10)
-        x = 0
+        output = soccerway_scraper(url)
+        spread(output, ws)
+        pause = 0
     else:
         time.sleep(3)
         output = soccerway_scraper(url)
-        spread(output, file_path)
+        spread(output, ws)
         pause += 1
+
+wb.save(file_path)
 
 print("=" * 100 + "\nComplete - {} matches added".format(len(url_list)))
