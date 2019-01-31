@@ -45,11 +45,11 @@ def spread(output, ws):
 
     # write minutes_data markets.
     for i in range(0, len(minutes_data)):
-        string = minutes_data[i][0]
-        length = len(output[string])
+        dict_key = minutes_data[i][0]
+        number_elements = len(output[dict_key])
         start_col = minutes_data[i][1]
-        for j in range(0, length):
-            ws.cell(row=column_length, column=start_col).value = output[string][j]
+        for j in range(0, number_elements):
+            ws.cell(row=column_length, column=start_col).value = output[dict_key][j]
             start_col += 1
 
     print("{} - {} vs {} added.".format(output['date'], output['home_team_name'], output['away_team_name']))
