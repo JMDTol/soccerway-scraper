@@ -43,7 +43,7 @@ def soccerway_scraper(url):
                                'away_pen_mins'
                                ])
 
-    # empty lists to be populated by minute stats.
+    # Empty lists to be populated by minute stats.
     home_goals = []
     away_goals = []
     home_yellow_times = []
@@ -53,31 +53,31 @@ def soccerway_scraper(url):
     home_pen_times = []
     away_pen_times = []
 
-    # find match week.
+    # Find match week.
     for x in soup.find_all("dt", string="Game week"):
         week_number = (x.find_next('dd')).text
         game_data['week'] = int(week_number)
 
-    # scrape date and team names.
+    # Scrape date and team names.
     page_title = soup.title.text
     date = page_title.split(' - ')[1]
     teams = page_title.split(' - ')[0]
     home = teams.split('vs.')[0]
     away = teams.split('vs.')[1]
 
-    # add date and team names to game_data dictionary.
+    # Add date and team names to the game_data dictionary.
     game_data['date'] = date.strip()
     game_data['home_team_name'] = home.strip()
     game_data['away_team_name'] = away.strip()
 
-    # scrape referee name and add to game_data if it exists.
+    # Scrape referee name and add it to game_data.
     for info in soup.find_all('dl', class_='details'):
         if info.contents[1].text == 'Referee:':
             game_data['referee'] = info.contents[3].text
         else:
             game_data['referee'] = None
 
-    # scrape goal times
+    # Scrape goal times
     for info in soup.findAll('td', class_='player player-a'):
         home_goal_mins = info.contents[1].find('span', class_='minute')
         if home_goal_mins is not None:
@@ -92,13 +92,13 @@ def soccerway_scraper(url):
             if away_goal_mins <= 90:
                 away_goals.append(away_goal_mins)
 
-    # add goal related markets to game_data dictionary.
+    # Add goal related markets to the game_data dictionary.
     game_data['home_goal_times'] = home_goals
     game_data['away_goal_times'] = away_goals
     game_data['home_goal_total'] = len(home_goals)
     game_data['away_goal_total'] = len(away_goals)
 
-    # scrape booking related markets
+    # Scrape booking related markets
     for home_bookings in soup.find_all('div', {'class': 'container left'}):
         bookings = home_bookings.find_all('span')
         for info in bookings:
@@ -129,13 +129,13 @@ def soccerway_scraper(url):
                     away_red_times.append(second_yellow)
                     away_red_times.sort()
 
-    # add card related markets to game_data dictionary.
+    # Add card related markets to the game_data dictionary.
     game_data['home_yellow_times'] = home_yellow_times
     game_data['home_red_times'] = home_red_times
     game_data['away_yellow_times'] = away_yellow_times
     game_data['away_red_times'] = away_red_times
 
-    # scrape times of scored pens.
+    # Scrape the times of scored pens.
     for info in soup.find_all("td", class_="player player-a"):
         if '(PG)' in info.text:
             pen = (info.text.split('+')[0])
@@ -152,13 +152,13 @@ def soccerway_scraper(url):
                 away_pen_times.append(pen)
                 away_pen_times.sort()
 
-    # add penalty related markets to game_data dictionary.
+    # Add penalty related markets to game_data dictionary.
     game_data['home_pens'] = len(home_pen_times)
     game_data['away_pens'] = len(away_pen_times)
     game_data['home_pen_mins'] = sum(home_pen_times)
     game_data['away_pen_mins'] = sum(away_pen_times)
 
-    # scrape iframe that contains match stats (corners, shots etc).
+    # Scrape the iframe that contains match stats (corners, shots etc).
     match_stats = []
     keys = ['home_corners', 'away_corners', 'home_shots_on', 'away_shots_on', 'home_shots_wide', 'away_shots_wide',
             'home_fouls', 'away_fouls', 'home_offsides', 'away_offsides']

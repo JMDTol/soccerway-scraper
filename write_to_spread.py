@@ -39,11 +39,11 @@ def spread(output, ws):
                     ('away_red_times', 44)
                     ]
 
-    # write main_data markets.
+    # Write main_data markets to sheet.
     for key in main_data.keys():
         ws.cell(row=column_length, column=main_data[key]).value = output[key]
 
-    # write minutes_data markets.
+    # Write minutes_data markets to sheet.
     for i in range(0, len(minutes_data)):
         dict_key = minutes_data[i][0]
         number_elements = len(output[dict_key])

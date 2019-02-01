@@ -7,10 +7,12 @@ import tkinter as tk
 import time
 
 
+# Open a dialog box to choose a spreadsheet for the data to be written to.
 root = tk.Tk()
 root.withdraw()
 file_path = filedialog.askopenfilename()
 
+# Load chosen workbook and set the first worksheet as the destination for the data.
 wb = load_workbook(file_path)
 ws = wb.worksheets[0]
 

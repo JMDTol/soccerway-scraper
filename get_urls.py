@@ -8,13 +8,10 @@ def get_urls(url):
     driver.fullscreen_window()
     driver.get(url)
 
-    time.sleep(0.5)
-
-    # click privacy policy.
+    # Click privacy policy.
     driver.find_element_by_class_name('qc-cmp-button').click()
-    time.sleep(1)
 
-    # organise matches by game week.
+    # Organise matches by game week.
     driver.find_element_by_id('page_competition_1_block_competition_matches_summary_5_1_2').click()
     time.sleep(0.5)
 
@@ -24,7 +21,7 @@ def get_urls(url):
     previous_clicks = 0
     url_list = []
 
-    # Check number of game weeks.  Previous button is clicked (number of game weeks - 1) times.
+    # Check the number of game weeks in the season.  Previous button is then clicked (number of game weeks - 1) times.
     for week in game_week_soup.findAll(id='page_competition_1_block_competition_matches_summary_5_page_dropdown'):
         number_weeks = (week.contents[-1])
         previous_clicks = int(number_weeks.contents[0]) - 1
