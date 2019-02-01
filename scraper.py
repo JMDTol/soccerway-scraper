@@ -106,13 +106,11 @@ def soccerway_scraper(url):
                 yellow = clean_string(info)
                 if yellow <= 90:
                     home_yellow_times.append(yellow)
-                    home_yellow_times.sort()
 
             elif info.select('img[src*=RC]') or info.select('img[src*=Y2C]'):
                 second_yellow = clean_string(info)
                 if second_yellow <= 90:
                     home_red_times.append(second_yellow)
-                    home_red_times.sort()
 
     for away_bookings in soup.find_all('div', {'class': 'container right'}):
         bookings = away_bookings.find_all('span')
@@ -121,15 +119,19 @@ def soccerway_scraper(url):
                 yellow = clean_string(info)
                 if yellow <= 90:
                     away_yellow_times.append(yellow)
-                    away_yellow_times.sort()
 
             elif info.select('img[src*=RC]') or info.select('img[src*=Y2C]'):
                 second_yellow = clean_string(info)
                 if second_yellow <= 90:
                     away_red_times.append(second_yellow)
-                    away_red_times.sort()
 
     # Add card related markets to the game_data dictionary.
+
+    home_yellow_times.sort()
+    home_red_times.sort()
+    away_yellow_times.sort()
+    away_red_times.sort()
+
     game_data['home_yellow_times'] = home_yellow_times
     game_data['home_red_times'] = home_red_times
     game_data['away_yellow_times'] = away_yellow_times
@@ -142,7 +144,6 @@ def soccerway_scraper(url):
             pen = int(''.join(ch for ch in pen if ch.isdigit()))
             if pen <= 90:
                 home_pen_times.append(pen)
-                home_pen_times.sort()
 
     for info in soup.find_all("td", class_="player player-b"):
         if '(PG)' in info.text:
@@ -150,9 +151,12 @@ def soccerway_scraper(url):
             pen = int(''.join(ch for ch in pen if ch.isdigit()))
             if pen <= 90:
                 away_pen_times.append(pen)
-                away_pen_times.sort()
 
     # Add penalty related markets to game_data dictionary.
+
+    home_pen_times.sort()
+    away_pen_times.sort()
+
     game_data['home_pens'] = len(home_pen_times)
     game_data['away_pens'] = len(away_pen_times)
     game_data['home_pen_mins'] = sum(home_pen_times)
