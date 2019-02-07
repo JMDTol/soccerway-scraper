@@ -1,5 +1,6 @@
 from bs4 import BeautifulSoup
 import requests
+import re
 
 
 def clean_string(info):
@@ -140,15 +141,13 @@ def soccerway_scraper(url):
     # Scrape the times of scored pens.
     for info in soup.find_all("td", class_="player player-a"):
         if '(PG)' in info.text:
-            pen = (info.text.split("'")[0])
-            pen = int(pen[-3:].strip())
+            pen = int(re.sub('[^0-9]', '', info.text))
             if pen <= 90:
                 home_pen_times.append(pen)
 
     for info in soup.find_all("td", class_="player player-b"):
         if '(PG)' in info.text:
-            pen = (info.text.split("'")[0])
-            pen = int(pen[-3:].strip())
+            pen = int(re.sub('[^0-9]', '', info.text))
             if pen <= 90:
                 away_pen_times.append(pen)
 

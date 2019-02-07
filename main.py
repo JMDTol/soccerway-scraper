@@ -40,7 +40,7 @@ for url in url_list:
         spread(output, ws)
         pause = 0
     else:
-        time.sleep(3)
+        time.sleep(1)
         output = soccerway_scraper(url)
         spread(output, ws)
         pause += 1
