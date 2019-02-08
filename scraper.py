@@ -66,6 +66,7 @@ def referee(match_soup):
             referee_name = info.contents[3].text
         else:
             referee_name = None
+
     game_data['referee'] = referee_name
 
 
@@ -77,6 +78,7 @@ def home_goals(match_soup):
             home_goal_mins = int(home_goal_mins.text.split("'")[0])
             if home_goal_mins <= 90:
                 home_goal_times.append(home_goal_mins)
+
     game_data['home_goal_total'] = len(home_goal_times)
     game_data['home_goal_times'] = home_goal_times
 
@@ -89,6 +91,7 @@ def away_goals(match_soup):
             away_goal_mins = int(away_goal_mins.text.split("'")[0])
             if away_goal_mins <= 90:
                 away_goal_times.append(away_goal_mins)
+
     game_data['away_goal_total'] = len(away_goal_times)
     game_data['away_goal_times'] = away_goal_times
 
@@ -171,6 +174,7 @@ def scrape_iframe(match_soup):
     match_stats = []
     keys = ['home_corners', 'away_corners', 'home_shots_on', 'away_shots_on', 'home_shots_wide', 'away_shots_wide',
             'home_fouls', 'away_fouls', 'home_offsides', 'away_offsides']
+
     for info in match_soup.find_all('iframe'):
         if info['src'].startswith('/charts'):
             iframe_complete_url = 'https://www.soccerway.com' + (info['src'])
