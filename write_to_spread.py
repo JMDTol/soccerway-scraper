@@ -31,25 +31,24 @@ def spread(output, ws):
                  'away_pen_mins': 61,
                  }
 
-    minutes_data = [('home_goal_times', 7),
-                    ('away_goal_times', 15),
-                    ('home_yellow_times', 23),
-                    ('away_yellow_times', 32),
-                    ('home_red_times', 41),
-                    ('away_red_times', 44)
-                    ]
-
+    minutes_data = {'home_goal_times': 7,
+                    'away_goal_times': 15,
+                    'home_yellow_times': 23,
+                    'away_yellow_times': 32,
+                    'home_red_times': 41,
+                    'away_red_times': 44
+                    }
     # Write main_data markets to sheet.
     for key in main_data.keys():
         ws.cell(row=column_length, column=main_data[key]).value = output[key]
 
     # Write minutes_data markets to sheet.
     for i in range(0, len(minutes_data)):
-        dict_key = minutes_data[i][0]
-        number_elements = len(output[dict_key])
-        start_col = minutes_data[i][1]
-        for j in range(0, number_elements):
-            ws.cell(row=column_length, column=start_col).value = output[dict_key][j]
-            start_col += 1
+            for key in minutes_data:
+                number_elements = len(output[key])
+                start_col = minutes_data[key]
+                for j in range(0, number_elements):
+                    ws.cell(row=column_length, column=start_col).value = output[key][j]
+                    start_col += 1
 
     print("{} - {} vs {} added.".format(output['date'], output['home_team_name'], output['away_team_name']))
