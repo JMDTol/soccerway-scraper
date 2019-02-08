@@ -1,4 +1,4 @@
-from scraper import soccerway_scraper
+from scraper import scrape_match
 from tkinter import filedialog
 from write_to_spread import spread
 from get_urls import get_urls
@@ -36,12 +36,12 @@ pause = 0
 for url in url_list:
     if pause == 10:
         time.sleep(10)
-        output = soccerway_scraper(url)
+        output = scrape_match(url)
         spread(output, ws)
         pause = 0
     else:
         time.sleep(1)
-        output = soccerway_scraper(url)
+        output = scrape_match(url)
         spread(output, ws)
         pause += 1
 
