@@ -11,17 +11,15 @@ root = tk.Tk()
 root.withdraw()
 file_path = filedialog.askopenfilename()
 
-check1 = input('Scrape entire season?: ')
+check_season = input('Scrape entire season?: ')
 
-if check1 == 'y':
-    url = input('Enter season URL: ')
-    url_list = get_urls(url)
-    check2 = input('Continue?: ')
-    if check2 != 'y':
+if check_season == 'y':
+    url_list = get_urls(input('Enter season URL: '))
+    check_url_number = input('Continue?: ')
+    if check_url_number != 'y':
         exit()
 else:
-    url = input("Enter match URLs (split multiple URLs with ','): ")
-    url_list = url.split(',')
+    url_list = input("Enter match URLs (split multiple URLs with ','): ").split(',')
 
 print("=" * 100)
 

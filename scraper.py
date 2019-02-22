@@ -1,6 +1,31 @@
+"""
+Convert to class
+"""
+
 from bs4 import BeautifulSoup
 import requests
 import re
+
+
+def scrape_match(url):
+    r = requests.get(url)
+    data = r.text
+    soup = BeautifulSoup(data, 'html.parser')
+
+    game_week(soup)
+    date(soup)
+    team_names(soup)
+    referee(soup)
+    home_goals(soup)
+    away_goals(soup)
+    home_bookings(soup)
+    away_bookings(soup)
+    home_pens(soup)
+    away_pens(soup)
+    scrape_iframe(soup)
+
+    return game_data
+
 
 game_data = {}
 
@@ -166,23 +191,3 @@ def scrape_iframe(match_soup):
         else:
             for i in range(10):
                 game_data[(keys[i])] = None
-
-
-def scrape_match(url):
-    r = requests.get(url)
-    data = r.text
-    soup = BeautifulSoup(data, 'html.parser')
-
-    game_week(soup)
-    date(soup)
-    team_names(soup)
-    referee(soup)
-    home_goals(soup)
-    away_goals(soup)
-    home_bookings(soup)
-    away_bookings(soup)
-    home_pens(soup)
-    away_pens(soup)
-    scrape_iframe(soup)
-
-    return game_data
