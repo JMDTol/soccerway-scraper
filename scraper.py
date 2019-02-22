@@ -1,7 +1,3 @@
-"""
-Convert to class
-"""
-
 from bs4 import BeautifulSoup
 import requests
 import re
@@ -11,6 +7,8 @@ def scrape_match(url):
     r = requests.get(url)
     data = r.text
     soup = BeautifulSoup(data, 'html.parser')
+
+    game_data = {}
 
     game_data['week'] = game_week(soup)
     game_data['date'] = date(soup)
@@ -29,16 +27,6 @@ def scrape_match(url):
     game_data.update(scrape_iframe(soup))
 
     return game_data
-
-
-game_data = {}
-
-
-def clean_string(info):
-    card = (str(info.contents[1]).strip())
-    card = (card[:-1])
-    card = int((card.split('+')[0]))
-    return card
 
 
 def game_week(match_soup):
@@ -137,6 +125,13 @@ def away_bookings(match_soup):
     away_red_times.sort()
 
     return away_yellow_times, away_red_times
+
+
+def clean_string(info):
+    card = (str(info.contents[1]).strip())
+    card = (card[:-1])
+    card = int((card.split('+')[0]))
+    return card
 
 
 def home_pens(match_soup):
