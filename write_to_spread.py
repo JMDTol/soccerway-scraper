@@ -47,13 +47,12 @@ def spread(match_dict, file_path):
         ws.cell(row=column_length, column=main_data[key]).value = match_dict[key]
 
     # Write time_data markets to sheet.
-    for i in range(0, len(time_data)):
-        for key in time_data:
-            number_items = len(match_dict[key])
-            start_col = time_data[key]
-            for j in range(0, number_items):
-                ws.cell(row=column_length, column=start_col).value = match_dict[key][j]
-                start_col += 1
+    for key in time_data:
+        number_items = len(match_dict[key])
+        start_col = time_data[key]
+        for j in range(0, number_items):
+            ws.cell(row=column_length, column=start_col).value = match_dict[key][j]
+            start_col += 1
 
     wb.save(file_path)
 
