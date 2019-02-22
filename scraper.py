@@ -18,8 +18,8 @@ def scrape_match(url):
     game_data['home_goal_total'], game_data['home_goal_times'] = home_goals(soup)
     game_data['away_goal_total'], game_data['away_goal_times'] = away_goals(soup)
 
-    game_data['home_yellow_times'], game_data['home_red_times'] = home_bookings(soup)
-    game_data['away_yellow_times'], game_data['away_red_times'] = away_bookings(soup)
+    game_data['home_yellow_times'], game_data['home_red_times'] = home_cards(soup)
+    game_data['away_yellow_times'], game_data['away_red_times'] = away_cards(soup)
 
     game_data['home_pens'], game_data['home_pen_mins'] = home_pens(soup)
     game_data['away_pens'], game_data['away_pen_mins'] = away_pens(soup)
@@ -83,7 +83,7 @@ def away_goals(match_soup):
     return len(away_goal_times), away_goal_times
 
 
-def home_bookings(match_soup):
+def home_cards(match_soup):
     home_yellow_times = []
     home_red_times = []
     for bookings in match_soup.find_all('div', {'class': 'container left'}):
@@ -99,13 +99,10 @@ def home_bookings(match_soup):
                 if second_yellow <= 90:
                     home_red_times.append(second_yellow)
 
-    home_yellow_times.sort()
-    home_red_times.sort()
-
-    return home_yellow_times, home_red_times
+    return sorted(home_yellow_times), sorted(home_red_times)
 
 
-def away_bookings(match_soup):
+def away_cards(match_soup):
     away_yellow_times = []
     away_red_times = []
     for bookings in match_soup.find_all('div', {'class': 'container right'}):
@@ -121,10 +118,7 @@ def away_bookings(match_soup):
                 if second_yellow <= 90:
                     away_red_times.append(second_yellow)
 
-    away_yellow_times.sort()
-    away_red_times.sort()
-
-    return away_yellow_times, away_red_times
+    return sorted(away_yellow_times), sorted(away_red_times)
 
 
 def clean_string(info):
