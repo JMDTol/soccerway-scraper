@@ -60,14 +60,12 @@ def date_teams(match_soup):
 
 
 def referee(match_soup):
-    global referee_name
+
     for info in match_soup.find_all('dl', class_='details'):
         if info.contents[1].text == 'Referee:':
-            referee_name = info.contents[3].text
+            game_data['referee'] = info.contents[3].text
         else:
-            referee_name = None
-
-    game_data['referee'] = referee_name
+            game_data['referee'] = None
 
 
 def home_goals(match_soup):
