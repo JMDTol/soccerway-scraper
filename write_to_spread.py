@@ -1,6 +1,10 @@
+from openpyxl import load_workbook
 
 
-def spread(output, ws):
+def spread(output, file_path):
+
+    wb = load_workbook(file_path)
+    ws = wb.worksheets[0]
 
     # search first column for an empty cell so data is appended.
     column_length = 1
@@ -50,5 +54,7 @@ def spread(output, ws):
                 for j in range(0, number_elements):
                     ws.cell(row=column_length, column=start_col).value = output[key][j]
                     start_col += 1
+
+    wb.save(file_path)
 
     print("{} - {} vs {} added.".format(output['date'], output['home_team_name'], output['away_team_name']))
