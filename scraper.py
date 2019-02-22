@@ -26,7 +26,7 @@ def scrape_match(url):
     game_data['home_pens'], game_data['home_pen_mins'] = home_pens(soup)
     game_data['away_pens'], game_data['away_pen_mins'] = away_pens(soup)
 
-    scrape_iframe(soup)
+    game_data.update(scrape_iframe(soup))
 
     return game_data
 
@@ -80,7 +80,7 @@ def home_goals(match_soup):
             if home_goal_mins <= 90:
                 home_goal_times.append(home_goal_mins)
 
-    return home_goal_times, len(home_goal_times)
+    return len(home_goal_times), home_goal_times
 
 
 def away_goals(match_soup):
@@ -92,7 +92,7 @@ def away_goals(match_soup):
             if away_goal_mins <= 90:
                 away_goal_times.append(away_goal_mins)
 
-    return away_goal_times, len(away_goal_times)
+    return len(away_goal_times), away_goal_times
 
 
 def home_bookings(match_soup):
@@ -167,9 +167,6 @@ def away_pens(match_soup):
 
 def scrape_iframe(match_soup):
     match_stats = []
-    keys = ['home_corners', 'away_corners', 'home_shots_on', 'away_shots_on', 'home_shots_wide', 'away_shots_wide',
-            'home_fouls', 'away_fouls', 'home_offsides', 'away_offsides']
-
     for info in match_soup.find_all('iframe'):
         if info['src'].startswith('/charts'):
             iframe_complete_url = 'https://www.soccerway.com' + (info['src'])
@@ -182,9 +179,11 @@ def scrape_iframe(match_soup):
                     match_stats.append((int(stat.contents[0])))
                 except (ValueError, IndexError):
                     continue
-            if len(match_stats) == 10:
-                for i in range(10):
-                    game_data[(keys[i])] = match_stats[i]
-        else:
-            for i in range(10):
-                game_data[(keys[i])] = None
+
+    keys = ('home_corners', 'away_corners', 'home_shots_on', 'away_shots_on', 'home_shots_wide', 'away_shots_wide',
+            'home_fouls', 'away_fouls', 'home_offsides', 'away_offsides')
+
+    if len(match_stats) == 10:
+        return dict(zip(keys, match_stats))
+    else:
+        return dict.fromkeys(keys, None)
