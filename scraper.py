@@ -2,34 +2,7 @@ from bs4 import BeautifulSoup
 import requests
 import re
 
-game_data = dict.fromkeys(['week',
-                           'date',
-                           'home_team_name',
-                           'away_team_name',
-                           'home_goal_total',
-                           'away_goal_total',
-                           'home_goal_times',
-                           'away_goal_times',
-                           'referee',
-                           'home_yellow_times',
-                           'home_red_times',
-                           'away_yellow_times',
-                           'away_red_times',
-                           'home_corners',
-                           'away_corners',
-                           'home_shots_on',
-                           'away_shots_on',
-                           'home_shots_wide',
-                           'away_shots_wide',
-                           'home_fouls',
-                           'away_fouls',
-                           'home_offsides',
-                           'away_offsides',
-                           'home_pens',
-                           'away_pens',
-                           'home_pen_mins',
-                           'away_pen_mins'
-                           ])
+game_data = {}
 
 
 def clean_string(info):
@@ -40,9 +13,11 @@ def clean_string(info):
 
 
 def game_week(match_soup):
-    for x in match_soup.find_all("dt", string="Game week"):
-        week_number = (x.find_next('dd')).text
-        game_data['week'] = int(week_number)
+    week_element = match_soup.find("dt", string="Game week")
+    if week_element:
+        game_data['week'] = int(week_element.find_next('dd').text)
+    else:
+        game_data['week'] = None
 
 
 def date(match_soup):
