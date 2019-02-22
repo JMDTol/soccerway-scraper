@@ -28,8 +28,7 @@ def get_urls(url):
 
     for info in game_week_soup.findAll('td', class_='info-button button'):
         for link in info.find_all('a', href=True):
-            match_url = 'https://us.soccerway.com' + link.get('href')
-            url_list.append(match_url)
+            url_list.append('https://us.soccerway.com' + link.get('href'))
 
     for i in range(previous_clicks):
         driver.find_element_by_class_name('previous').click()
@@ -38,8 +37,7 @@ def get_urls(url):
         game_week_soup = BeautifulSoup(html, 'html.parser')
         for info in game_week_soup.findAll('td', class_='info-button button'):
             for link in info.find_all('a', href=True):
-                match_url = 'https://us.soccerway.com' + link.get('href')
-                url_list.append(match_url)
+                url_list.append('https://us.soccerway.com' + link.get('href'))
 
     driver.quit()
 

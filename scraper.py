@@ -45,16 +45,17 @@ def game_week(match_soup):
         game_data['week'] = int(week_number)
 
 
-def date_teams(match_soup):
+def date(match_soup):
     page_title = match_soup.title.text
-    date = page_title.split(' - ')[1]
-    teams = page_title.split(' - ')[0]
-    home = teams.split('vs.')[0]
-    home = home.strip()
-    away = teams.split('vs.')[1]
-    away = away.strip()
+    game_data['date'] = page_title.split(' - ')[1]
 
-    game_data['date'] = date
+
+def team_names(match_soup):
+    page_title = match_soup.title.text
+    teams = page_title.split(' - ')[0]
+    home = teams.split('vs.')[0].strip()
+    away = teams.split('vs.')[1].strip()
+
     game_data['home_team_name'] = home
     game_data['away_team_name'] = away
 
@@ -198,7 +199,8 @@ def scrape_match(url):
     soup = BeautifulSoup(data, 'html.parser')
 
     game_week(soup)
-    date_teams(soup)
+    date(soup)
+    team_names(soup)
     referee(soup)
     home_goals(soup)
     away_goals(soup)
