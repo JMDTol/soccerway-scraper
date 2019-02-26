@@ -1,7 +1,3 @@
-"""
-Convert to class
-"""
-
 from bs4 import BeautifulSoup
 import requests
 import re
@@ -12,42 +8,38 @@ def scrape_match(url):
     data = r.text
     soup = BeautifulSoup(data, 'html.parser')
 
-    game_week(soup)
-    date(soup)
-    team_names(soup)
-    referee(soup)
-    home_goals(soup)
-    away_goals(soup)
-    home_bookings(soup)
-    away_bookings(soup)
-    home_pens(soup)
-    away_pens(soup)
-    scrape_iframe(soup)
+    game_data = {}
+
+    game_data['week'] = game_week(soup)
+    game_data['date'] = date(soup)
+    game_data['home_team_name'], game_data['away_team_name'] = team_names(soup)
+    game_data['referee'] = referee(soup)
+
+    game_data['home_goal_total'], game_data['home_goal_times'] = home_goals(soup)
+    game_data['away_goal_total'], game_data['away_goal_times'] = away_goals(soup)
+
+    game_data['home_yellow_times'], game_data['home_red_times'] = home_cards(soup)
+    game_data['away_yellow_times'], game_data['away_red_times'] = away_cards(soup)
+
+    game_data['home_pens'], game_data['home_pen_mins'] = home_pens(soup)
+    game_data['away_pens'], game_data['away_pen_mins'] = away_pens(soup)
+
+    game_data.update(scrape_iframe(soup))
 
     return game_data
-
-
-game_data = {}
-
-
-def clean_string(info):
-    card = (str(info.contents[1]).strip())
-    card = (card[:-1])
-    card = int((card.split('+')[0]))
-    return card
 
 
 def game_week(match_soup):
     week_element = match_soup.find("dt", string="Game week")
     if week_element:
-        game_data['week'] = int(week_element.find_next('dd').text)
+        return int(week_element.find_next('dd').text)
     else:
-        game_data['week'] = None
+        return None
 
 
 def date(match_soup):
     page_title = match_soup.title.text
-    game_data['date'] = page_title.split(' - ')[1]
+    return page_title.split(' - ')[1]
 
 
 def team_names(match_soup):
@@ -56,16 +48,15 @@ def team_names(match_soup):
     home = teams.split('vs.')[0].strip()
     away = teams.split('vs.')[1].strip()
 
-    game_data['home_team_name'] = home
-    game_data['away_team_name'] = away
+    return home, away
 
 
 def referee(match_soup):
     for info in match_soup.find_all('dl', class_='details'):
         if info.contents[1].text == 'Referee:':
-            game_data['referee'] = info.contents[3].text
+            return info.contents[3].text
         else:
-            game_data['referee'] = None
+            return None
 
 
 def home_goals(match_soup):
@@ -77,8 +68,7 @@ def home_goals(match_soup):
             if home_goal_mins <= 90:
                 home_goal_times.append(home_goal_mins)
 
-    game_data['home_goal_total'] = len(home_goal_times)
-    game_data['home_goal_times'] = home_goal_times
+    return len(home_goal_times), home_goal_times
 
 
 def away_goals(match_soup):
@@ -90,11 +80,10 @@ def away_goals(match_soup):
             if away_goal_mins <= 90:
                 away_goal_times.append(away_goal_mins)
 
-    game_data['away_goal_total'] = len(away_goal_times)
-    game_data['away_goal_times'] = away_goal_times
+    return len(away_goal_times), away_goal_times
 
 
-def home_bookings(match_soup):
+def home_cards(match_soup):
     home_yellow_times = []
     home_red_times = []
     for bookings in match_soup.find_all('div', {'class': 'container left'}):
@@ -110,14 +99,10 @@ def home_bookings(match_soup):
                 if second_yellow <= 90:
                     home_red_times.append(second_yellow)
 
-    home_yellow_times.sort()
-    home_red_times.sort()
-
-    game_data['home_yellow_times'] = home_yellow_times
-    game_data['home_red_times'] = home_red_times
+    return sorted(home_yellow_times), sorted(home_red_times)
 
 
-def away_bookings(match_soup):
+def away_cards(match_soup):
     away_yellow_times = []
     away_red_times = []
     for bookings in match_soup.find_all('div', {'class': 'container right'}):
@@ -133,11 +118,14 @@ def away_bookings(match_soup):
                 if second_yellow <= 90:
                     away_red_times.append(second_yellow)
 
-    away_yellow_times.sort()
-    away_red_times.sort()
+    return sorted(away_yellow_times), sorted(away_red_times)
 
-    game_data['away_yellow_times'] = away_yellow_times
-    game_data['away_red_times'] = away_red_times
+
+def clean_string(info):
+    card = (str(info.contents[1]).strip())
+    card = (card[:-1])
+    card = int((card.split('+')[0]))
+    return card
 
 
 def home_pens(match_soup):
@@ -150,8 +138,7 @@ def home_pens(match_soup):
             if pen <= 90:
                 home_pen_times.append(pen)
 
-    game_data['home_pen_mins'] = sum(home_pen_times)
-    game_data['home_pens'] = len(home_pen_times)
+    return len(home_pen_times), sum(home_pen_times)
 
 
 def away_pens(match_soup):
@@ -164,15 +151,11 @@ def away_pens(match_soup):
             if pen <= 90:
                 away_pen_times.append(pen)
 
-        game_data['away_pen_mins'] = sum(away_pen_times)
-        game_data['away_pens'] = len(away_pen_times)
+        return len(away_pen_times), sum(away_pen_times)
 
 
 def scrape_iframe(match_soup):
     match_stats = []
-    keys = ['home_corners', 'away_corners', 'home_shots_on', 'away_shots_on', 'home_shots_wide', 'away_shots_wide',
-            'home_fouls', 'away_fouls', 'home_offsides', 'away_offsides']
-
     for info in match_soup.find_all('iframe'):
         if info['src'].startswith('/charts'):
             iframe_complete_url = 'https://www.soccerway.com' + (info['src'])
@@ -185,9 +168,11 @@ def scrape_iframe(match_soup):
                     match_stats.append((int(stat.contents[0])))
                 except (ValueError, IndexError):
                     continue
-            if len(match_stats) == 10:
-                for i in range(10):
-                    game_data[(keys[i])] = match_stats[i]
-        else:
-            for i in range(10):
-                game_data[(keys[i])] = None
+
+    keys = ('home_corners', 'away_corners', 'home_shots_on', 'away_shots_on', 'home_shots_wide', 'away_shots_wide',
+            'home_fouls', 'away_fouls', 'home_offsides', 'away_offsides')
+
+    if len(match_stats) == 10:
+        return dict(zip(keys, match_stats))
+    else:
+        return dict.fromkeys(keys, None)

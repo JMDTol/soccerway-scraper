@@ -1,8 +1,7 @@
 from openpyxl import load_workbook
 
 
-def spread(output, file_path):
-
+def spread(match_dict, file_path):
     wb = load_workbook(file_path)
     ws = wb.worksheets[0]
 
@@ -11,7 +10,7 @@ def spread(output, file_path):
     for _ in ws.rows:
         column_length += 1
 
-    # integers in main_data and minutes_data correspond to spreadsheet column numbers.
+    # integers in main_data and time_data correspond to spreadsheet column numbers.
     main_data = {'week': 1,
                  'date': 2,
                  'home_team_name': 3,
@@ -35,26 +34,25 @@ def spread(output, file_path):
                  'away_pen_mins': 61,
                  }
 
-    minutes_data = {'home_goal_times': 7,
-                    'away_goal_times': 15,
-                    'home_yellow_times': 23,
-                    'away_yellow_times': 32,
-                    'home_red_times': 41,
-                    'away_red_times': 44
-                    }
+    time_data = {'home_goal_times': 7,
+                 'away_goal_times': 15,
+                 'home_yellow_times': 23,
+                 'away_yellow_times': 32,
+                 'home_red_times': 41,
+                 'away_red_times': 44
+                 }
+
     # Write main_data markets to sheet.
     for key in main_data.keys():
-        ws.cell(row=column_length, column=main_data[key]).value = output[key]
+        ws.cell(row=column_length, column=main_data[key]).value = match_dict[key]
 
-    # Write minutes_data markets to sheet.
-    for i in range(0, len(minutes_data)):
-            for key in minutes_data:
-                number_items = len(output[key])
-                start_col = minutes_data[key]
-                for j in range(0, number_items):
-                    ws.cell(row=column_length, column=start_col).value = output[key][j]
-                    start_col += 1
+    # Write time_data markets to sheet.
+    for key in time_data:
+        number_items = len(match_dict[key])
+        start_col = time_data[key]
+        for item in range(0, number_items):
+            ws.cell(row=column_length, column=start_col).value = match_dict[key][item]
+            start_col += 1
 
     wb.save(file_path)
-
-    print("{} - {} vs {} added.".format(output['date'], output['home_team_name'], output['away_team_name']))
+    print("{} - {} vs {} added.".format(match_dict['date'], match_dict['home_team_name'], match_dict['away_team_name']))
