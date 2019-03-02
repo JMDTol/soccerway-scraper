@@ -18,14 +18,13 @@ def get_urls(url):
     html = driver.find_element_by_tag_name('html').get_attribute('innerHTML')
     game_week_soup = BeautifulSoup(html, 'html.parser')
 
-    previous_clicks = 0
-    url_list = []
-
     # Check the number of game weeks in the season.  Previous button is then clicked (number of game weeks - 1) times.
+    previous_clicks = 0
     for week in game_week_soup.findAll(id='page_competition_1_block_competition_matches_summary_5_page_dropdown'):
         number_weeks = (week.contents[-1])
         previous_clicks = int(number_weeks.contents[0]) - 1
 
+    url_list = []
     for info in game_week_soup.findAll('td', class_='info-button button'):
         for link in info.find_all('a', href=True):
             url_list.append('https://us.soccerway.com' + link.get('href'))
