@@ -1,4 +1,5 @@
 from selenium import webdriver
+from selenium.common.exceptions import NoSuchElementException
 from bs4 import BeautifulSoup
 import time
 
@@ -14,7 +15,10 @@ def get_urls(url):
     driver.get(url)
 
     # Click privacy policy.
-    driver.find_element_by_class_name('qc-cmp-button').click()
+    try:
+        driver.find_element_by_class_name('qc-cmp-button').click()
+    except NoSuchElementException:
+        pass
 
     # Organise matches by game week.
     driver.find_element_by_id('page_competition_1_block_competition_matches_summary_5_1_2').click()
