@@ -1,5 +1,8 @@
 from selenium import webdriver
 from selenium.common.exceptions import NoSuchElementException
+from selenium.webdriver.common.by import By
+from selenium.webdriver.support.ui import WebDriverWait
+from selenium.webdriver.support import expected_conditions as ec
 from bs4 import BeautifulSoup
 import time
 
@@ -10,18 +13,21 @@ def get_urls(url):
     :param url: Soccerway URL for match.
     :return: List of URLs.
     """
-    driver = webdriver.Chrome()
+    driver = webdriver.Firefox()
     driver.fullscreen_window()
     driver.get(url)
 
-    # Click privacy policy.
+    # Click privacy policy if present.
     try:
         driver.find_element_by_class_name('qc-cmp-button').click()
     except NoSuchElementException:
         pass
 
-    # Organise matches by game week.
-    driver.find_element_by_id('page_competition_1_block_competition_matches_summary_5_1_2').click()
+    element = WebDriverWait(driver, 5).until(
+        ec.presence_of_element_located((By.ID, 'page_competition_1_block_competition_matches_summary_5_1_2'))
+    )
+    element.click()
+
     time.sleep(0.5)
 
     html = driver.find_element_by_tag_name('html').get_attribute('innerHTML')
