@@ -7,7 +7,7 @@ from bs4 import BeautifulSoup
 import time
 
 
-def get_urls(url):
+def season_urls(url):
     """
     Get the URL for every match in a season.
     :param url: Soccerway URL for match.
@@ -33,13 +33,13 @@ def get_urls(url):
     previous_clicks = num_previous_clicks(game_week_soup)
 
     url_list = []
-    url_list = get_match_urls(game_week_soup) + url_list
+    url_list = match_urls(game_week_soup) + url_list
 
     for i in range(previous_clicks):
         driver.find_element_by_class_name('previous').click()
         time.sleep(1)
         game_week_soup = inner_soup(driver)
-        url_list += get_match_urls(game_week_soup)
+        url_list += match_urls(game_week_soup)
 
     driver.quit()
 
@@ -57,7 +57,7 @@ def num_previous_clicks(soup):
     return previous_clicks
 
 
-def get_match_urls(soup):
+def match_urls(soup):
     urls = []
     for info in soup.findAll('td', class_='info-button button'):
         for link in info.find_all('a', href=True):

@@ -1,14 +1,14 @@
 from scraper import scrape_match
 from tkinter import filedialog
 from write_to_spread import spread
-from get_urls import get_urls
+from get_urls import season_urls
 import tkinter as tk
 import time
 
 
 def input_urls():
     if input('Scrape entire season?: ') == 'y':
-        url_list = get_urls(input('Enter season URL: '))
+        url_list = season_urls(input('Enter season URL: '))
         if input('Continue?: ') != 'y':
             exit()
     else:
