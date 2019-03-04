@@ -6,7 +6,7 @@ import tkinter as tk
 import time
 
 
-def urls():
+def input_urls():
     if input('Scrape entire season?: ') == 'y':
         url_list = get_urls(input('Enter season URL: '))
         if input('Continue?: ') != 'y':
@@ -36,7 +36,7 @@ def main():
     root = tk.Tk()
     root.withdraw()
     path = filedialog.askopenfilename()
-    urls_to_scrape = urls()
+    urls_to_scrape = input_urls()
     scrape_urls(urls_to_scrape, path)
 
 
