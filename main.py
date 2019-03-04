@@ -6,36 +6,39 @@ import tkinter as tk
 import time
 
 
-class Main:
-    def __init__(self, spreadsheet_path):
-        self.path = spreadsheet_path
-        self.url_list = []
-        self.pause = 0
+def urls():
+    if input('Scrape entire season?: ') == 'y':
+        url_list = get_urls(input('Enter season URL: '))
+        if input('Continue?: ') != 'y':
+            exit()
+    else:
+        url_list = input("Enter match URLs (split multiple URLs with ','): ").split(',')
 
-    def scraper(self):
-        if input('Scrape entire season?: ') == 'y':
-            self.url_list = get_urls(input('Enter season URL: '))
-            check_url_number = input('Continue?: ')
-            if check_url_number != 'y':
-                exit()
+    return url_list
+
+
+def scrape_urls(url_list, path):
+    pause = 0
+    for url in url_list:
+        if pause == 10:
+            time.sleep(10)
+            spread(scrape_match(url), path)
+            pause = 0
         else:
-            self.url_list = input("Enter match URLs (split multiple URLs with ','): ").split(',')
+            time.sleep(1)
+            spread(scrape_match(url), path)
+            pause += 1
 
-        for url in self.url_list:
-            if self.pause == 10:
-                time.sleep(10)
-                spread(scrape_match(url), self.path)
-                self.pause = 0
-            else:
-                time.sleep(1)
-                spread(scrape_match(url), self.path)
-                self.pause += 1
+    print("=" * 100 + "\nComplete - {} matches added".format(len(url_list)))
 
-        print("=" * 100 + "\nComplete - {} matches added".format(len(self.url_list)))
+
+def main():
+    root = tk.Tk()
+    root.withdraw()
+    path = filedialog.askopenfilename()
+    urls_to_scrape = urls()
+    scrape_urls(urls_to_scrape, path)
 
 
 if __name__ == "__main__":
-    root = tk.Tk()
-    root.withdraw()
-    main = Main(filedialog.askopenfilename())
-    main.scraper()
+    main()
