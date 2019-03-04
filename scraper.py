@@ -4,12 +4,16 @@ import re
 
 
 def scrape_match(url):
+    """
+    Create soup and scrape match data.
+    :param url: Soccerway URL for match.
+    :return: Dictionary containing match data
+    """
     r = requests.get(url)
     data = r.text
     soup = BeautifulSoup(data, 'html.parser')
 
     game_data = {}
-
     game_data['week'] = game_week(soup)
     game_data['date'] = date(soup)
     game_data['home_team_name'], game_data['away_team_name'] = team_names(soup)
@@ -158,9 +162,8 @@ def scrape_iframe(match_soup):
     match_stats = []
     for info in match_soup.find_all('iframe'):
         if info['src'].startswith('/charts'):
-            iframe_complete_url = 'https://www.soccerway.com' + (info['src'])
-            iframe_r = requests.get(iframe_complete_url)
-            iframe = iframe_r.text
+            iframe_url = 'https://www.soccerway.com' + (info['src'])
+            iframe = requests.get(iframe_url).text
             iframe_soup = BeautifulSoup(iframe, 'html.parser')
 
             for stat in iframe_soup.findAll('td', {'class': 'legend'}):

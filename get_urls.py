@@ -4,6 +4,11 @@ import time
 
 
 def get_urls(url):
+    """
+    Get the URL for every match in a season.
+    :param url: Soccerway URL for match.
+    :return: List of URLs.
+    """
     driver = webdriver.Chrome()
     driver.fullscreen_window()
     driver.get(url)
