@@ -23,38 +23,50 @@ def get_urls(url):
     except NoSuchElementException:
         pass
 
-    element = WebDriverWait(driver, 5).until(
+    element = WebDriverWait(driver, 10).until(
         ec.presence_of_element_located((By.ID, 'page_competition_1_block_competition_matches_summary_5_1_2'))
     )
     element.click()
 
     time.sleep(0.5)
-
-    html = driver.find_element_by_tag_name('html').get_attribute('innerHTML')
-    game_week_soup = BeautifulSoup(html, 'html.parser')
-
-    # Check the number of game weeks in the season.  Previous button is then clicked (number of game weeks - 1) times.
-    previous_clicks = 0
-    for week in game_week_soup.findAll(id='page_competition_1_block_competition_matches_summary_5_page_dropdown'):
-        number_weeks = (week.contents[-1])
-        previous_clicks = int(number_weeks.contents[0]) - 1
+    game_week_soup = inner_soup(driver)
+    previous_clicks = num_previous_clicks(game_week_soup)
 
     url_list = []
-    for info in game_week_soup.findAll('td', class_='info-button button'):
-        for link in info.find_all('a', href=True):
-            url_list.append('https://us.soccerway.com' + link.get('href'))
+    url_list = get_match_urls(game_week_soup) + url_list
 
     for i in range(previous_clicks):
         driver.find_element_by_class_name('previous').click()
         time.sleep(1)
-        html = driver.find_element_by_tag_name('html').get_attribute('innerHTML')
-        game_week_soup = BeautifulSoup(html, 'html.parser')
-        for info in game_week_soup.findAll('td', class_='info-button button'):
-            for link in info.find_all('a', href=True):
-                url_list.append('https://us.soccerway.com' + link.get('href'))
+        game_week_soup = inner_soup(driver)
+        url_list += get_match_urls(game_week_soup)
 
     driver.quit()
 
     print('=' * 100 + '\n{} matches found'.format(len(set(url_list))))
 
     return url_list
+
+
+def num_previous_clicks(soup):
+    previous_clicks = 0
+    for week in soup.findAll(id='page_competition_1_block_competition_matches_summary_5_page_dropdown'):
+        number_weeks = (week.contents[-1])
+        previous_clicks = int(number_weeks.contents[0]) - 1
+
+    return previous_clicks
+
+
+def get_match_urls(soup):
+    urls = []
+    for info in soup.findAll('td', class_='info-button button'):
+        for link in info.find_all('a', href=True):
+            urls.append('https://us.soccerway.com' + link.get('href'))
+    return urls
+
+
+def inner_soup(driver):
+    html = driver.find_element_by_tag_name('html').get_attribute('innerHTML')
+    soup = BeautifulSoup(html, 'html.parser')
+
+    return soup
