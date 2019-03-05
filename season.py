@@ -29,17 +29,15 @@ def season_scrape(url):
     element.click()
 
     time.sleep(0.5)
-    game_week_soup = inner_soup(driver)
-    previous_clicks = num_previous_clicks(game_week_soup)
+    previous_clicks = num_previous_clicks(innerhtml_soup(driver))
 
     url_list = []
-    url_list = match_urls(game_week_soup) + url_list
+    url_list = match_urls(innerhtml_soup(driver)) + url_list
 
     for i in range(previous_clicks):
         driver.find_element_by_class_name('previous').click()
         time.sleep(1)
-        game_week_soup = inner_soup(driver)
-        url_list += match_urls(game_week_soup)
+        url_list += match_urls(innerhtml_soup(driver))
 
     driver.quit()
 
@@ -75,7 +73,7 @@ def match_urls(soup):
     return urls
 
 
-def inner_soup(driver):
+def innerhtml_soup(driver):
     """
     Get soup from innerHTML.
     :param driver:

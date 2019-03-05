@@ -8,7 +8,7 @@ import time
 
 def input_urls():
     """
-    Check whether user wants to scrape an entire season or manually enter URLs for each match.
+    Check whether the user wants to scrape an entire season or manually enter URLs for each match.
     :return: List of match URLs.
     """
     if input('Scrape entire season?: ') == 'y':
