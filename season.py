@@ -7,7 +7,7 @@ from bs4 import BeautifulSoup
 import time
 
 
-def season_urls(url):
+def season_scrape(url):
     """
     Get the URL for every match in a season.
     :param url: Soccerway URL for match.
