@@ -155,7 +155,7 @@ def away_pens(match_soup):
             if pen <= 90:
                 away_pen_times.append(pen)
 
-        return len(away_pen_times), sum(away_pen_times)
+    return len(away_pen_times), sum(away_pen_times)
 
 
 def scrape_iframe(match_soup):
