@@ -49,6 +49,11 @@ def season_scrape(url):
 
 
 def num_previous_clicks(soup):
+    """
+    Work out how many times the 'Previous' button should be clicked.
+    :param soup:
+    :return:
+    """
     previous_clicks = 0
     for week in soup.findAll(id='page_competition_1_block_competition_matches_summary_5_page_dropdown'):
         number_weeks = (week.contents[-1])
@@ -58,6 +63,11 @@ def num_previous_clicks(soup):
 
 
 def match_urls(soup):
+    """
+    Extract URL for each match in that game week.
+    :param soup:
+    :return: List of match URLs.
+    """
     urls = []
     for info in soup.findAll('td', class_='info-button button'):
         for link in info.find_all('a', href=True):
@@ -66,6 +76,11 @@ def match_urls(soup):
 
 
 def inner_soup(driver):
+    """
+    Get soup from innerHTML.
+    :param driver:
+    :return:
+    """
     html = driver.find_element_by_tag_name('html').get_attribute('innerHTML')
     soup = BeautifulSoup(html, 'html.parser')
 

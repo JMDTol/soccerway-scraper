@@ -7,6 +7,10 @@ import time
 
 
 def input_urls():
+    """
+    Check whether user wants to scrape an entire season or manually enter URLs for each match.
+    :return: List of match URLs.
+    """
     if input('Scrape entire season?: ') == 'y':
         season_url = input('Enter season URL: ')
         url_list = season_scrape(season_url)
@@ -19,6 +23,12 @@ def input_urls():
 
 
 def scrape_urls(url_list, path):
+    """
+    Scrape each URL pausing at intervals to prevent requests from being denied.
+    :param url_list: List of match URLs.
+    :param path: Path to spreadsheet data is to be written to.
+    :return:
+    """
     pause = 0
     for url in url_list:
         if pause == 10:
