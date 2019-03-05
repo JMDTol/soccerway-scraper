@@ -23,6 +23,7 @@ def season_scrape(url):
     except NoSuchElementException:
         pass
 
+    # Organize matches by game week
     element = WebDriverWait(driver, 10).until(
         ec.presence_of_element_located((By.ID, 'page_competition_1_block_competition_matches_summary_5_1_2'))
     )
