@@ -56,17 +56,17 @@ def team_names(match_soup):
 
 
 def referee(match_soup):
-    for info in match_soup.find_all('dl', class_='details'):
-        if info.contents[1].text == 'Referee:':
-            return info.contents[3].text
+    for element in match_soup.find_all('dl', class_='details'):
+        if element.contents[1].text == 'Referee:':
+            return element.contents[3].text
         else:
             return None
 
 
 def home_goals(match_soup):
     home_goal_times = []
-    for info in match_soup.findAll('td', class_='player player-a'):
-        home_goal_mins = info.contents[1].find('span', class_='minute')
+    for element in match_soup.findAll('td', class_='player player-a'):
+        home_goal_mins = element.contents[1].find('span', class_='minute')
         if home_goal_mins is not None:
             home_goal_mins = int(home_goal_mins.text.split("'")[0])
             if home_goal_mins <= 90:
@@ -77,8 +77,8 @@ def home_goals(match_soup):
 
 def away_goals(match_soup):
     away_goal_times = []
-    for info in match_soup.findAll('td', class_='player player-b'):
-        away_goal_mins = info.contents[1].find('span', class_='minute')
+    for element in match_soup.findAll('td', class_='player player-b'):
+        away_goal_mins = element.contents[1].find('span', class_='minute')
         if away_goal_mins is not None:
             away_goal_mins = int(away_goal_mins.text.split("'")[0])
             if away_goal_mins <= 90:
@@ -134,9 +134,9 @@ def clean_string(info):
 
 def home_pens(match_soup):
     home_pen_times = []
-    for info in match_soup.find_all("td", class_="player player-a"):
-        if '(PG)' in info.text:
-            string = info.text.strip()
+    for element in match_soup.find_all("td", class_="player player-a"):
+        if '(PG)' in element.text:
+            string = element.text.strip()
             string = string[:-1]
             pen = int(re.sub('[^0-9]', '', string))
             if pen <= 90:
@@ -147,9 +147,9 @@ def home_pens(match_soup):
 
 def away_pens(match_soup):
     away_pen_times = []
-    for info in match_soup.find_all("td", class_="player player-b"):
-        if '(PG)' in info.text:
-            string = info.text.strip()
+    for element in match_soup.find_all("td", class_="player player-b"):
+        if '(PG)' in element.text:
+            string = element.text.strip()
             string = string[:-1]
             pen = int(re.sub('[^0-9]', '', string))
             if pen <= 90:
@@ -160,9 +160,9 @@ def away_pens(match_soup):
 
 def scrape_iframe(match_soup):
     match_stats = []
-    for info in match_soup.find_all('iframe'):
-        if info['src'].startswith('/charts'):
-            iframe_url = 'https://www.soccerway.com' + (info['src'])
+    for element in match_soup.find_all('iframe'):
+        if element['src'].startswith('/charts'):
+            iframe_url = 'https://www.soccerway.com' + (element['src'])
             iframe = requests.get(iframe_url).text
             iframe_soup = BeautifulSoup(iframe, 'html.parser')
 
