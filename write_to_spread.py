@@ -46,9 +46,11 @@ def spread(match_dict, file_path):
     for stat in time_cols:
         number_items = len(match_dict[stat])
         start_col = time_cols[stat]
-        for item in range(0, number_items):
+        for item in range(number_items):
             ws.cell(row=write_row, column=start_col).value = match_dict[stat][item]
             start_col += 1
 
     wb.save(file_path)
-    print("{} - {} vs {} added.".format(match_dict['date'], match_dict['home_team_name'], match_dict['away_team_name']))
+    print("{} - {} vs {} added.".format(match_dict['date'],
+                                        match_dict['home_team_name'],
+                                        match_dict['away_team_name']))
