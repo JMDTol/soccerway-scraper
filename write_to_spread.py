@@ -4,11 +4,7 @@ from openpyxl import load_workbook
 def spread(match_dict, file_path):
     wb = load_workbook(file_path)
     ws = wb.worksheets[0]
-
-    # search first column for an empty cell so data is appended.
-    column_length = 1
-    for _ in ws.rows:
-        column_length += 1
+    write_row = ws.max_row + 1
 
     # integers in main_data and time_data correspond to spreadsheet column numbers.
     main_data = {'week': 1,
@@ -44,14 +40,14 @@ def spread(match_dict, file_path):
 
     # Write main_data markets to sheet.
     for key in main_data.keys():
-        ws.cell(row=column_length, column=main_data[key]).value = match_dict[key]
+        ws.cell(row=write_row, column=main_data[key]).value = match_dict[key]
 
     # Write time_data markets to sheet.
     for key in time_data:
         number_items = len(match_dict[key])
         start_col = time_data[key]
         for item in range(0, number_items):
-            ws.cell(row=column_length, column=start_col).value = match_dict[key][item]
+            ws.cell(row=write_row, column=start_col).value = match_dict[key][item]
             start_col += 1
 
     wb.save(file_path)
