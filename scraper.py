@@ -62,13 +62,14 @@ def referee(match_soup):
 def home_goals(match_soup):
     home_goal_times = []
     for element in match_soup.select('td.player.player-a'):
-        try:
-            goal_time = int(element.contents[1].find('span', class_='minute').text[:-1])
-        except AttributeError:
-            continue
+        for goal_time in element.findChildren(class_='minute'):
+            if '+' in goal_time.text:
+                goal_time = int(goal_time.text[:-3])
+            else:
+                goal_time = int(goal_time.text[:-1])
 
-        if goal_time <= 90:
-            home_goal_times.append(goal_time)
+            if goal_time <= 90:
+                home_goal_times.append(goal_time)
 
     return len(home_goal_times), home_goal_times
 
@@ -76,13 +77,14 @@ def home_goals(match_soup):
 def away_goals(match_soup):
     away_goal_times = []
     for element in match_soup.select('td.player.player-b'):
-        try:
-            goal_time = int(element.contents[1].find('span', class_='minute').text[:-1])
-        except AttributeError:
-            continue
+        for goal_time in element.findChildren(class_='minute'):
+            if '+' in goal_time.text:
+                goal_time = int(goal_time.text[:-3])
+            else:
+                goal_time = int(goal_time.text[:-1])
 
-        if goal_time <= 90:
-            away_goal_times.append(goal_time)
+            if goal_time <= 90:
+                away_goal_times.append(goal_time)
 
     return len(away_goal_times), away_goal_times
 
