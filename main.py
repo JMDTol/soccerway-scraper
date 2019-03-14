@@ -43,13 +43,9 @@ def scrape_urls(url_list, path):
     print("=" * 100 + "\nComplete - {} matches added".format(len(url_list)))
 
 
-def main():
+if __name__ == "__main__":
     root = tk.Tk()
     root.withdraw()
     path = filedialog.askopenfilename()
     matches_to_scrape = input_urls()
     scrape_urls(matches_to_scrape, path)
-
-
-if __name__ == "__main__":
-    main()
