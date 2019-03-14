@@ -18,10 +18,13 @@ def scrape_match(url):
     game_data['home_team_name'], game_data['away_team_name'] = team_names(soup)
     game_data['referee'] = referee(soup)
 
-    game_data['home_goal_total'] = len(home_goals(soup))
-    game_data['home_goal_times'] = home_goals(soup)
-    game_data['away_goal_total'] = len(away_goals(soup))
-    game_data['away_goal_times'] = away_goals(soup)
+    home_goal_times = home_goals(soup)
+    away_goal_times = away_goals(soup)
+
+    game_data['home_goal_total'] = len(home_goal_times)
+    game_data['away_goal_total'] = len(away_goal_times)
+    game_data['home_goal_times'] = home_goal_times
+    game_data['away_goal_times'] = away_goal_times
 
     game_data['home_yellow_times'], game_data['home_red_times'] = home_cards(soup)
     game_data['away_yellow_times'], game_data['away_red_times'] = away_cards(soup)
