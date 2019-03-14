@@ -59,14 +59,20 @@ def referee(match_soup):
         return None
 
 
+def clean_string(time):
+    time = str(time.text)
+    if '+' in time:
+        time = time[:-3]
+    else:
+        time = time[:-1]
+    return int(time)
+
+
 def home_goals(match_soup):
     home_goal_times = []
     for element in match_soup.select('td.player.player-a'):
         for goal_time in element.findChildren(class_='minute'):
-            if '+' in goal_time.text:
-                goal_time = int(goal_time.text[:-3])
-            else:
-                goal_time = int(goal_time.text[:-1])
+            goal_time = clean_string(goal_time)
 
             if goal_time <= 90:
                 home_goal_times.append(goal_time)
@@ -78,22 +84,12 @@ def away_goals(match_soup):
     away_goal_times = []
     for element in match_soup.select('td.player.player-b'):
         for goal_time in element.findChildren(class_='minute'):
-            if '+' in goal_time.text:
-                goal_time = int(goal_time.text[:-3])
-            else:
-                goal_time = int(goal_time.text[:-1])
+            goal_time = clean_string(goal_time)
 
             if goal_time <= 90:
                 away_goal_times.append(goal_time)
 
     return len(away_goal_times), away_goal_times
-
-
-def clean_string(info):
-    card = (str(info.contents[1]).strip())
-    card = (card[:-1])
-    card = int((card.split('+')[0]))
-    return card
 
 
 def home_cards(match_soup):
@@ -102,11 +98,14 @@ def home_cards(match_soup):
     for bookings in match_soup.select('div.container.left'):
         for elem in bookings.findAll('span'):
             if 'events/YC.png' in str(elem):
-                home_yellow_times.append(clean_string(elem))
+                if clean_string(elem) <= 90:
+                    home_yellow_times.append(clean_string(elem))
             elif 'events/RC.png' in str(elem):
-                home_red_times.append(clean_string(elem))
+                if clean_string(elem) <= 90:
+                    home_red_times.append(clean_string(elem))
             elif 'events/Y2C.png' in str(elem):
-                home_red_times.append(clean_string(elem))
+                if clean_string(elem) <= 90:
+                    home_red_times.append(clean_string(elem))
 
     return sorted(home_yellow_times), sorted(home_red_times)
 
@@ -117,11 +116,14 @@ def away_cards(match_soup):
     for bookings in match_soup.select('div.container.right'):
         for elem in bookings.findAll('span'):
             if 'events/YC.png' in str(elem):
-                away_yellow_times.append(clean_string(elem))
+                if clean_string(elem) <= 90:
+                    away_yellow_times.append(clean_string(elem))
             elif 'events/RC.png' in str(elem):
-                away_red_times.append(clean_string(elem))
+                if clean_string(elem) <= 90:
+                    away_red_times.append(clean_string(elem))
             elif 'events/Y2C.png' in str(elem):
-                away_red_times.append(clean_string(elem))
+                if clean_string(elem) <= 90:
+                    away_red_times.append(clean_string(elem))
 
     return sorted(away_yellow_times), sorted(away_red_times)
 
