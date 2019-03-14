@@ -18,8 +18,10 @@ def scrape_match(url):
     game_data['home_team_name'], game_data['away_team_name'] = team_names(soup)
     game_data['referee'] = referee(soup)
 
-    game_data['home_goal_total'], game_data['home_goal_times'] = home_goals(soup)
-    game_data['away_goal_total'], game_data['away_goal_times'] = away_goals(soup)
+    game_data['home_goal_total'] = len(home_goals(soup))
+    game_data['home_goal_times'] = home_goals(soup)
+    game_data['away_goal_total'] = len(away_goals(soup))
+    game_data['away_goal_times'] = away_goals(soup)
 
     game_data['home_yellow_times'], game_data['home_red_times'] = home_cards(soup)
     game_data['away_yellow_times'], game_data['away_red_times'] = away_cards(soup)
@@ -77,7 +79,7 @@ def home_goals(match_soup):
             if goal_time <= 90:
                 home_goal_times.append(goal_time)
 
-    return len(home_goal_times), home_goal_times
+    return home_goal_times
 
 
 def away_goals(match_soup):
@@ -88,7 +90,7 @@ def away_goals(match_soup):
             if goal_time <= 90:
                 away_goal_times.append(goal_time)
 
-    return len(away_goal_times), away_goal_times
+    return away_goal_times
 
 
 def home_cards(match_soup):
