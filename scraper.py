@@ -98,18 +98,18 @@ def away_goals(match_soup):
 def home_cards(match_soup):
     home_yellow_times = []
     home_red_times = []
-    for bookings in match_soup.select('div.container.left'):
-        for elem in bookings.findAll('span'):
-            if 'events/YC.png' in str(elem):
-                card_time = clean_string(elem)
+    for elem in match_soup.select('div.container.left'):
+        for card in elem.findAll('span'):
+            if 'events/YC.png' in str(card):
+                card_time = clean_string(card)
                 if card_time <= 90:
                     home_yellow_times.append(card_time)
-            elif 'events/RC.png' in str(elem):
-                card_time = clean_string(elem)
-                if clean_string(elem) <= 90:
+            elif 'events/RC.png' in str(card):
+                card_time = clean_string(card)
+                if clean_string(card) <= 90:
                     home_red_times.append(card_time)
-            elif 'events/Y2C.png' in str(elem):
-                card_time = clean_string(elem)
+            elif 'events/Y2C.png' in str(card):
+                card_time = clean_string(card)
                 if card_time <= 90:
                     home_red_times.append(card_time)
 
@@ -119,18 +119,18 @@ def home_cards(match_soup):
 def away_cards(match_soup):
     away_yellow_times = []
     away_red_times = []
-    for bookings in match_soup.select('div.container.right'):
-        for elem in bookings.findAll('span'):
-            if 'events/YC.png' in str(elem):
-                card_time = clean_string(elem)
+    for elem in match_soup.select('div.container.right'):
+        for card in elem.findAll('span'):
+            if 'events/YC.png' in str(card):
+                card_time = clean_string(card)
                 if card_time <= 90:
                     away_yellow_times.append(card_time)
-            elif 'events/RC.png' in str(elem):
-                card_time = clean_string(elem)
+            elif 'events/RC.png' in str(card):
+                card_time = clean_string(card)
                 if card_time <= 90:
                     away_red_times.append(card_time)
-            elif 'events/Y2C.png' in str(elem):
-                card_time = clean_string(elem)
+            elif 'events/Y2C.png' in str(card):
+                card_time = clean_string(card)
                 if card_time <= 90:
                     away_red_times.append(card_time)
 
