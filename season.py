@@ -13,7 +13,7 @@ def season_scrape(url):
     :param url: Soccerway URL for match.
     :return: List of URLs.
     """
-    driver = webdriver.Firefox()
+    driver = webdriver.Chrome()
     driver.fullscreen_window()
     driver.get(url)
 
@@ -53,10 +53,9 @@ def num_previous_clicks(soup):
     :param soup:
     :return:
     """
-    previous_clicks = 0
-    for week in soup.findAll(id='page_competition_1_block_competition_matches_summary_5_page_dropdown'):
-        number_weeks = (week.contents[-1])
-        previous_clicks = int(number_weeks.contents[0]) - 1
+    number_weeks = soup.find(id='page_competition_1_block_competition_matches_summary_5_page_dropdown')
+    last_week = number_weeks.contents[-1]
+    previous_clicks = int(last_week.text) - 1
 
     return previous_clicks
 
