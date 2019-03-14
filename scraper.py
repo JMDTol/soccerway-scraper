@@ -56,11 +56,11 @@ def team_names(match_soup):
 
 
 def referee(match_soup):
-    for element in match_soup.find_all('dl', class_='details'):
-        if element.contents[1].text == 'Referee:':
-            return element.contents[3].text
-        else:
-            return None
+    referee_element = match_soup.find("dt", string="Referee:")
+    if referee_element:
+        return referee_element.find_next('dd').text
+    else:
+        return None
 
 
 def home_goals(match_soup):
