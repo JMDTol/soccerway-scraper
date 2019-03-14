@@ -34,6 +34,7 @@ def season_scrape(url):
 
     # Create a list containing match URLs for the final game week before clicking 'previous'
     url_list = get_urls(innerhtml_soup(driver))
+
     for i in range(previous_clicks):
         driver.find_element_by_class_name('previous').click()
         time.sleep(1)
@@ -65,8 +66,9 @@ def get_urls(soup):
     :return: List of match URLs.
     """
     urls = []
-    for match in soup.select('td.info-button.button'):
-            urls.append('https://us.soccerway.com' + match.contents[1].get('href'))
+    for elem in soup.findAll('td', class_='info-button button'):
+        for link in elem.find_all('a', href=True):
+            urls.append('https://us.soccerway.com' + link.get('href'))
     return urls
 
 
