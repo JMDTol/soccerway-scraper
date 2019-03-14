@@ -107,7 +107,6 @@ def home_cards(match_soup):
                 card_time = clean_string(card)
                 if card_time <= 90:
                     home_red_times.append(card_time)
-
     return sorted(home_yellow_times), sorted(home_red_times)
 
 
@@ -128,7 +127,6 @@ def away_cards(match_soup):
                 card_time = clean_string(card)
                 if card_time <= 90:
                     away_red_times.append(card_time)
-
     return sorted(away_yellow_times), sorted(away_red_times)
 
 
