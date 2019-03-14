@@ -20,7 +20,6 @@ def scrape_match(url):
 
     home_goal_times = home_goals(soup)
     away_goal_times = away_goals(soup)
-
     game_data['home_goal_total'] = len(home_goal_times)
     game_data['away_goal_total'] = len(away_goal_times)
     game_data['home_goal_times'] = home_goal_times
