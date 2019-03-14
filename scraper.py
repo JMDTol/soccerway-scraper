@@ -30,9 +30,9 @@ def scrape_match(url):
 
 
 def game_week(match_soup):
-    week_element = match_soup.find('dt', string='Game week')
-    if week_element:
-        return int(week_element.find_next('dd').text)
+    week_elem = match_soup.find('dt', string='Game week')
+    if week_elem:
+        return int(week_elem.find_next('dd').text)
     else:
         return None
 
@@ -52,9 +52,9 @@ def team_names(match_soup):
 
 
 def referee(match_soup):
-    referee_element = match_soup.find('dt', string='Referee:')
-    if referee_element:
-        return referee_element.find_next('dd').text
+    referee_elem = match_soup.find('dt', string='Referee:')
+    if referee_elem:
+        return referee_elem.find_next('dd').text
     else:
         return None
 
@@ -71,8 +71,8 @@ def clean_string(time):
 
 def home_goals(match_soup):
     home_goal_times = []
-    for element in match_soup.select('td.player.player-a'):
-        for goal_time in element.findChildren(class_='minute'):
+    for elem in match_soup.select('td.player.player-a'):
+        for goal_time in elem.findChildren(class_='minute'):
             goal_time = clean_string(goal_time)
             if goal_time <= 90:
                 home_goal_times.append(goal_time)
@@ -82,8 +82,8 @@ def home_goals(match_soup):
 
 def away_goals(match_soup):
     away_goal_times = []
-    for element in match_soup.select('td.player.player-b'):
-        for goal_time in element.findChildren(class_='minute'):
+    for elem in match_soup.select('td.player.player-b'):
+        for goal_time in elem.findChildren(class_='minute'):
             goal_time = clean_string(goal_time)
             if goal_time <= 90:
                 away_goal_times.append(goal_time)
@@ -135,9 +135,9 @@ def away_cards(match_soup):
 
 def scrape_iframe(match_soup):
     match_stats = []
-    for element in match_soup.find_all('iframe'):
-        if element['src'].startswith('/charts'):
-            iframe_url = 'https://www.soccerway.com' + (element['src'])
+    for elem in match_soup.find_all('iframe'):
+        if elem['src'].startswith('/charts'):
+            iframe_url = 'https://www.soccerway.com' + (elem['src'])
             iframe = requests.get(iframe_url).text
             iframe_soup = BeautifulSoup(iframe, 'html.parser')
 
