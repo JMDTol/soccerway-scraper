@@ -1,6 +1,5 @@
 from bs4 import BeautifulSoup
 import requests
-import re
 
 
 def scrape_match(url):
@@ -24,9 +23,6 @@ def scrape_match(url):
 
     game_data['home_yellow_times'], game_data['home_red_times'] = home_cards(soup)
     game_data['away_yellow_times'], game_data['away_red_times'] = away_cards(soup)
-
-    game_data['home_pens'], game_data['home_pen_mins'] = home_pens(soup)
-    game_data['away_pens'], game_data['away_pen_mins'] = away_pens(soup)
 
     game_data.update(scrape_iframe(soup))
 
@@ -94,18 +90,17 @@ def away_goals(match_soup):
 def home_cards(match_soup):
     home_yellow_times = []
     home_red_times = []
-    for bookings in match_soup.find_all('div', {'class': 'container left'}):
-        card = bookings.find_all('span')
-        for info in card:
-            if info.select('img[src*=YC]'):
-                yellow = clean_string(info)
-                if yellow <= 90:
-                    home_yellow_times.append(yellow)
-
-            elif info.select('img[src*=RC]') or info.select('img[src*=Y2C]'):
-                second_yellow = clean_string(info)
-                if second_yellow <= 90:
-                    home_red_times.append(second_yellow)
+    for bookings in match_soup.select('div.container.left'):
+        for elem in bookings.findAll('span'):
+            if 'events/YC.png' in str(elem):
+                card_time = int(elem.text[:-1])
+                home_yellow_times.append(card_time)
+            elif 'events/RC.png' in str(elem):
+                card_time = int(elem.text[:-1])
+                home_red_times.append(card_time)
+            elif 'events/Y2C.png' in str(elem):
+                card_time = int(elem.text[:-1])
+                home_red_times.append(card_time)
 
     return sorted(home_yellow_times), sorted(home_red_times)
 
@@ -113,53 +108,19 @@ def home_cards(match_soup):
 def away_cards(match_soup):
     away_yellow_times = []
     away_red_times = []
-    for bookings in match_soup.find_all('div', {'class': 'container right'}):
-        card = bookings.find_all('span')
-        for info in card:
-            if info.select('img[src*=YC]'):
-                yellow = clean_string(info)
-                if yellow <= 90:
-                    away_yellow_times.append(yellow)
-
-            elif info.select('img[src*=RC]') or info.select('img[src*=Y2C]'):
-                second_yellow = clean_string(info)
-                if second_yellow <= 90:
-                    away_red_times.append(second_yellow)
+    for bookings in match_soup.select('div.container.right'):
+        for elem in bookings.findAll('span'):
+            if 'events/YC.png' in str(elem):
+                card_time = int(elem.text[:-1])
+                away_yellow_times.append(card_time)
+            elif 'events/RC.png' in str(elem):
+                card_time = int(elem.text[:-1])
+                away_red_times.append(card_time)
+            elif 'events/Y2C.png' in str(elem):
+                card_time = int(elem.text[:-1])
+                away_red_times.append(card_time)
 
     return sorted(away_yellow_times), sorted(away_red_times)
-
-
-def clean_string(info):
-    card = (str(info.contents[1]).strip())
-    card = (card[:-1])
-    card = int((card.split('+')[0]))
-    return card
-
-
-def home_pens(match_soup):
-    home_pen_times = []
-    for element in match_soup.find_all("td", class_="player player-a"):
-        if '(PG)' in element.text:
-            string = element.text.strip()
-            string = string[:-1]
-            pen = int(re.sub('[^0-9]', '', string))
-            if pen <= 90:
-                home_pen_times.append(pen)
-
-    return len(home_pen_times), sum(home_pen_times)
-
-
-def away_pens(match_soup):
-    away_pen_times = []
-    for element in match_soup.find_all("td", class_="player player-b"):
-        if '(PG)' in element.text:
-            string = element.text.strip()
-            string = string[:-1]
-            pen = int(re.sub('[^0-9]', '', string))
-            if pen <= 90:
-                away_pen_times.append(pen)
-
-    return len(away_pen_times), sum(away_pen_times)
 
 
 def scrape_iframe(match_soup):

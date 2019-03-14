@@ -24,10 +24,6 @@ def spread(match_dict, file_path):
                  'away_fouls': 53,
                  'home_offsides': 50,
                  'away_offsides': 51,
-                 'home_pens': 58,
-                 'away_pens': 59,
-                 'home_pen_mins': 60,
-                 'away_pen_mins': 61,
                  }
 
     time_cols = {'home_goal_times': 7,
