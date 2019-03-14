@@ -65,9 +65,8 @@ def get_urls(soup):
     :return: List of match URLs.
     """
     urls = []
-    for info in soup.findAll('td', class_='info-button button'):
-        for link in info.find_all('a', href=True):
-            urls.append('https://us.soccerway.com' + link.get('href'))
+    for match in soup.select('td.info-button.button'):
+            urls.append('https://us.soccerway.com' + match.contents[1].get('href'))
     return urls
 
 
