@@ -56,7 +56,7 @@ def team_names(match_soup):
 
 
 def referee(match_soup):
-    referee_elem = match_soup.find('dt', string='Referee:')
+    referee_elem = match_soup.find(text='Referee:')
     if referee_elem:
         return referee_elem.find_next('dd').text
     else:
