@@ -42,7 +42,6 @@ def season_scrape(url):
 
     driver.quit()
     print('=' * 100 + '\n{} matches found'.format(len(set(url_list))))
-
     return url_list
 
 
@@ -55,7 +54,6 @@ def num_previous_clicks(soup):
     number_weeks = soup.find(id='page_competition_1_block_competition_matches_summary_5_page_dropdown')
     last_week = number_weeks.contents[-1]
     previous_clicks = int(last_week.text) - 1
-
     return previous_clicks
 
 
@@ -79,5 +77,4 @@ def innerhtml_soup(driver):
     """
     html = driver.find_element_by_tag_name('html').get_attribute('innerHTML')
     soup = BeautifulSoup(html, 'html.parser')
-
     return soup

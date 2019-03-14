@@ -29,7 +29,6 @@ def scrape_match(url):
     game_data['away_yellow_times'], game_data['away_red_times'] = away_cards(soup)
 
     game_data.update(scrape_iframe(soup))
-
     return game_data
 
 
@@ -51,7 +50,6 @@ def team_names(match_soup):
     teams = page_title.split(' - ')[0]
     home = teams.split('vs.')[0].strip()
     away = teams.split('vs.')[1].strip()
-
     return home, away
 
 
@@ -69,7 +67,6 @@ def clean_string(time):
         time = int(time[:-3])
     else:
         time = int(time[:-1])
-
     return time
 
 
@@ -80,7 +77,6 @@ def home_goals(match_soup):
             goal_time = clean_string(goal_time)
             if goal_time <= 90:
                 home_goal_times.append(goal_time)
-
     return home_goal_times
 
 
@@ -91,7 +87,6 @@ def away_goals(match_soup):
             goal_time = clean_string(goal_time)
             if goal_time <= 90:
                 away_goal_times.append(goal_time)
-
     return away_goal_times
 
 
@@ -112,7 +107,6 @@ def home_cards(match_soup):
                 card_time = clean_string(card)
                 if card_time <= 90:
                     home_red_times.append(card_time)
-
     return sorted(home_yellow_times), sorted(home_red_times)
 
 
@@ -133,7 +127,6 @@ def away_cards(match_soup):
                 card_time = clean_string(card)
                 if card_time <= 90:
                     away_red_times.append(card_time)
-
     return sorted(away_yellow_times), sorted(away_red_times)
 
 
