@@ -33,14 +33,15 @@ def season_scrape(url):
     previous_clicks = num_previous_clicks(innerhtml_soup(driver))
 
     # Create a list containing match URLs for the final game week before clicking 'previous'
-    url_list = match_urls(innerhtml_soup(driver))
+    url_list = get_urls(innerhtml_soup(driver))
     for i in range(previous_clicks):
         driver.find_element_by_class_name('previous').click()
         time.sleep(1)
-        url_list += match_urls(innerhtml_soup(driver))
+        url_list += get_urls(innerhtml_soup(driver))
 
     driver.quit()
     print('=' * 100 + '\n{} matches found'.format(len(set(url_list))))
+
     return url_list
 
 
@@ -57,7 +58,7 @@ def num_previous_clicks(soup):
     return previous_clicks
 
 
-def match_urls(soup):
+def get_urls(soup):
     """
     Extract URL for each match in that game week.
     :param soup:
