@@ -87,20 +87,24 @@ def away_goals(match_soup):
     return len(away_goal_times), away_goal_times
 
 
+def clean_string(info):
+    card = (str(info.contents[1]).strip())
+    card = (card[:-1])
+    card = int((card.split('+')[0]))
+    return card
+
+
 def home_cards(match_soup):
     home_yellow_times = []
     home_red_times = []
     for bookings in match_soup.select('div.container.left'):
         for elem in bookings.findAll('span'):
             if 'events/YC.png' in str(elem):
-                card_time = int(elem.text[:-1])
-                home_yellow_times.append(card_time)
+                home_yellow_times.append(clean_string(elem))
             elif 'events/RC.png' in str(elem):
-                card_time = int(elem.text[:-1])
-                home_red_times.append(card_time)
+                home_red_times.append(clean_string(elem))
             elif 'events/Y2C.png' in str(elem):
-                card_time = int(elem.text[:-1])
-                home_red_times.append(card_time)
+                home_red_times.append(clean_string(elem))
 
     return sorted(home_yellow_times), sorted(home_red_times)
 
@@ -111,14 +115,11 @@ def away_cards(match_soup):
     for bookings in match_soup.select('div.container.right'):
         for elem in bookings.findAll('span'):
             if 'events/YC.png' in str(elem):
-                card_time = int(elem.text[:-1])
-                away_yellow_times.append(card_time)
+                away_yellow_times.append(clean_string(elem))
             elif 'events/RC.png' in str(elem):
-                card_time = int(elem.text[:-1])
-                away_red_times.append(card_time)
+                away_red_times.append(clean_string(elem))
             elif 'events/Y2C.png' in str(elem):
-                card_time = int(elem.text[:-1])
-                away_red_times.append(card_time)
+                away_red_times.append(clean_string(elem))
 
     return sorted(away_yellow_times), sorted(away_red_times)
 
