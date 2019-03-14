@@ -93,40 +93,38 @@ def away_goals(match_soup):
 def home_cards(match_soup):
     home_yellow_times = []
     home_red_times = []
-    for elem in match_soup.select('div.container.left'):
-        for card in elem.findAll('span'):
-            if 'events/YC.png' in str(card):
-                card_time = clean_string(card)
-                if card_time <= 90:
-                    home_yellow_times.append(card_time)
-            elif 'events/RC.png' in str(card):
-                card_time = clean_string(card)
-                if clean_string(card) <= 90:
-                    home_red_times.append(card_time)
-            elif 'events/Y2C.png' in str(card):
-                card_time = clean_string(card)
-                if card_time <= 90:
-                    home_red_times.append(card_time)
+    for card in match_soup.select('div.container.left span'):
+        if 'events/YC.png' in str(card):
+            card_time = clean_string(card)
+            if card_time <= 90:
+                home_yellow_times.append(card_time)
+        elif 'events/RC.png' in str(card):
+            card_time = clean_string(card)
+            if clean_string(card) <= 90:
+                home_red_times.append(card_time)
+        elif 'events/Y2C.png' in str(card):
+            card_time = clean_string(card)
+            if card_time <= 90:
+                home_red_times.append(card_time)
     return sorted(home_yellow_times), sorted(home_red_times)
 
 
 def away_cards(match_soup):
     away_yellow_times = []
     away_red_times = []
-    for elem in match_soup.select('div.container.right'):
-        for card in elem.findAll('span'):
-            if 'events/YC.png' in str(card):
-                card_time = clean_string(card)
-                if card_time <= 90:
-                    away_yellow_times.append(card_time)
-            elif 'events/RC.png' in str(card):
-                card_time = clean_string(card)
-                if card_time <= 90:
-                    away_red_times.append(card_time)
-            elif 'events/Y2C.png' in str(card):
-                card_time = clean_string(card)
-                if card_time <= 90:
-                    away_red_times.append(card_time)
+    for card in match_soup.select('div.container.right span'):
+        if 'events/YC.png' in str(card):
+            card_time = clean_string(card)
+            if card_time <= 90:
+                away_yellow_times.append(card_time)
+        elif 'events/RC.png' in str(card):
+            card_time = clean_string(card)
+            if card_time <= 90:
+                away_red_times.append(card_time)
+        elif 'events/Y2C.png' in str(card):
+            card_time = clean_string(card)
+            if card_time <= 90:
+                away_red_times.append(card_time)
     return sorted(away_yellow_times), sorted(away_red_times)
 
 
