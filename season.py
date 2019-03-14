@@ -10,8 +10,8 @@ import time
 def season_scrape(url):
     """
     Get the URL for every match in a season.
-    :param url: Soccerway URL for match.
-    :return: List of URLs.
+    :param url: Soccerway URL for the season.
+    :return: List of match URLs.
     """
     driver = webdriver.Chrome()
     driver.fullscreen_window()
