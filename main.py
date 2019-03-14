@@ -36,7 +36,7 @@ def scrape_urls(url_list, path):
             spread(scrape_match(url), path)
             pause = 0
         else:
-            time.sleep(1)
+            time.sleep(2)
             spread(scrape_match(url), path)
             pause += 1
 
