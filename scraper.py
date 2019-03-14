@@ -34,7 +34,7 @@ def scrape_match(url):
 
 
 def game_week(match_soup):
-    week_elem = match_soup.find('dt', string='Game week')
+    week_elem = match_soup.find(text='Game week')
     if week_elem:
         return int(week_elem.find_next('dd').text)
     else:
