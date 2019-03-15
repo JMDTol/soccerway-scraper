@@ -1,4 +1,5 @@
 from bs4 import BeautifulSoup
+from datetime import datetime
 import requests
 
 
@@ -42,7 +43,9 @@ def game_week(match_soup):
 
 def date(match_soup):
     page_title = match_soup.title.text
-    return page_title.split(' - ')[1]
+    date_string = page_title.split(' - ')[1]
+    datetime_object = datetime.strptime(date_string, '%d %B %Y').date()
+    return datetime_object
 
 
 def team_names(match_soup):
