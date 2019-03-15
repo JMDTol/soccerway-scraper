@@ -128,7 +128,7 @@ def scrape_iframe(match_soup):
             iframe = requests.get(iframe_url).text
             iframe_soup = BeautifulSoup(iframe, 'html.parser')
 
-            for stat in iframe_soup.findAll('td.legend'):
+            for stat in iframe_soup.findAll('td', {'class': 'legend'}):
                 try:
                     match_stats.append((int(stat.contents[0])))
                 except (ValueError, IndexError):
