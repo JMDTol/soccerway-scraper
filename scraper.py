@@ -72,21 +72,19 @@ def clean_string(time):
 
 def home_goals(match_soup):
     home_goal_times = []
-    for elem in match_soup.select('td.player.player-a'):
-        for goal_time in elem.findChildren(class_='minute'):
-            goal_time = clean_string(goal_time)
-            if goal_time <= 90:
-                home_goal_times.append(goal_time)
+    for elem in match_soup.select('.player.player-a .minute'):
+        goal_time = clean_string(elem)
+        if goal_time <= 90:
+            home_goal_times.append(goal_time)
     return home_goal_times
 
 
 def away_goals(match_soup):
     away_goal_times = []
-    for elem in match_soup.select('td.player.player-b'):
-        for goal_time in elem.findChildren(class_='minute'):
-            goal_time = clean_string(goal_time)
-            if goal_time <= 90:
-                away_goal_times.append(goal_time)
+    for elem in match_soup.select('.player.player-b .minute'):
+        goal_time = clean_string(elem)
+        if goal_time <= 90:
+            away_goal_times.append(goal_time)
     return away_goal_times
 
 
