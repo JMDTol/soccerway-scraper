@@ -100,7 +100,7 @@ def home_cards(match_soup):
                 home_yellow_times.append(card_time)
         elif 'events/RC.png' in str(card) or 'events/Y2C.png' in str(card):
             card_time = clean_string(card)
-            if clean_string(card) <= 90:
+            if card_time <= 90:
                 home_red_times.append(card_time)
     return sorted(home_yellow_times), sorted(home_red_times)
 
