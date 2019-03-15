@@ -64,58 +64,57 @@ def referee(match_soup):
 def clean_string(time):
     time = str(time.text)
     if '+' in time:
-        time = int(time.split('+')[0])
+        return int(time.split('+')[0])
     else:
-        time = int(time[:-1])
-    return time
+        return int(time[:-1])
 
 
 def home_goals(match_soup):
-    home_goal_times = []
+    goal_times = []
     for elem in match_soup.select('.player.player-a .minute'):
         goal_time = clean_string(elem)
         if goal_time <= 90:
-            home_goal_times.append(goal_time)
-    return home_goal_times
+            goal_times.append(goal_time)
+    return goal_times
 
 
 def away_goals(match_soup):
-    away_goal_times = []
+    goal_times = []
     for elem in match_soup.select('.player.player-b .minute'):
         goal_time = clean_string(elem)
         if goal_time <= 90:
-            away_goal_times.append(goal_time)
-    return away_goal_times
+            goal_times.append(goal_time)
+    return goal_times
 
 
 def home_cards(match_soup):
-    home_yellow_times = []
-    home_red_times = []
+    yellow_times = []
+    red_times = []
     for card in match_soup.select('div.container.left span'):
         if 'events/YC.png' in str(card):
             card_time = clean_string(card)
             if card_time <= 90:
-                home_yellow_times.append(card_time)
+                yellow_times.append(card_time)
         elif 'events/RC.png' in str(card) or 'events/Y2C.png' in str(card):
             card_time = clean_string(card)
             if card_time <= 90:
-                home_red_times.append(card_time)
-    return sorted(home_yellow_times), sorted(home_red_times)
+                red_times.append(card_time)
+    return sorted(yellow_times), sorted(red_times)
 
 
 def away_cards(match_soup):
-    away_yellow_times = []
-    away_red_times = []
+    yellow_times = []
+    red_times = []
     for card in match_soup.select('div.container.right span'):
         if 'events/YC.png' in str(card):
             card_time = clean_string(card)
             if card_time <= 90:
-                away_yellow_times.append(card_time)
+                yellow_times.append(card_time)
         elif 'events/RC.png' in str(card) or 'events/Y2C.png' in str(card):
             card_time = clean_string(card)
             if card_time <= 90:
-                away_red_times.append(card_time)
-    return sorted(away_yellow_times), sorted(away_red_times)
+                red_times.append(card_time)
+    return sorted(yellow_times), sorted(red_times)
 
 
 def scrape_iframe(match_soup):
