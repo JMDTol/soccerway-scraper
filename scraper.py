@@ -67,7 +67,7 @@ def referee(match_soup):
 def clean_string(time):
     time = str(time.text)
     if '+' in time:
-        return int(time.split('+')[0])
+        return int(time.split('+')[0].replace("'", ""))
     else:
         return int(time[:-1])
 
