@@ -9,9 +9,8 @@ def scrape_match(url):
     :param url: Soccerway URL for match.
     :return: Dictionary containing match data
     """
-    r = requests.get('https://us.soccerway' + url.split('soccerway')[1])
-    data = r.text
-    soup = BeautifulSoup(data, 'html.parser')
+    response = requests.get('https://us.soccerway' + url.split('soccerway')[1])
+    soup = BeautifulSoup(response.text, 'html.parser')
 
     game_data = {}
     game_data['week'] = game_week(soup)
