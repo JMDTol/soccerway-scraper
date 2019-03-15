@@ -38,11 +38,12 @@ def season_scrape(url):
     for i in range(previous_clicks):
         driver.find_element_by_class_name('previous').click()
         time.sleep(1)
-        url_list += get_urls(innerhtml_soup(driver))
+        urls = get_urls(innerhtml_soup(driver))
+        url_list += reversed(urls)
 
     driver.quit()
     print('=' * 100 + '\n{} matches found'.format(len(set(url_list))))
-    return url_list
+    return reversed(url_list)
 
 
 def num_previous_clicks(soup):
