@@ -127,12 +127,9 @@ def scrape_iframe(match_soup):
             iframe_url = 'https://www.soccerway.com' + (elem['src'])
             iframe = requests.get(iframe_url).text
             iframe_soup = BeautifulSoup(iframe, 'html.parser')
-
             for stat in iframe_soup.select('.legend'):
-                try:
-                    match_stats.append((int(stat.contents[0])))
-                except (ValueError, IndexError):
-                    continue
+                if 'title' not in stat.attrs['class']:
+                    match_stats.append((int(stat.text)))
 
     keys = ('home_corners', 'away_corners', 'home_shots_on', 'away_shots_on', 'home_shots_wide', 'away_shots_wide',
             'home_fouls', 'away_fouls', 'home_offsides', 'away_offsides')
