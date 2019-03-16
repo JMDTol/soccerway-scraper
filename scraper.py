@@ -94,13 +94,13 @@ def home_cards(match_soup):
     red_times = []
     for card in match_soup.select('div.container.left span'):
         if 'events/YC.png' in str(card):
-            card_time = clean_string(card)
-            if card_time <= 90:
-                yellow_times.append(card_time)
+            yellow_time = clean_string(card)
+            if yellow_time <= 90:
+                yellow_times.append(yellow_time)
         elif 'events/RC.png' in str(card) or 'events/Y2C.png' in str(card):
-            card_time = clean_string(card)
-            if card_time <= 90:
-                red_times.append(card_time)
+            red_time = clean_string(card)
+            if red_time <= 90:
+                red_times.append(red_time)
     return sorted(yellow_times), sorted(red_times)
 
 
@@ -109,13 +109,13 @@ def away_cards(match_soup):
     red_times = []
     for card in match_soup.select('div.container.right span'):
         if 'events/YC.png' in str(card):
-            card_time = clean_string(card)
-            if card_time <= 90:
-                yellow_times.append(card_time)
+            yellow_time = clean_string(card)
+            if yellow_time <= 90:
+                yellow_times.append(yellow_time)
         elif 'events/RC.png' in str(card) or 'events/Y2C.png' in str(card):
-            card_time = clean_string(card)
-            if card_time <= 90:
-                red_times.append(card_time)
+            red_time = clean_string(card)
+            if red_time <= 90:
+                red_times.append(red_time)
     return sorted(yellow_times), sorted(red_times)
 
 
