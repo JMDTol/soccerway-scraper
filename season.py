@@ -28,15 +28,14 @@ def season_scrape(url):
         ec.presence_of_element_located((By.ID, 'page_competition_1_block_competition_matches_summary_5_1_2'))
     )
     element.click()
-
     time.sleep(0.5)
-    previous_clicks = num_previous_clicks(innerhtml_soup(driver))
 
     # Create a list containing match URLs for the final game week before clicking 'previous'
     url_list = get_urls(innerhtml_soup(driver))
+    previous_id = 'page_competition_1_block_competition_matches_summary_5_previous'
 
-    for i in range(previous_clicks):
-        driver.find_element_by_class_name('previous').click()
+    while driver.find_element_by_id(previous_id).get_attribute('class') != 'previous disabled':
+        driver.find_element_by_id(previous_id).click()
         time.sleep(1)
         urls = get_urls(innerhtml_soup(driver))
         urls.reverse()
@@ -46,18 +45,6 @@ def season_scrape(url):
     print('=' * 100 + '\n{} matches found'.format(len(set(url_list))))
     url_list.reverse()
     return url_list
-
-
-def num_previous_clicks(soup):
-    """
-    Work out how many times the 'Previous' button should be clicked.
-    :param soup:
-    :return:
-    """
-    number_weeks = soup.find(id='page_competition_1_block_competition_matches_summary_5_page_dropdown')
-    last_week = number_weeks.contents[-1]
-    previous_clicks = int(last_week.text) - 1
-    return previous_clicks
 
 
 def get_urls(soup):
