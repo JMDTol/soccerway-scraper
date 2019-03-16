@@ -1,4 +1,5 @@
 from bs4 import BeautifulSoup
+from datetime import datetime
 import requests
 
 
@@ -8,9 +9,8 @@ def scrape_match(url):
     :param url: Soccerway URL for match.
     :return: Dictionary containing match data
     """
-    r = requests.get(url)
-    data = r.text
-    soup = BeautifulSoup(data, 'html.parser')
+    response = requests.get('https://us.soccerway' + url.split('soccerway')[1])
+    soup = BeautifulSoup(response.text, 'html.parser')
 
     game_data = {}
     game_data['week'] = game_week(soup)
@@ -42,7 +42,9 @@ def game_week(match_soup):
 
 def date(match_soup):
     page_title = match_soup.title.text
-    return page_title.split(' - ')[1]
+    date_string = page_title.split(' - ')[1]
+    datetime_object = datetime.strptime(date_string, '%d %B %Y').date()
+    return datetime_object
 
 
 def team_names(match_soup):
@@ -64,60 +66,57 @@ def referee(match_soup):
 def clean_string(time):
     time = str(time.text)
     if '+' in time:
-        time = int(time[:-3])
+        return int(time.split('+')[0].replace("'", ""))
     else:
-        time = int(time[:-1])
-    return time
+        return int(time[:-1])
 
 
 def home_goals(match_soup):
-    home_goal_times = []
-    for elem in match_soup.select('td.player.player-a'):
-        for goal_time in elem.findChildren(class_='minute'):
-            goal_time = clean_string(goal_time)
-            if goal_time <= 90:
-                home_goal_times.append(goal_time)
-    return home_goal_times
+    goal_times = []
+    for elem in match_soup.select('.player.player-a .minute'):
+        goal_time = clean_string(elem)
+        if goal_time <= 90:
+            goal_times.append(goal_time)
+    return goal_times
 
 
 def away_goals(match_soup):
-    away_goal_times = []
-    for elem in match_soup.select('td.player.player-b'):
-        for goal_time in elem.findChildren(class_='minute'):
-            goal_time = clean_string(goal_time)
-            if goal_time <= 90:
-                away_goal_times.append(goal_time)
-    return away_goal_times
+    goal_times = []
+    for elem in match_soup.select('.player.player-b .minute'):
+        goal_time = clean_string(elem)
+        if goal_time <= 90:
+            goal_times.append(goal_time)
+    return goal_times
 
 
 def home_cards(match_soup):
-    home_yellow_times = []
-    home_red_times = []
+    yellow_times = []
+    red_times = []
     for card in match_soup.select('div.container.left span'):
         if 'events/YC.png' in str(card):
             card_time = clean_string(card)
             if card_time <= 90:
-                home_yellow_times.append(card_time)
+                yellow_times.append(card_time)
         elif 'events/RC.png' in str(card) or 'events/Y2C.png' in str(card):
             card_time = clean_string(card)
-            if clean_string(card) <= 90:
-                home_red_times.append(card_time)
-    return sorted(home_yellow_times), sorted(home_red_times)
+            if card_time <= 90:
+                red_times.append(card_time)
+    return sorted(yellow_times), sorted(red_times)
 
 
 def away_cards(match_soup):
-    away_yellow_times = []
-    away_red_times = []
+    yellow_times = []
+    red_times = []
     for card in match_soup.select('div.container.right span'):
         if 'events/YC.png' in str(card):
             card_time = clean_string(card)
             if card_time <= 90:
-                away_yellow_times.append(card_time)
+                yellow_times.append(card_time)
         elif 'events/RC.png' in str(card) or 'events/Y2C.png' in str(card):
             card_time = clean_string(card)
             if card_time <= 90:
-                away_red_times.append(card_time)
-    return sorted(away_yellow_times), sorted(away_red_times)
+                red_times.append(card_time)
+    return sorted(yellow_times), sorted(red_times)
 
 
 def scrape_iframe(match_soup):
@@ -127,12 +126,9 @@ def scrape_iframe(match_soup):
             iframe_url = 'https://www.soccerway.com' + (elem['src'])
             iframe = requests.get(iframe_url).text
             iframe_soup = BeautifulSoup(iframe, 'html.parser')
-
-            for stat in iframe_soup.findAll('td.legend'):
-                try:
-                    match_stats.append((int(stat.contents[0])))
-                except (ValueError, IndexError):
-                    continue
+            for stat in iframe_soup.select('.legend'):
+                if 'title' not in stat.attrs['class']:
+                    match_stats.append((int(stat.text)))
 
     keys = ('home_corners', 'away_corners', 'home_shots_on', 'away_shots_on', 'home_shots_wide', 'away_shots_wide',
             'home_fouls', 'away_fouls', 'home_offsides', 'away_offsides')

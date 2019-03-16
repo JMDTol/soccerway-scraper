@@ -22,22 +22,22 @@ def input_urls():
     return url_list
 
 
-def scrape_urls(url_list, path):
+def scrape_urls(url_list, spreadsheet_path):
     """
     Scrape each URL pausing at intervals to prevent requests from being denied.
     :param url_list: List of match URLs.
-    :param path: Path to spreadsheet data is to be written to.
+    :param spreadsheet_path: Path to spreadsheet data is to be written to.
     :return:
     """
     pause = 0
     for url in url_list:
         if pause == 10:
             time.sleep(10)
-            spread(scrape_match(url), path)
+            spread(scrape_match(url), spreadsheet_path)
             pause = 0
         else:
             time.sleep(2)
-            spread(scrape_match(url), path)
+            spread(scrape_match(url), spreadsheet_path)
             pause += 1
 
     print("=" * 100 + "\nComplete - {} matches added".format(len(url_list)))
