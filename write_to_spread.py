@@ -40,9 +40,8 @@ def spread(match_dict, file_path):
 
     # Write time_cols markets to sheet.
     for stat, start_col in time_cols.items():
-        number_items = len(match_dict[stat])
-        for item in range(number_items):
-            ws.cell(row=row, column=start_col).value = match_dict[stat][item]
+        for time in match_dict[stat]:
+            ws.cell(row=row, column=start_col).value = time
             start_col += 1
 
     wb.save(file_path)
