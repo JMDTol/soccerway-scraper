@@ -4,7 +4,7 @@ from selenium.webdriver.common.by import By
 from selenium.webdriver.support.ui import WebDriverWait
 from selenium.webdriver.support import expected_conditions as ec
 from bs4 import BeautifulSoup
-import time
+from time import sleep
 
 
 def season_scrape(url):
@@ -28,7 +28,7 @@ def season_scrape(url):
         ec.presence_of_element_located((By.ID, 'page_competition_1_block_competition_matches_summary_5_1_2'))
     )
     element.click()
-    time.sleep(0.5)
+    sleep(0.5)
 
     # Create a list containing match URLs for the final game week before clicking 'previous'
     url_list = get_urls(innerhtml_soup(driver))
@@ -36,7 +36,7 @@ def season_scrape(url):
     previous_id = 'page_competition_1_block_competition_matches_summary_5_previous'
     while driver.find_element_by_id(previous_id).get_attribute('class') != 'previous disabled':
         driver.find_element_by_id(previous_id).click()
-        time.sleep(1)
+        sleep(1)
         urls = get_urls(innerhtml_soup(driver))
         urls.reverse()
         url_list += urls
