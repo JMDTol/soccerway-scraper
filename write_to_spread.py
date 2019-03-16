@@ -1,8 +1,14 @@
 from openpyxl import load_workbook
 
 
-def spread(match_dict, file_path):
-    wb = load_workbook(file_path)
+def spread(match_dict, spreadsheet_path):
+    """
+    Write match data to spreadsheet.
+    :param match_dict: Dictionary containing match data
+    :param spreadsheet_path: Path to spreadsheet data is to be written to.
+    :return:
+    """
+    wb = load_workbook(spreadsheet_path)
     ws = wb.worksheets[0]
     row = ws.max_row + 1
 
@@ -46,7 +52,7 @@ def spread(match_dict, file_path):
             ws.cell(row=row, column=start_col).value = match_time
             start_col += 1
 
-    wb.save(file_path)
+    wb.save(spreadsheet_path)
     print("{} - {} vs {} added.".format(match_dict['date'],
                                         match_dict['home_team_name'],
                                         match_dict['away_team_name']))
