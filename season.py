@@ -1,8 +1,5 @@
 from selenium import webdriver
 from selenium.common.exceptions import NoSuchElementException
-from selenium.webdriver.common.by import By
-from selenium.webdriver.support.ui import WebDriverWait
-from selenium.webdriver.support import expected_conditions as ec
 from bs4 import BeautifulSoup
 from time import sleep
 
@@ -23,12 +20,7 @@ def season_scrape(url):
     except NoSuchElementException:
         pass
 
-    # Organize matches by game week
-    element = WebDriverWait(driver, 10).until(
-        ec.presence_of_element_located((By.ID, 'page_competition_1_block_competition_matches_summary_5_1_2'))
-    )
-    element.click()
-    sleep(0.5)
+    # driver.find_element_by_id('page_competition_1_block_competition_matches_summary_5_1_2').click()
 
     # Create a list containing match URLs for the final game week before clicking 'previous'
     url_list = get_urls(innerhtml_soup(driver))
