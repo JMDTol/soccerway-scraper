@@ -1,9 +1,9 @@
-from scraper import scrape_match
+import time
+import tkinter as tk
 from tkinter import filedialog
+from scraper import scrape_match
 from write_to_spread import spread
 from season import season_scrape
-import tkinter as tk
-import time
 
 
 def input_urls():

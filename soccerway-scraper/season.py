@@ -1,7 +1,7 @@
-from selenium import webdriver
-from selenium.common.exceptions import NoSuchElementException
 from bs4 import BeautifulSoup
 from time import sleep
+from selenium import webdriver
+from selenium.common.exceptions import NoSuchElementException
 
 
 def season_scrape(url):
