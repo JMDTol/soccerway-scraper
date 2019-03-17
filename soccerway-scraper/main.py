@@ -40,10 +40,10 @@ def scrape_urls(url_list, spreadsheet_path):
             spread(scrape_match(url), spreadsheet_path)
             pause += 1
 
-    print("=" * 100 + "\nComplete - {} matches added".format(len(url_list)))
+    print('=' * 100 + '\nComplete - {} matches added'.format(len(url_list)))
 
 
-if __name__ == "__main__":
+if __name__ == '__main__':
     root = tk.Tk()
     root.withdraw()
     path = filedialog.askopenfilename()
