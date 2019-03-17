@@ -32,7 +32,7 @@ def season_scrape(url):
         url_list += urls
 
     driver.quit()
-    print('=' * 100 + '\n{} matches found'.format(len(set(url_list))))
+    print('=' * 100 + f'\n{len(set(url_list))} matches found')
     url_list.reverse()
     return url_list
 
