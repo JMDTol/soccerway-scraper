@@ -53,6 +53,4 @@ def spread(match_dict, spreadsheet_path):
             start_col += 1
 
     wb.save(spreadsheet_path)
-    print('{} - {} vs {} added.'.format(match_dict['date'],
-                                        match_dict['home_team_name'],
-                                        match_dict['away_team_name']))
+    print(f"{match_dict['date']} - {match_dict['home_team_name']} vs {match_dict['away_team_name']} added.")
