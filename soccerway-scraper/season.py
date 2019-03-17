@@ -35,7 +35,8 @@ def scrape_season(url):
     url_list.reverse()
 
     unique_urls = len(set(url_list))
-    print('=' * 100 + f'\n{unique_urls} matches found')
+    print('=' * 100)
+    print(f'{unique_urls} matches found')
     return url_list
 
 

@@ -40,7 +40,8 @@ def scrape_urls(url_list, spreadsheet_path):
             spread(scrape_match(url), spreadsheet_path)
             pause += 1
 
-    print('=' * 100 + f'\nComplete - {len(url_list)} matches added')
+    print('=' * 100)
+    print(f'Complete - {len(url_list)} matches added')
 
 
 if __name__ == '__main__':
