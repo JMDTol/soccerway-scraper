@@ -20,8 +20,6 @@ def season_scrape(url):
     except NoSuchElementException:
         pass
 
-    # driver.find_element_by_id('page_competition_1_block_competition_matches_summary_5_1_2').click()
-
     # Create a list containing match URLs for the final game week before clicking the previous button.
     url_list = get_urls(innerhtml_soup(driver))
 
