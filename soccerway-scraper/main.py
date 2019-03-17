@@ -3,7 +3,7 @@ import tkinter as tk
 from tkinter import filedialog
 from scraper import scrape_match
 from write_to_spread import spread
-from season import season_scrape
+from season import scrape_season
 
 
 def input_urls():
@@ -13,7 +13,7 @@ def input_urls():
     """
     if input('Scrape entire season? (y/n): ') == 'y':
         season_url = input('Enter season URL: ')
-        url_list = season_scrape(season_url)
+        url_list = scrape_season(season_url)
         if input('Continue? (y/n): ') != 'y':
             exit()
     else:

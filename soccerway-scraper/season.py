@@ -4,7 +4,7 @@ from selenium import webdriver
 from selenium.common.exceptions import NoSuchElementException
 
 
-def season_scrape(url):
+def scrape_season(url):
     """
     Get the URL for every match in a season.
     :param url: Soccerway URL for the season.
