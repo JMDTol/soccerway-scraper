@@ -47,5 +47,9 @@ if __name__ == '__main__':
     root = tk.Tk()
     root.withdraw()
     path = filedialog.askopenfilename()
-    matches_to_scrape = input_urls()
-    scrape_urls(matches_to_scrape, path)
+    try:
+        matches_to_scrape = input_urls()
+        scrape_urls(matches_to_scrape, path)
+    except IndexError:
+        print('=' * 50)
+        print('Invalid URLs entered')
