@@ -51,5 +51,5 @@ if __name__ == '__main__':
         matches_to_scrape = input_urls()
         scrape_urls(matches_to_scrape, path)
     except IndexError:
-        print('=' * 50)
+        print('=' * 100)
         print('Invalid URLs entered')
