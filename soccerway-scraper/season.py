@@ -20,7 +20,6 @@ def scrape_season(url):
     except NoSuchElementException:
         pass
 
-    # Create a list containing match URLs for the final game week before clicking the previous button.
     url_list = get_urls(innerhtml_soup(driver))
 
     previous_id = 'page_competition_1_block_competition_matches_summary_5_previous'
