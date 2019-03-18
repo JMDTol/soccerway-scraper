@@ -128,8 +128,9 @@ def scrape_iframe(match_soup):
                 if 'title' not in stat.attrs['class']:
                     match_stats.append((int(stat.text)))
 
-    keys = ('home_corners', 'away_corners', 'home_shots_on', 'away_shots_on', 'home_shots_wide', 'away_shots_wide',
-            'home_fouls', 'away_fouls', 'home_offsides', 'away_offsides')
+    keys = ('home_corners', 'away_corners', 'home_shots_on', 'away_shots_on',
+            'home_shots_wide', 'away_shots_wide', 'home_fouls', 'away_fouls',
+            'home_offsides', 'away_offsides')
 
     if len(match_stats) == 10:
         return dict(zip(keys, match_stats))
