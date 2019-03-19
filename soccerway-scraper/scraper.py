@@ -93,7 +93,8 @@ def away_goals(match_soup):
 
 
 def home_cards(match_soup):
-    yellow_times, red_times = [], []
+    yellow_times = []
+    red_times = []
     for card in match_soup.select('div.container.left span'):
         if 'events/YC.png' in str(card):
             yellow_time = clean_string(card)
@@ -103,11 +104,13 @@ def home_cards(match_soup):
             red_time = clean_string(card)
             if red_time <= 90:
                 red_times.append(red_time)
+
     return sorted(yellow_times), sorted(red_times)
 
 
 def away_cards(match_soup):
-    yellow_times, red_times = [], []
+    yellow_times = []
+    red_times = []
     for card in match_soup.select('div.container.right span'):
         if 'events/YC.png' in str(card):
             yellow_time = clean_string(card)
@@ -117,6 +120,7 @@ def away_cards(match_soup):
             red_time = clean_string(card)
             if red_time <= 90:
                 red_times.append(red_time)
+
     return sorted(yellow_times), sorted(red_times)
 
 
