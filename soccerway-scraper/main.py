@@ -8,7 +8,8 @@ from season import scrape_season
 
 def input_urls():
     """
-    Check whether the user wants to scrape an entire season or manually enter URLs for each match.
+    Check whether the user wants to scrape an entire season or manually enter
+    URLs for each match.
     :return: List of match URLs.
     """
     if input('Scrape entire season? (y/n): ') == 'y':
@@ -17,7 +18,8 @@ def input_urls():
         if input('Continue? (y/n): ') != 'y':
             exit()
     else:
-        url_list = input("Enter match URLs (split multiple URLs with ','): ").split(',')
+        urls = input("Enter match URLs (split multiple URLs with ','): ")
+        url_list = urls.split(',')
 
     return url_list
 

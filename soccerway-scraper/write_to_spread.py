@@ -12,7 +12,7 @@ def spread(match_dict, spreadsheet_path):
     ws = wb.worksheets[0]
     row = ws.max_row + 1
 
-    # integers in main_cols and time_cols correspond to spreadsheet column numbers.
+    # integers in dicts correspond to spreadsheet column numbers.
     main_cols = {
         'week': 1,
         'date': 2,
@@ -53,4 +53,6 @@ def spread(match_dict, spreadsheet_path):
             start_col += 1
 
     wb.save(spreadsheet_path)
-    print(f"{match_dict['date']} - {match_dict['home_team_name']} vs {match_dict['away_team_name']} added.")
+    print(f"{match_dict['date']} - "
+          f"{match_dict['home_team_name']} vs "
+          f"{match_dict['away_team_name']} added.")
