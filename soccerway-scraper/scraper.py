@@ -42,8 +42,7 @@ def game_week(match_soup):
     week_elem = match_soup.find(text='Game week')
     if week_elem:
         return int(week_elem.find_next('dd').text)
-    else:
-        return None
+    return None
 
 
 def date(match_soup):
@@ -65,8 +64,7 @@ def referee(match_soup):
     referee_elem = match_soup.find(text='Referee:')
     if referee_elem:
         return referee_elem.find_next('dd').text
-    else:
-        return None
+    return None
 
 
 def clean_string(time):
