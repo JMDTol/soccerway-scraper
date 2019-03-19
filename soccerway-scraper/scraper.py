@@ -71,8 +71,7 @@ def clean_string(time):
     time = str(time.text)
     if '+' in time:
         return int(time.split('+')[0].replace("'", ""))
-    else:
-        return int(time[:-1])
+    return int(time[:-1])
 
 
 def home_goals(match_soup):
@@ -132,11 +131,13 @@ def scrape_iframe(match_soup):
                 if 'title' not in stat.attrs['class']:
                     match_stats.append((int(stat.text)))
 
-    keys = ('home_corners', 'away_corners', 'home_shots_on', 'away_shots_on',
-            'home_shots_wide', 'away_shots_wide', 'home_fouls', 'away_fouls',
-            'home_offsides', 'away_offsides')
+    keys = (
+        'home_corners', 'away_corners', 'home_shots_on', 'away_shots_on',
+        'home_shots_wide', 'away_shots_wide', 'home_fouls', 'away_fouls',
+        'home_offsides', 'away_offsides'
+    )
 
     if len(match_stats) == 10:
         return dict(zip(keys, match_stats))
-    else:
-        return dict.fromkeys(keys, None)
+
+    return dict.fromkeys(keys, None)
