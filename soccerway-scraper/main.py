@@ -1,5 +1,5 @@
-import time
 import tkinter as tk
+from time import sleep
 from tkinter import filedialog
 from scraper import scrape_match
 from write_to_spread import spread
@@ -33,9 +33,9 @@ def scrape_urls(url_list, spreadsheet_path):
     """
     for counter, url in enumerate(url_list):
         if counter % 10 == 0 and counter != 0:
-            time.sleep(10)
+            sleep(10)
         else:
-            time.sleep(2)
+            sleep(2)
 
         spread(scrape_match(url), spreadsheet_path)
 
