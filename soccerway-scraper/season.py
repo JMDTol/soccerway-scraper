@@ -23,8 +23,8 @@ def scrape_season(url):
     url_list = get_urls(innerhtml_soup(driver))
 
     prev_id = 'page_competition_1_block_competition_matches_summary_5_previous'
-    while driver.find_element_by_id(prev_id).get_attribute('class') \
-            != 'previous disabled':
+    while (driver.find_element_by_id(prev_id).get_attribute('class') !=
+           'previous disabled'):
         driver.find_element_by_id(prev_id).click()
         sleep(1)
         urls = get_urls(innerhtml_soup(driver))
