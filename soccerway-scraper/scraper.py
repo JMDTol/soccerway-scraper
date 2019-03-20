@@ -15,7 +15,7 @@ def scrape_match(url):
     game_data = {}
     game_data['week'] = game_week(soup)
     game_data['date'] = date(soup)
-    game_data['home_team_name'], game_data['away_team_name'] = team_names(soup)
+    game_data['home_team'], game_data['away_team'] = team_names(soup)
     game_data['referee'] = referee(soup)
 
     home_goal_times = home_goals(soup)

@@ -16,8 +16,8 @@ def spread(match_dict, spreadsheet_path):
     main_cols = {
         'week': 1,
         'date': 2,
-        'home_team_name': 3,
-        'away_team_name': 4,
+        'home_team': 3,
+        'away_team': 4,
         'home_goal_total': 5,
         'away_goal_total': 6,
         'referee': 47,
@@ -54,5 +54,4 @@ def spread(match_dict, spreadsheet_path):
 
     wb.save(spreadsheet_path)
     print(f"{match_dict['date']} - "
-          f"{match_dict['home_team_name']} vs "
-          f"{match_dict['away_team_name']} added.")
+          f"{match_dict['home_team']} vs {match_dict['away_team']} added.")
