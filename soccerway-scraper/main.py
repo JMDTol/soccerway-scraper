@@ -3,7 +3,7 @@ import tkinter as tk
 from tkinter import filedialog
 from scraper import scrape_match
 from write_to_spread import spread
-from season import scrape_season
+from season import get_urls_season
 
 
 def input_urls():
@@ -14,14 +14,14 @@ def input_urls():
     """
     if input('Scrape entire season? (y/n): ') == 'y':
         season_url = input('Enter season URL: ')
-        url_list = scrape_season(season_url)
+        match_urls = get_urls_season(season_url)
         if input('Continue? (y/n): ') != 'y':
             exit()
     else:
         urls = input("Enter match URLs (split multiple URLs with ','): ")
-        url_list = urls.split(',')
+        match_urls = urls.split(',')
 
-    return url_list
+    return match_urls
 
 
 def scrape_urls(url_list, spreadsheet_path):
@@ -31,16 +31,13 @@ def scrape_urls(url_list, spreadsheet_path):
     :param spreadsheet_path: Path to spreadsheet data is to be written to.
     :return:
     """
-    pause = 0
-    for url in url_list:
-        if pause == 10:
+    for counter, url in enumerate(url_list):
+        if counter % 10 == 0 and counter != 0:
             time.sleep(10)
-            spread(scrape_match(url), spreadsheet_path)
-            pause = 0
         else:
             time.sleep(2)
-            spread(scrape_match(url), spreadsheet_path)
-            pause += 1
+
+        spread(scrape_match(url), spreadsheet_path)
 
     print('=' * 100)
     print(f'Complete - {len(url_list)} matches added')

@@ -4,7 +4,7 @@ from selenium import webdriver
 from selenium.common.exceptions import NoSuchElementException
 
 
-def scrape_season(url):
+def get_urls_season(url):
     """
     Get the URL for every match in a season.
     :param url: Soccerway URL for the season.
@@ -26,7 +26,7 @@ def scrape_season(url):
     while (driver.find_element_by_id(prev_id).get_attribute('class') !=
            'previous disabled'):
         driver.find_element_by_id(prev_id).click()
-        sleep(1)
+        sleep(2)
         urls = get_urls(innerhtml_soup(driver))
         urls.reverse()
         url_list += urls
