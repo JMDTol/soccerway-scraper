@@ -12,7 +12,7 @@ def get_urls_season(url):
     """
     driver = webdriver.Chrome()
     driver.fullscreen_window()
-    driver.get(url)
+    driver.get(('https://us.soccerway' + url.split('soccerway')[1]))
 
     # Click privacy policy if present.
     try:

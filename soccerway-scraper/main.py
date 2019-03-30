@@ -43,7 +43,7 @@ def scrape_urls(url_list, spreadsheet_path):
     print(f'Complete - {len(url_list)} matches added')
 
 
-if __name__ == '__main__':
+def main():
     root = tk.Tk()
     root.withdraw()
     path = filedialog.askopenfilename()
@@ -53,3 +53,7 @@ if __name__ == '__main__':
     except IndexError:
         print('=' * 100)
         print('Invalid URLs entered')
+
+
+if __name__ == '__main__':
+    main()
