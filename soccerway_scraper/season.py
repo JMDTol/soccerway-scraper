@@ -7,8 +7,8 @@ from selenium.common.exceptions import NoSuchElementException
 def get_urls_season(url):
     """
     Get the URL for every match in a season.
-    :param url: Soccerway URL for the season.
-    :return: List of match URLs.
+    :param url: Soccerway URL for the season
+    :return: List of match URLs
     """
     driver = webdriver.Chrome()
     driver.fullscreen_window()
@@ -44,7 +44,7 @@ def get_urls(soup):
     """
     Extract URL for each match in that game week.
     :param soup:
-    :return: List of match URLs.
+    :return: List of match URLs
     """
     urls = []
     for elem in soup.select('.info-button.button > a'):

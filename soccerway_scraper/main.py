@@ -10,7 +10,7 @@ def input_urls():
     """
     Check whether the user wants to scrape an entire season or manually enter
     URLs for each match.
-    :return: List of match URLs.
+    :return: List of match URLs
     """
     if input('Scrape entire season? (y/n): ') == 'y':
         season_url = input('Enter season URL: ')
@@ -27,8 +27,8 @@ def input_urls():
 def scrape_urls(url_list, spreadsheet_path):
     """
     Scrape each URL pausing at intervals to prevent requests from being denied.
-    :param url_list: List of match URLs.
-    :param spreadsheet_path: Path to spreadsheet data is to be written to.
+    :param url_list: List of match URLs
+    :param spreadsheet_path: Path to spreadsheet data is to be written to
     :return:
     """
     for counter, url in enumerate(url_list):
