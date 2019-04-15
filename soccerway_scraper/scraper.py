@@ -133,7 +133,10 @@ def scrape_iframe(match_soup):
             iframe_soup = BeautifulSoup(iframe, 'html.parser')
             for stat in iframe_soup.select('.legend'):
                 if 'title' not in stat.attrs['class']:
-                    match_stats.append((int(stat.text)))
+                    try:
+                        match_stats.append((int(stat.text)))
+                    except ValueError:
+                        break
 
     keys = (
         'home_corners', 'away_corners', 'home_shots_on', 'away_shots_on',
