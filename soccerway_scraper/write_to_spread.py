@@ -12,7 +12,7 @@ def spread(match_dict, spreadsheet_path):
     ws = wb.worksheets[0]
     row = ws.max_row + 1
 
-    # integers in dicts correspond to spreadsheet column numbers.
+    # integers in dicts correspond to spreadsheet column numbers
     main_cols = {
         'week': 1,
         'date': 2,
