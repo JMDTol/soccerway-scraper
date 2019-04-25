@@ -3,13 +3,13 @@ from bs4 import BeautifulSoup
 from datetime import datetime
 
 
-def scrape_match(url):
+def scrape_match(url_path):
     """
     Create soup and scrape match data.
-    :param url: Soccerway URL for match.
+    :param url_path: Soccerway URL path for match.
     :return: Dictionary containing match data
     """
-    response = requests.get('https://us.soccerway' + url.split('soccerway')[1])
+    response = requests.get('https://us.soccerway' + url_path)
     soup = BeautifulSoup(response.text, 'html.parser')
 
     game_data = {}

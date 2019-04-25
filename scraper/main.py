@@ -1,6 +1,7 @@
 import tkinter as tk
 from time import sleep
 from tkinter import filedialog
+from urllib.parse import urlparse
 from scraper import scrape_match
 from write_to_spread import spread
 from season import get_urls_season
@@ -19,7 +20,7 @@ def input_urls():
             exit()
     else:
         urls = input("Enter match URLs (split multiple URLs with ','): ")
-        match_urls = urls.split(',')
+        match_urls = [urlparse(url).path for url in urls.split(',')]
 
     return match_urls
 

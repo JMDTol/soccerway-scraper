@@ -1,18 +1,19 @@
 from bs4 import BeautifulSoup
+from urllib.parse import urlparse
 from time import sleep
 from selenium import webdriver
 from selenium.common.exceptions import NoSuchElementException
 
 
-def get_urls_season(url):
+def get_urls_season(url_path):
     """
     Get the URL for every match in a season.
-    :param url: Soccerway URL for the season
+    :param url_path: Soccerway URL path for the season
     :return: List of match URLs
     """
     driver = webdriver.Chrome()
     driver.fullscreen_window()
-    driver.get(('https://us.soccerway' + url.split('soccerway')[1]))
+    driver.get('https://us.soccerway' + url_path)
 
     # Click privacy policy if present.
     try:
@@ -28,15 +29,14 @@ def get_urls_season(url):
         driver.find_element_by_id(prev_id).click()
         sleep(2)
         urls = get_urls(innerhtml_soup(driver))
-        urls.reverse()
+        urls.reverse()  # Arrange in chronological order
         url_list += urls
 
     driver.quit()
     url_list.reverse()
 
-    unique_urls = len(set(url_list))
     print('=' * 100)
-    print(f'{unique_urls} matches found')
+    print(f'{len(set(url_list))} matches found')
     return url_list
 
 
@@ -48,7 +48,8 @@ def get_urls(soup):
     """
     urls = []
     for elem in soup.select('.info-button.button > a'):
-        urls.append('https://us.soccerway.com' + elem.get('href'))
+        url = elem.get('href')
+        urls.append(urlparse(url).path)
     return urls
 
 
