@@ -22,6 +22,7 @@ def get_urls_season(url_path):
     except NoSuchElementException:
         pass
 
+    # Get URLs from current page first
     url_list = get_urls(innerhtml_soup(driver))
 
     prev_id = 'page_competition_1_block_competition_matches_summary_5_previous'
@@ -30,7 +31,8 @@ def get_urls_season(url_path):
         driver.find_element_by_id(prev_id).click()
         sleep(2)
         urls = get_urls(innerhtml_soup(driver))
-        urls.reverse()  # Arrange in chronological order
+        # Arrange in chronological order
+        urls.reverse()
         url_list += urls
 
     driver.quit()
@@ -39,6 +41,7 @@ def get_urls_season(url_path):
     print('=' * 100)
     print(f'{len(set(url_list))} matches found')
 
+    # Exit if incorrect number of URLs found
     if input('Continue? (y/n): ') != 'y':
         exit()
 
