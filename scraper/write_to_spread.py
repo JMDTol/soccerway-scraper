@@ -1,14 +1,14 @@
 from openpyxl import load_workbook
 
 
-def spread(match_dict, spreadsheet_path):
+def write_spread(match_dict, path=''):
     """
     Write match data to spreadsheet.
     :param match_dict: Dictionary containing match data
-    :param spreadsheet_path: Path to spreadsheet data is to be written to.
+    :param path: Path to spreadsheet data is to be written to.
     :return:
     """
-    wb = load_workbook(spreadsheet_path)
+    wb = load_workbook(path)
     ws = wb.worksheets[0]
     row = ws.max_row + 1
 

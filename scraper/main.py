@@ -1,7 +1,7 @@
 from time import sleep
 from urllib.parse import urlparse
 from scraper import scrape_match
-from write_to_spread import spread
+from write_to_spread import write_spread
 from season import get_urls_season
 
 
@@ -33,7 +33,8 @@ def scrape_urls(url_list):
         else:
             sleep(2)
 
-        spread(scrape_match(url), 'example_output.xlsx')
+        match_dict = scrape_match(url)
+        write_spread(match_dict, path='example_output.xlsx')
 
     print('=' * 100)
     print(f'Complete - {len(url_list)} added')
