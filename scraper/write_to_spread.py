@@ -23,14 +23,14 @@ def write_spread(match_dict, path=''):
         'referee': 47,
         'home_corners': 48,
         'away_corners': 49,
+        'home_offsides': 50,
+        'away_offsides': 51,
+        'home_fouls': 52,
+        'away_fouls': 53,
         'home_shots_on': 54,
         'away_shots_on': 56,
         'home_shots_wide': 55,
         'away_shots_wide': 57,
-        'home_fouls': 52,
-        'away_fouls': 53,
-        'home_offsides': 50,
-        'away_offsides': 51,
     }
 
     time_cols = {
