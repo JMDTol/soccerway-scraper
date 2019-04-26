@@ -29,7 +29,7 @@ def scrape_urls(url_list, spreadsheet_path):
     """
     Scrape each URL pausing at intervals to prevent requests from being denied.
     :param url_list: List of match URLs
-    :param spreadsheet_path: Path to spreadsheet data is to be written to
+    :param spreadsheet_path: Path to spreadsheet to write to
     :return:
     """
     for counter, url in enumerate(url_list):
