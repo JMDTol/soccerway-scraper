@@ -47,10 +47,10 @@ def scrape_urls(url_list, spreadsheet_path):
 def main():
     root = tk.Tk()
     root.withdraw()
-    path = filedialog.askopenfilename()
+    spreadsheet = filedialog.askopenfilename()
     try:
-        matches_to_scrape = input_urls()
-        scrape_urls(matches_to_scrape, path)
+        urls = input_urls()
+        scrape_urls(urls, spreadsheet)
     except IndexError:
         print('=' * 100)
         print('Invalid URLs entered')
