@@ -52,6 +52,6 @@ def write_spread(match_dict, path=''):
             ws.cell(row=row, column=start_col).value = match_time
             start_col += 1
 
-    wb.save(spreadsheet_path)
+    wb.save(path)
     print(f"{match_dict['date']} - "
           f"{match_dict['home_team']} vs {match_dict['away_team']} added.")
