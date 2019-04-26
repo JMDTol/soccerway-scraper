@@ -1,6 +1,4 @@
-import tkinter as tk
 from time import sleep
-from tkinter import filedialog
 from urllib.parse import urlparse
 from scraper import scrape_match
 from write_to_spread import spread
@@ -16,8 +14,6 @@ def input_urls():
     if input('Scrape entire season? (y/n): ') == 'y':
         season_url = input('Enter season URL: ')
         match_urls = get_urls_season(season_url)
-        if input('Continue? (y/n): ') != 'y':
-            exit()
     else:
         urls = input("Enter match URLs (split multiple URLs with ','): ")
         match_urls = [urlparse(url).path for url in urls.split(',')]
@@ -25,11 +21,10 @@ def input_urls():
     return match_urls
 
 
-def scrape_urls(url_list, spreadsheet_path):
+def scrape_urls(url_list):
     """
     Scrape each URL pausing at intervals to prevent requests from being denied.
     :param url_list: List of match URLs
-    :param spreadsheet_path: Path to spreadsheet to write to
     :return:
     """
     for counter, url in enumerate(url_list):
@@ -38,19 +33,16 @@ def scrape_urls(url_list, spreadsheet_path):
         else:
             sleep(2)
 
-        spread(scrape_match(url), spreadsheet_path)
+        spread(scrape_match(url), 'example_output.xlsx')
 
     print('=' * 100)
-    print(f'Complete - {len(url_list)} matches added')
+    print(f'Complete - {len(url_list)} added')
 
 
 def main():
-    root = tk.Tk()
-    root.withdraw()
-    spreadsheet = filedialog.askopenfilename()
     try:
         urls = input_urls()
-        scrape_urls(urls, spreadsheet)
+        scrape_urls(urls)
     except IndexError:
         print('=' * 100)
         print('Invalid URLs entered')

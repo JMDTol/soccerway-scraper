@@ -9,7 +9,7 @@ def scrape_match(url_path):
     :param url_path: Soccerway URL path for match.
     :return: Dictionary containing match data
     """
-    response = requests.get('https://us.soccerway' + url_path)
+    response = requests.get('https://us.soccerway.com' + url_path)
     soup = BeautifulSoup(response.text, 'html.parser')
 
     game_data = {}

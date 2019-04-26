@@ -1,6 +1,7 @@
 from bs4 import BeautifulSoup
 from urllib.parse import urlparse
 from time import sleep
+
 from selenium import webdriver
 from selenium.common.exceptions import NoSuchElementException
 
@@ -13,7 +14,7 @@ def get_urls_season(url_path):
     """
     driver = webdriver.Chrome()
     driver.fullscreen_window()
-    driver.get('https://us.soccerway' + url_path)
+    driver.get('https://us.soccerway.com' + url_path)
 
     # Click privacy policy if present.
     try:
@@ -37,6 +38,10 @@ def get_urls_season(url_path):
 
     print('=' * 100)
     print(f'{len(set(url_list))} matches found')
+
+    if input('Continue? (y/n): ') != 'y':
+        exit()
+
     return url_list
 
 
