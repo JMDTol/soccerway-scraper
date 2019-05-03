@@ -30,7 +30,9 @@ def get_urls_season(url_path):
            'previous disabled'):
         driver.find_element_by_id(prev_id).click()
         sleep(2)
+
         urls = get_urls(innerhtml_soup(driver))
+
         # Arrange in chronological order
         urls.reverse()
         url_list += urls
