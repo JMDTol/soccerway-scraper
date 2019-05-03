@@ -1,5 +1,6 @@
 from time import sleep
 from urllib.parse import urlparse
+
 from scraper import scrape_match
 from write_to_spread import write_spread
 from season import get_urls_season

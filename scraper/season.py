@@ -1,7 +1,7 @@
-from bs4 import BeautifulSoup
 from urllib.parse import urlparse
 from time import sleep
 
+from bs4 import BeautifulSoup
 from selenium import webdriver
 from selenium.common.exceptions import NoSuchElementException
 
