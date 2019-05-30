@@ -14,7 +14,7 @@ def input_urls():
     """
     if input('Scrape entire season? (y/n): ') == 'y':
         season_url = input('Enter season URL: ')
-        match_urls = get_urls_season(season_url)
+        match_urls = get_urls_season(urlparse(season_url).path)
     else:
         urls = input("Enter match URLs (split multiple URLs with ','): ")
         match_urls = [urlparse(url).path for url in urls.split(',')]
