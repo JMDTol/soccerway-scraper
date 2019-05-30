@@ -1,5 +1,5 @@
-from urllib.parse import urlparse
 from time import sleep
+from urllib.parse import urlparse
 
 from bs4 import BeautifulSoup
 from selenium import webdriver
@@ -23,34 +23,42 @@ def get_urls_season(url_path):
         pass
 
     # Get URLs from current page first
-    url_list = get_urls(innerhtml_soup(driver))
-
-    prev_id = 'page_competition_1_block_competition_matches_summary_5_previous'
-    while (driver.find_element_by_id(prev_id).get_attribute('class') !=
-           'previous disabled'):
-        driver.find_element_by_id(prev_id).click()
-        sleep(2)
-
-        urls = get_urls(innerhtml_soup(driver))
-
-        # Arrange in chronological order
-        urls.reverse()
-        url_list += urls
+    url_list = get_fixture_urls(innerhtml_soup(driver))
+    url_list += cycle_through_game_weeks(driver)
+    url_list.reverse()
 
     driver.quit()
-    url_list.reverse()
 
     print('=' * 100)
     print(f'{len(set(url_list))} matches found')
 
-    # Exit if incorrect number of URLs found
     if input('Continue? (y/n): ') != 'y':
         exit()
 
     return url_list
 
 
-def get_urls(soup):
+def cycle_through_game_weeks(driver):
+    fixture_urls = []
+
+    prev_id = 'page_competition_1_block_competition_matches_summary_5_previous'
+    while (
+            driver.find_element_by_id(prev_id).get_attribute('class') !=
+            'previous disabled'
+    ):
+        driver.find_element_by_id(prev_id).click()
+        sleep(2)
+
+        urls = get_fixture_urls(innerhtml_soup(driver))
+
+        # Arrange in chronological order
+        urls.reverse()
+        fixture_urls += urls
+
+    return fixture_urls
+
+
+def get_fixture_urls(soup):
     """
     Extract URL for each match in that game week.
     :param soup:
@@ -58,8 +66,9 @@ def get_urls(soup):
     """
     urls = []
     for elem in soup.select('.info-button.button > a'):
-        url = elem.get('href')
-        urls.append(urlparse(url).path)
+        urls.append(
+            urlparse(elem.get('href')).path
+        )
     return urls
 
 
