@@ -43,8 +43,7 @@ def game_week(match_soup):
     week_elem = match_soup.find(text='Game week')
     if week_elem:
         return int(week_elem.find_next('dd').text)
-    else:
-        return None
+    return None
 
 
 def date(match_soup):
@@ -66,16 +65,14 @@ def referee(match_soup):
     referee_elem = match_soup.find(text='Referee:')
     if referee_elem:
         return referee_elem.find_next('dd').text
-    else:
-        return None
+    return None
 
 
 def clean_string(time):
     time = str(time.text)
     if '+' in time:
         return int(time.split('+')[0].replace("'", ""))
-    else:
-        return int(time[:-1])
+    return int(time[:-1])
 
 
 def home_goals(match_soup):
@@ -150,5 +147,4 @@ def scrape_iframe(match_soup):
 
     if len(match_stats) == 10:
         return dict(zip(keys, match_stats))
-    else:
-        return dict.fromkeys(keys, None)
+    return dict.fromkeys(keys, None)
