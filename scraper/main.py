@@ -42,13 +42,9 @@ def scrape_urls(url_list):
 
 
 def main():
-    try:
-        urls = input_urls()
-        scrape_urls(urls)
-    except IndexError:
-        print('=' * 100)
-        print('Invalid URLs entered')
+    urls = input_urls()
+    scrape_urls(urls)
 
-
+    
 if __name__ == '__main__':
     main()
