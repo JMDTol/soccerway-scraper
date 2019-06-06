@@ -28,8 +28,8 @@ def scrape_urls(url_list):
     :param url_list: List of match URLs
     :return:
     """
-    for counter, url in enumerate(url_list):
-        if counter % 10 == 0 and counter != 0:
+    for counter, url in enumerate(url_list, start=1):
+        if counter % 10 == 0:
             sleep(10)
         else:
             sleep(2)
