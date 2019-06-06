@@ -38,7 +38,7 @@ def scrape_urls(url_list):
         write_spread(match_dict, path='example_output.xlsx')
 
     print('=' * 100)
-    print(f'Complete - {counter} added')
+    print(f'Complete - {len(url_list)} added')
 
 
 def main():
