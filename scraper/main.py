@@ -6,12 +6,7 @@ from write_to_spread import write_spread
 from season import get_urls_season
 
 
-def input_urls():
-    """
-    Check whether the user wants to scrape an entire season or manually enter
-    URLs for each match.
-    :return: List of match URLs
-    """
+def main():
     if input('Scrape entire season? (y/n): ') == 'y':
         season_url = input('Enter season URL: ')
         match_urls = get_urls_season(urlparse(season_url).path)
@@ -19,16 +14,7 @@ def input_urls():
         urls = input("Enter match URLs (split multiple URLs with ','): ")
         match_urls = [urlparse(url).path for url in urls.split(',')]
 
-    return match_urls
-
-
-def scrape_urls(url_list):
-    """
-    Scrape each URL pausing at intervals to prevent requests from being denied.
-    :param url_list: List of match URLs
-    :return:
-    """
-    for counter, url in enumerate(url_list, start=1):
+    for counter, url in enumerate(match_urls, start=1):
         if counter % 10 == 0:
             sleep(10)
         else:
@@ -38,12 +24,7 @@ def scrape_urls(url_list):
         write_spread(match_dict, path='example_output.xlsx')
 
     print('=' * 100)
-    print(f'Complete - {len(url_list)} added')
-
-
-def main():
-    urls = input_urls()
-    scrape_urls(urls)
+    print(f'Complete - {len(match_urls)} added')
 
     
 if __name__ == '__main__':
