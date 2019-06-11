@@ -41,16 +41,18 @@ class TestScraper(unittest.TestCase):
         self.assertEqual(scraper.away_cards(self.soup), ([63], []))
 
     def test_stats(self):
-        stats = {
-            "away_corners": 6,
-            "away_fouls": 18,
-            "away_offsides": 0,
-            "away_shots_on": 4,
-            "away_shots_wide": 8,
-            "home_corners": 6,
-            "home_fouls": 19,
-            "home_offsides": 2,
-            "home_shots_on": 6,
-            "home_shots_wide": 11,
-        }
-        self.assertEqual(scraper.scrape_iframe(self.soup), stats)
+        self.assertEqual(
+            scraper.scrape_iframe(self.soup),
+            {
+                "away_corners": 6,
+                "away_fouls": 18,
+                "away_offsides": 0,
+                "away_shots_on": 4,
+                "away_shots_wide": 8,
+                "home_corners": 6,
+                "home_fouls": 19,
+                "home_offsides": 2,
+                "home_shots_on": 6,
+                "home_shots_wide": 11,
+            },
+        )
