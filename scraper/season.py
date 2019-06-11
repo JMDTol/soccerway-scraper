@@ -14,11 +14,11 @@ def get_urls_season(url_path):
     """
     driver = webdriver.Chrome()
     driver.fullscreen_window()
-    driver.get('https://us.soccerway.com' + url_path)
+    driver.get("https://us.soccerway.com" + url_path)
 
     # Click privacy policy if present.
     try:
-        driver.find_element_by_class_name('qc-cmp-button').click()
+        driver.find_element_by_class_name("qc-cmp-button").click()
     except NoSuchElementException:
         pass
 
@@ -29,10 +29,10 @@ def get_urls_season(url_path):
 
     driver.quit()
 
-    print('=' * 100)
-    print(f'{len(set(url_list))} matches found')
+    print("=" * 100)
+    print(f"{len(set(url_list))} matches found")
 
-    if input('Continue? (y/n): ') != 'y':
+    if input("Continue? (y/n): ") != "y":
         exit()
 
     return url_list
@@ -41,10 +41,9 @@ def get_urls_season(url_path):
 def cycle_through_game_weeks(driver):
     fixture_urls = []
 
-    prev_id = 'page_competition_1_block_competition_matches_summary_5_previous'
+    prev_id = "page_competition_1_block_competition_matches_summary_5_previous"
     while (
-            driver.find_element_by_id(prev_id).get_attribute('class') !=
-            'previous disabled'
+        driver.find_element_by_id(prev_id).get_attribute("class") != "previous disabled"
     ):
         driver.find_element_by_id(prev_id).click()
         sleep(2)
@@ -65,10 +64,8 @@ def get_fixture_urls(soup):
     :return: List of match URLs
     """
     urls = []
-    for elem in soup.select('.info-button.button > a'):
-        urls.append(
-            urlparse(elem.get('href')).path
-        )
+    for elem in soup.select(".info-button.button > a"):
+        urls.append(urlparse(elem.get("href")).path)
     return urls
 
 
@@ -78,6 +75,6 @@ def innerhtml_soup(driver):
     :param driver:
     :return:
     """
-    html = driver.find_element_by_tag_name('html').get_attribute('innerHTML')
-    soup = BeautifulSoup(html, 'html.parser')
+    html = driver.find_element_by_tag_name("html").get_attribute("innerHTML")
+    soup = BeautifulSoup(html, "html.parser")
     return soup

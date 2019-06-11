@@ -7,12 +7,12 @@ from season import get_urls_season
 
 
 def main():
-    if input('Scrape entire season? (y/n): ') == 'y':
-        season_url = input('Enter season URL: ')
+    if input("Scrape entire season? (y/n): ") == "y":
+        season_url = input("Enter season URL: ")
         match_urls = get_urls_season(urlparse(season_url).path)
     else:
         urls = input("Enter match URLs (split multiple URLs with ','): ")
-        match_urls = [urlparse(url).path for url in urls.split(',')]
+        match_urls = [urlparse(url).path for url in urls.split(",")]
 
     for counter, url in enumerate(match_urls, start=1):
         if counter % 10 == 0:
@@ -21,11 +21,11 @@ def main():
             sleep(2)
 
         match_dict = scrape_match(url)
-        write_spread(match_dict, path='example_output.xlsx')
+        write_spread(match_dict, path="example_output.xlsx")
 
-    print('=' * 100)
-    print(f'Complete - {len(match_urls)} added')
+    print("=" * 100)
+    print(f"Complete - {len(match_urls)} added")
 
-    
-if __name__ == '__main__':
+
+if __name__ == "__main__":
     main()
