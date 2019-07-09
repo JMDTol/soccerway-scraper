@@ -37,7 +37,7 @@ def get_urls_season(url_path):
 
 
 def cycle_through_game_weeks(driver):
-    fixture_urls = [get_fixture_urls(innerhtml_soup(driver))]
+    season_urls = get_fixture_urls(innerhtml_soup(driver))
 
     while is_previous_button_enabled(driver):
         click_previous_button(driver)
@@ -47,9 +47,9 @@ def cycle_through_game_weeks(driver):
 
         # Arrange in chronological order
         urls.reverse()
-        fixture_urls += urls
+        season_urls += urls
 
-    return fixture_urls
+    return season_urls
 
 
 def is_previous_button_enabled(driver):
