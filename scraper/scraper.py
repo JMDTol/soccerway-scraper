@@ -13,31 +13,26 @@ def scrape_match(url_path):
     response = requests.get("https://us.soccerway.com" + url_path)
     soup = BeautifulSoup(response.text, "html.parser")
 
-    game_data = {}
-    game_data["week"] = game_week(soup)
-    game_data["date"] = date(soup)
-    game_data["home_team"], game_data["away_team"] = team_names(soup)
-    game_data["referee"] = referee(soup)
+    game_data = {
+        "week": game_week(soup),
+        "date": date(soup),
+        "home_team": team_names(soup)[0],
+        "away team": team_names(soup)[1],
+        "referee": referee(soup),
+        "home_goal_total": len(home_goals(soup)),
+        "away_goal_total": len(away_goals(soup)),
+        "home_goal_times": home_goals(soup),
+        "away_goal_times": away_goals(soup),
+        "home_yellow_times": home_yellow_cards(soup),
+        "away_yellow_times": away_yellow_cards(soup),
+        "home_red_times": home_red_cards(soup),
+        "away_red_times": away_red_cards(soup),
 
-    home_goal_times = home_goals(soup)
-    game_data["home_goal_total"] = len(home_goal_times)
-    game_data["home_goal_times"] = home_goal_times
+    }
 
-    away_goal_times = away_goals(soup)
-    game_data["away_goal_total"] = len(away_goal_times)
-    game_data["away_goal_times"] = away_goal_times
-
-    home_yellows = home_yellow_cards(soup)
-    home_reds = home_red_cards(soup)
-    game_data["home_yellow_times"] = home_yellows
-    game_data["home_red_times"] = home_reds
-
-    away_yellows = away_yellow_cards(soup)
-    away_reds = away_red_cards(soup)
-    game_data["away_yellow_times"] = away_yellows
-    game_data["away_red_times"] = away_reds
-
+    # Add corners, fouls etc
     game_data.update(scrape_iframe(soup))
+
     return game_data
 
 
