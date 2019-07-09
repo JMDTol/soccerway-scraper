@@ -16,7 +16,7 @@ def get_urls_season(url_path):
     driver.fullscreen_window()
     driver.get("https://us.soccerway.com" + url_path)
     click_privacy_policy(driver)
-    
+
     url_list = cycle_through_game_weeks(driver)
     url_list.reverse()
 

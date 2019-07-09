@@ -27,7 +27,6 @@ def scrape_match(url_path):
         "away_yellow_times": away_yellow_cards(soup),
         "home_red_times": home_red_cards(soup),
         "away_red_times": away_red_cards(soup),
-
     }
 
     # Add corners, fouls etc
