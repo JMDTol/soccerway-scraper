@@ -41,11 +41,8 @@ def get_urls_season(url_path):
 def cycle_through_game_weeks(driver):
     fixture_urls = []
 
-    prev_id = "page_competition_1_block_competition_matches_summary_5_previous"
-    while (
-        driver.find_element_by_id(prev_id).get_attribute("class") != "previous disabled"
-    ):
-        driver.find_element_by_id(prev_id).click()
+    while is_previous_button_enabled(driver):
+        click_previous_button(driver)
         sleep(2)
 
         urls = get_fixture_urls(innerhtml_soup(driver))
@@ -55,6 +52,18 @@ def cycle_through_game_weeks(driver):
         fixture_urls += urls
 
     return fixture_urls
+
+
+def is_previous_button_enabled(driver):
+    return driver.find_element_by_id(
+        "page_competition_1_block_competition_matches_summary_5_previous"
+    ).get_attribute("class") != "previous disabled"
+
+
+def click_previous_button(driver):
+    driver.find_element_by_id(
+        "page_competition_1_block_competition_matches_summary_5_previous"
+    ).click()
 
 
 def get_fixture_urls(soup):
