@@ -149,7 +149,7 @@ def scrape_iframe(match_soup):
             for stat in iframe_soup.select(".legend"):
                 if "title" not in stat.attrs["class"]:
                     try:
-                        match_stats.append((int(stat.text)))
+                        match_stats.append(int(stat.text))
                     except ValueError:
                         break
 
@@ -168,4 +168,5 @@ def scrape_iframe(match_soup):
 
     if len(match_stats) == 10:
         return dict(zip(keys, match_stats))
-    return dict.fromkeys(keys, None)
+    else:
+        return dict.fromkeys(keys, None)
