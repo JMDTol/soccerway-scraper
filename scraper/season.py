@@ -15,13 +15,8 @@ def get_urls_season(url_path):
     driver = webdriver.Chrome()
     driver.fullscreen_window()
     driver.get("https://us.soccerway.com" + url_path)
-
-    # Click privacy policy if present.
-    try:
-        driver.find_element_by_class_name("qc-cmp-button").click()
-    except NoSuchElementException:
-        pass
-
+    click_privacy_policy(driver)
+    
     url_list = cycle_through_game_weeks(driver)
     url_list.reverse()
 
@@ -34,6 +29,13 @@ def get_urls_season(url_path):
         exit()
 
     return url_list
+
+
+def click_privacy_policy(driver):
+    try:
+        driver.find_element_by_class_name("qc-cmp-button").click()
+    except NoSuchElementException:
+        pass
 
 
 def cycle_through_game_weeks(driver):
