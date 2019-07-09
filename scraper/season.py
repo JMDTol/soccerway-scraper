@@ -22,9 +22,7 @@ def get_urls_season(url_path):
     except NoSuchElementException:
         pass
 
-    # Get URLs from current page first
-    url_list = get_fixture_urls(innerhtml_soup(driver))
-    url_list += cycle_through_game_weeks(driver)
+    url_list = cycle_through_game_weeks(driver)
     url_list.reverse()
 
     driver.quit()
@@ -39,7 +37,7 @@ def get_urls_season(url_path):
 
 
 def cycle_through_game_weeks(driver):
-    fixture_urls = []
+    fixture_urls = [get_fixture_urls(innerhtml_soup(driver))]
 
     while is_previous_button_enabled(driver):
         click_previous_button(driver)
