@@ -27,11 +27,13 @@ def scrape_match(url_path):
     game_data["away_goal_total"] = len(away_goal_times)
     game_data["away_goal_times"] = away_goal_times
 
-    home_yellows, home_reds = home_cards(soup)
+    home_yellows = home_yellow_cards(soup)
+    home_reds = home_red_cards(soup)
     game_data["home_yellow_times"] = home_yellows
     game_data["home_red_times"] = home_reds
 
-    away_yellows, away_reds = away_cards(soup)
+    away_yellows = away_yellow_cards(soup)
+    away_reds = away_red_cards(soup)
     game_data["away_yellow_times"] = away_yellows
     game_data["away_red_times"] = away_reds
 
@@ -93,36 +95,52 @@ def away_goals(match_soup):
     return goal_times
 
 
-def home_cards(match_soup):
-    yellow_times = []
+def home_red_cards(match_soup):
     red_times = []
+
+    for card in match_soup.select("div.container.left span"):
+        if "events/RC.png" in str(card) or "events/Y2C.png" in str(card):
+            red_time = clean_string(card)
+            if red_time <= 90:
+                red_times.append(red_time)
+
+    return sorted(red_times)
+
+
+def home_yellow_cards(match_soup):
+    yellow_times = []
+
     for card in match_soup.select("div.container.left span"):
         if "events/YC.png" in str(card):
             yellow_time = clean_string(card)
             if yellow_time <= 90:
                 yellow_times.append(yellow_time)
-        elif "events/RC.png" in str(card) or "events/Y2C.png" in str(card):
-            red_time = clean_string(card)
-            if red_time <= 90:
-                red_times.append(red_time)
 
-    return sorted(yellow_times), sorted(red_times)
+    return sorted(yellow_times)
 
 
-def away_cards(match_soup):
+def away_yellow_cards(match_soup):
     yellow_times = []
-    red_times = []
+
     for card in match_soup.select("div.container.right span"):
         if "events/YC.png" in str(card):
             yellow_time = clean_string(card)
             if yellow_time <= 90:
                 yellow_times.append(yellow_time)
-        elif "events/RC.png" in str(card) or "events/Y2C.png" in str(card):
+
+    return sorted(yellow_times)
+
+
+def away_red_cards(match_soup):
+    red_times = []
+
+    for card in match_soup.select("div.container.right span"):
+        if "events/RC.png" in str(card) or "events/Y2C.png" in str(card):
             red_time = clean_string(card)
             if red_time <= 90:
                 red_times.append(red_time)
 
-    return sorted(yellow_times), sorted(red_times)
+    return sorted(red_times)
 
 
 def scrape_iframe(match_soup):

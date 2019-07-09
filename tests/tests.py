@@ -34,11 +34,17 @@ class TestScraper(unittest.TestCase):
     def test_away_goals(self):
         self.assertEqual(scraper.away_goals(self.soup), [53])
 
-    def test_home_cards(self):
-        self.assertEqual(scraper.home_cards(self.soup), ([32, 34, 83, 90], [90]))
+    def test_home_yellow_cards(self):
+        self.assertEqual(scraper.home_yellow_cards(self.soup), [32, 34, 83, 90])
 
-    def test_away_cards(self):
-        self.assertEqual(scraper.away_cards(self.soup), ([63], []))
+    def test_away_yellow_cards(self):
+        self.assertEqual(scraper.away_yellow_cards(self.soup), [63])
+
+    def test_home_red_cards(self):
+        self.assertEqual(scraper.home_red_cards(self.soup), [90])
+
+    def test_away_red_cards(self):
+        self.assertEqual(scraper.away_red_cards(self.soup), [])
 
     def test_stats(self):
         self.assertEqual(
