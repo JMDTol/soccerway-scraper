@@ -17,7 +17,7 @@ def scrape_match(url_path):
         "week": game_week(soup),
         "date": date(soup),
         "home_team": team_names(soup)[0],
-        "away team": team_names(soup)[1],
+        "away_team": team_names(soup)[1],
         "referee": referee(soup),
         "home_goal_total": len(home_goals(soup)),
         "away_goal_total": len(away_goals(soup)),
