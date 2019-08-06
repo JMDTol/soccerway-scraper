@@ -137,9 +137,9 @@ def scrape_iframe(match_soup):
     match_stats = []
     for elem in match_soup.find_all("iframe"):
         if elem["src"].startswith("/charts"):
-            iframe_url = "https://www.soccerway.com" + (elem["src"])
-            response = requests.get(iframe_url).text
-            iframe_soup = BeautifulSoup(response, "html.parser")
+            iframe_url = "https://www.soccerway.com" + elem["src"]
+            response = requests.get(iframe_url)
+            iframe_soup = BeautifulSoup(response.text, "html.parser")
             for stat in iframe_soup.select(".legend"):
                 if "title" not in stat.attrs["class"]:
                     try:
