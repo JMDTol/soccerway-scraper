@@ -15,13 +15,15 @@ def main():
         match_urls = [urlparse(url).path for url in urls.split(",")]
 
     for counter, url in enumerate(match_urls, start=1):
+        
+        # Stagger to prevent requests being denied
         if counter % 10 == 0:
             sleep(10)
         else:
             sleep(2)
 
-        match_dict = scrape_match(url)
-        write_spread(match_dict, path="example_output.xlsx")
+        match_data = scrape_match(url)
+        write_spread(match_data, path="example_output.xlsx")
 
     print("=" * 100)
     print(f"Complete - {len(match_urls)} added")
